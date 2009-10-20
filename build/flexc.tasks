@@ -1,0 +1,10 @@
+mxmlc=net.lunardev.ant.flexcompilers.Mxmlc
+compc=net.lunardev.ant.flexcompilers.Compc
+asdoc=net.lunardev.ant.flexcompilers.Asdoc
+adt=net.lunardev.ant.flexcompilers.Adt
+asc=net.lunardev.ant.flexcompilers.Asc
+fdb=net.lunardev.ant.flexcompilers.Fdb
+optimizer=net.lunardev.ant.flexcompilers.Optimizer
+pixelbender=net.lunardev.ant.flexcompilers.PixelBender
+adl=net.lunardev.ant.flexcompilers.Adl
+flexsdk=net.lunardev.ant.flexcompilers.FlexSDK

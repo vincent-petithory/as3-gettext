@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<application xmlns="http://ns.adobe.com/air/application/1.5"> 
+	
+	<id>${project.name}.UnitTest</id> 
+	<version>1.0</version> 
+	<filename>${project.name}</filename> 
+	
+	<name>${ant.project.name} Unit tests</name> 
+	<description>${ant.project.name} Unit tests</description> 
+	<copyright></copyright> 
+	
+	<initialWindow> 
+		<title>${ant.project.name} Unit tests</title> 
+		<content>${project.check.output.filename}</content> 
+		<systemChrome>standard</systemChrome> 
+		<transparent>false</transparent> 
+		<visible>false</visible> 
+		<minimizable>true</minimizable> 
+		<maximizable>false</maximizable> 
+		<resizable>false</resizable> 
+	</initialWindow> 
+	
+</application>

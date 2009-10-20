@@ -1,0 +1,9 @@
+docs
+lib
+man
+**/*.cache
+**/*.swc
+**/*.swf
+unittest/*.xml
+!**/*-tmp.xml
+

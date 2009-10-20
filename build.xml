@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project name="Actionscript GNU Gettext" default="all" basedir=".">
+
+	<!-- Project properties -->
+	
+	<!-- The project name (canonical form) -->
+	<property name="project.name" value="as3-gettext" />
+	<!-- The project major version -->
+	<property name="project.version.major" value="0" />
+	<!-- The project minor version -->
+	<property name="project.version.minor" value="1" />
+	
+	<!-- Compile time properties -->
+	<property name="debug" value="true" />
+	<property name="player" value="10" />
+	<property name="air" value="false" />
+	
+	<!-- Properties -->
+
+	<property file="${basedir}/build.properties" />
+
+	<taskdef 
+		file="${project.build.flexc.tasks}" 
+		classpath="${project.build.flexc.jar}" 
+	/>
+	
+	<!-- Standard targets -->
+
+	<target name="distclean" description="cleans the distribution files">
+		<delete includeemptydirs="true">
+			<fileset dir="${project.lib}" includes="**/*"/>
+			<fileset dir="${project.man}" includes="**/*"/>
+		</delete>
+	</target>
+
+	<target name="dist" description="makes the distribution files">
+		<antcall target="all" />
+		<asdoc air="${air}" failonerror="true">
+		    <arg value="-define=CFG::debug,${debug}" />
+		    <arg value="-define=CFG::air,${air}" />
+		    <arg value="-define=CFG::player,${player}" />
+		    <arg value="-define=CFG::vector,&quot;CFG::air || CFG::player > 9&quot;" />
+		    <arg value="-define=CFG::array,&quot;!CFG::vector&quot;" />
+		    <arg value="-target-player=${player}" />
+			<arg value="-sp ${project.src}" />
+			<arg value="-library-path+=${project.deps}" />
+			<arg value="-doc-sources ${project.input}" />
+			<arg value="-o ${project.man}/reference" />
+		</asdoc>
+	</target>
+    
+    <target name="all">
+    	<buildnumber file="${project.build.file}" />
+		<compc air="${air}" failonerror="true">
+		    <arg value="-define=CFG::debug,${debug}" />
+		    <arg value="-define=CFG::air,${air}" />
+		    <arg value="-define=CFG::player,${player}" />
+		    <arg value="-define=CFG::vector,&quot;CFG::air || CFG::player > 9&quot;" />
+		    <arg value="-define=CFG::array,&quot;!CFG::vector&quot;" />
+			<arg value="-debug=${debug}" />
+			<arg value="-target-player=${player}" />
+			<arg value="-sp ${project.src}" />
+			<arg value="-library-path+=${project.deps}" />
+			<arg value="-is ${project.input}" />
+			<arg value="-o ${project.output}" />
+		</compc>
+    </target>
+    
+    <target name="clean">
+    	<delete includeemptydirs="true">
+			<fileset dir="${project.lib}" includes="**/*"/>
+			<fileset dir="${project.check.bin}" includes="*.cache"/>
+			<fileset dir="${project.check.bin}" includes="*.swf"/>
+			<fileset dir="${project.check.bin}" includes="*.xml" excludes="*-tmp.xml"/>
+		</delete>
+    </target>
+
+	<target name="check" description="runs unit tests">
+        <mxmlc air="true" failonerror="true">
+            <arg value="-define=CFG::debug,${debug}" />
+		    <arg value="-define=CFG::air,${air}" />
+		    <arg value="-define=CFG::player,${player}" />
+		    <arg value="-define=CFG::vector,&quot;CFG::air || CFG::player > 9&quot;" />
+		    <arg value="-define=CFG::array,&quot;!CFG::vector&quot;" />
+            <arg value="-debug=${debug}" />
+            <arg value="-target-player=${player}" />
+            <arg value="-sp ${project.check.src}" />
+            <arg value="-sp ${project.src}" />
+			<arg value="-library-path+=${project.deps}" />
+			<arg value="-file-specs ${project.check.input}" />
+			<arg value="-o ${project.check.output}" />
+        </mxmlc>
+        <copy file="${project.check.appdesc.tmp}" tofile="${project.check.appdesc}">
+        	<filterchain>
+        		<expandproperties />
+        	</filterchain>
+        </copy>
+        <adl xml="${project.check.appdesc}" dir="${project.check.bin}" />
+    </target>
+    
+</project>
