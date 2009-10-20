@@ -9,8 +9,7 @@ package gnu.as3.gettext
         public static function suite():TestSuite
         {
             var list:TestSuite = new TestSuite();
-            list.add(MOParserTest);
-//            list.add(new MOParserTest("theNumberOfTranslationReturnedAreValid"));
+            list.add(ParseMOBytesTest);
             return list;
         }
 
