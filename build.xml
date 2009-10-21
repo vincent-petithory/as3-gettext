@@ -97,5 +97,41 @@
         </copy>
         <adl xml="${project.check.appdesc}" dir="${project.check.bin}" />
     </target>
+	
+	<!-- Samples -->
+	
+	<target name="samplesclean" description="Cleans all samples">
+    	<delete includeemptydirs="true">
+			<fileset dir="${project.home}/samples" includes="*.swf" />
+			<fileset dir="${project.home}/samples" includes="*.xml" excludes="*-tmp.xml"/>
+			<fileset dir="${project.home}/samples" includes="*.cache" />
+		</delete>
+	</target>
+	
+	<target name="sample" unless="${sample}" description="Runs a sample">
+        <mxmlc air="true" failonerror="true">
+            <arg value="-define=CFG::debug,${debug}" />
+		    <arg value="-define=CFG::air,true" />
+		    <arg value="-define=CFG::player,${player}" />
+		    <arg value="-define=CFG::vector,&quot;CFG::air || CFG::player > 9&quot;" />
+		    <arg value="-define=CFG::array,&quot;!CFG::vector&quot;" />
+            <arg value="-debug=${debug}" />
+            <arg value="-target-player=${player}" />
+            <arg value="-sp ${project.src}" />
+			<arg value="-library-path+=${project.deps}" />
+			<arg value="-file-specs ${project.home}/samples/${sample}.as" />
+			<arg value="-o ${project.home}/samples/${sample}.swf" />
+        </mxmlc>
+        <copy 
+            file="${project.home}/samples/application-sample-tmp.xml" 
+            tofile="${project.home}/samples/application-${sample}.xml"
+        >
+        	<filterchain>
+        		<expandproperties />
+        	</filterchain>
+        </copy>
+        <adl xml="${project.home}/samples/application-${sample}.xml" dir="${project.home}/samples" />
+	</target>
+    
     
 </project>

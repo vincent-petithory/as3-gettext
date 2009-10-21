@@ -36,7 +36,7 @@ package gnu.as3.gettext
      * @throws GettextError if the bytes does not represent a valid MO file.
      * @throws TypeError if the specified ByteArray is null.
      */
-    public const parseMOBytes:Function = function parse(bytes:ByteArray):MOFile 
+    public function parseMOBytes(bytes:ByteArray):MOFile 
     {
 		if (bytes == null)
 		{

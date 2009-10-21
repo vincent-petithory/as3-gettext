@@ -10,6 +10,8 @@ package gnu.as3.gettext
         {
             var list:TestSuite = new TestSuite();
             list.add(ParseMOBytesTest);
+            list.add(LocaleTest);
+            list.add(GettextTest);
             return list;
         }
 

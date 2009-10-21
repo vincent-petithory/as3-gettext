@@ -1,0 +1,2 @@
+The locale modifications are not detected in _Gettext, so _Gettext.currentLocale is never set.
+We load only LC_MESSAGES for now. See if it's possible to change that
