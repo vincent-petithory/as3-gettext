@@ -23,7 +23,6 @@ package gnu.as3.gettext
 {
 	
 	import astre.api.*;
-	import astre.core.Astre;
 	
 	public class LocaleTest extends Test 
 	{
@@ -31,6 +30,8 @@ package gnu.as3.gettext
 		public function LocaleTest(name:String)
 		{
 			super(name);
+			ISO_639_1.codes;
+			ISO_3166.codes;
 		}
 		
 		private var locale:_Locale;
@@ -49,7 +50,7 @@ package gnu.as3.gettext
 		
 		public function languageConstOverridesLangConstAndLC_ALL():void
 		{
-			locale.LANGUAGE = locale.ISO("en","US");
+			locale.LANGUAGE = mklocale("en","US");
 			assertEquals("en_US", locale.setlocale(locale.LC_ALL));
 		}
 		

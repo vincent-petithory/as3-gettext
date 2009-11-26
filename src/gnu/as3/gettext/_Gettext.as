@@ -23,7 +23,6 @@ package gnu.as3.gettext
 {
 	
 	import flash.events.Event;
-	
 	import flash.utils.Dictionary;
 	
 	import gnu.as3.gettext.services.IGettextService;
@@ -53,7 +52,8 @@ package gnu.as3.gettext
 		 */
 		public function bindtextdomain(
 								domainName:String, 
-								dirName:String = null 
+								dirName:String = null, 
+								service:IGettextService = null
 							):String
 		{
 			if (_domainBindings[domainName] == undefined)
@@ -71,6 +71,7 @@ package gnu.as3.gettext
 				if (dirName.charAt(l) == "/")
 				{
 					dirName = dirName.substring(0,l);
+					tryService(service, dirName, domainName);
 				}
 				_domainBindings[domainName] = dirName;
 				return dirName;
@@ -108,8 +109,22 @@ package gnu.as3.gettext
 		}
 		
 		/**
-		 * A call to textdomain assumes that the locale has been set.
-		 * The current _Locale associated to this _Gettext will be used to resolve the locale to use at this moment.
+		 * Selects the default domain to use for the translations. Libraries 
+		 * should not call this method, since it is the responsability of the 
+		 * main application to set it. Instead, libraries use the domain 
+		 * parameter of the gettext() method (or its _() alias).
+		 * 
+		 * <p>A call to textdomain assumes that the locale has been set.
+		 * The current _Locale associated to this _Gettext will be used 
+		 * to resolve the locale to use at this moment.</p>
+		 * 
+		 * @param domainName the name of the domain to set as the default domain.
+		 * @param service the service to use to load the translations 
+		 * associated. If null, the loading operation does not occur. As it is 
+		 * the last opportunity to load the translations for the specified 
+		 * domain, you must load them here if you did not do that in the 
+		 * bindtextdomain method.
+		 * 
 		 */
 		public function textdomain(domainName:String = null, service:IGettextService = null):String
 		{

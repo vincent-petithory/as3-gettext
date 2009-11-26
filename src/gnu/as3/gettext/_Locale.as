@@ -25,11 +25,20 @@ package gnu.as3.gettext
 	import flash.utils.Dictionary;
 	import flash.system.Capabilities;
 	
+	/**
+	 * 
+	 */
 	public final class _Locale 
     {
 		
+		/**
+		 * @private
+		 */
 		private var pwd_inc:uint = 0;
 		
+		/**
+		 * The standard messages
+		 */
 		public const LC_MESSAGES:uint = 1 << pwd_inc++;
 		public const LC_TIME:uint = 1 << pwd_inc++;
 		public const LC_MONETARY:uint = 1 << pwd_inc++;
@@ -43,17 +52,36 @@ package gnu.as3.gettext
 		 * localize your library.
 		 */
 		public const LC_CTYPE:uint = 1 << pwd_inc++;
+		
+		/**
+		 * A shortcut to all the categories
+		 */
 		public const LC_ALL:uint = 			LC_MESSAGES | LC_TIME 	 | 
 											LC_MONETARY | LC_NUMERIC | 
 											LC_COLLATE 	| LC_CTYPE;
 		
+		/**
+		 * @private
+		 * The number of categories.
+		 */
 		private const NUM_LC_XXX:uint = pwd_inc;
 		
-		private var _domainsMap:Dictionary = new Dictionary(false);
+		//private var _domainsMap:Dictionary = new Dictionary(false);
+		
+		/**
+		 * @private
+		 * The hash table of the locales associated to the categories.
+		 */
 		private var _locales:Dictionary = new Dictionary(false);
 		
+		/**
+		 * The user default language.
+		 */
 		public var LANGUAGE:String = "";
 		
+		/**
+		 * @private
+		 */
 		private const __FP_ISO639_TO_LOCALE__:Object = { 
 			'cs'    : 'cs_CZ',
 			'da'    : 'da_DK',
@@ -78,17 +106,57 @@ package gnu.as3.gettext
 			'tr'    : 'tr_TR' 
 		};
 		
+		/**
+		 * The native locale of the system, which defaults to the language 
+		 * Flash Player determines (see the table below).
+		 * 
+		 * <p>As Flash Player only determines a language code, not a full locale, 
+		 * a locale is made out of that language code. When Flash Player 
+		 * encounters an unknown locale, then en_US is used instead.
+		 * The following table 
+		 * shows the mapping between flash player language codes and locales 
+		 * (an ISO 639-1 code, followed by a _ character, followed by an 
+		 * ISO 3166 code) :</p>
+		 * <table class="innertable">
+		 *     <tr><th>Flash Player language code</th><th>Locale</th></tr>
+		 *     <tr><td>cs</code></td><td>cs_CZ</td></tr>
+		 *     <tr><td>da</code></td><td>da_DK</td></tr>
+		 *     <tr><td>nl</code></td><td>nl_NL</td></tr>
+		 *     <tr><td>en</code></td><td>en_US</td></tr>
+		 *     <tr><td>fi</code></td><td>fi_FI</td></tr>
+		 *     <tr><td>fr</code></td><td>fr_FR</td></tr>
+		 *     <tr><td>de</code></td><td>de_DE</td></tr>
+		 *     <tr><td>hu</code></td><td>hu_HU</td></tr>
+		 *     <tr><td>it</code></td><td>it_IT</td></tr>
+		 *     <tr><td>ja</code></td><td>ja_JP</td></tr>
+		 *     <tr><td>ko</code></td><td>ko_KR</td></tr>
+		 *     <tr><td>no</code></td><td>no_NO</td></tr>
+		 *     <tr><td>xu</code></td><td>en_US</td></tr>
+		 *     <tr><td>pl</code></td><td>pl_PL</td></tr>
+		 *     <tr><td>pt</code></td><td>pt_PT</td></tr>
+		 *     <tr><td>ru</code></td><td>ru_RU</td></tr>
+		 *     <tr><td>zh-CN</code></td>zh_CN<td></td></tr>
+		 *     <tr><td>es</code></td><td>es_ES</td></tr>
+		 *     <tr><td>sv</code></td><td>sv_SE</td></tr>
+		 *     <tr><td>zh-TW</code></td>zh_TW<td></td></tr>
+		 *     <tr><td>tr</code></td><td>tr_TR</td></tr>
+		 * </table>
+		 * 
+		 */
 		public const LANG:String = __FP_ISO639_TO_LOCALE__[Capabilities.language];
 		
 		/**
 		 * The setlocale() method encapsulates all the logic to set and 
 		 * retrieve the current locale. 
 		 * 
-		 * <p>The default locale for every category is determined in the 
+		 * <p>The default locale for a given category is determined in the 
 		 * following order :
 		 * <ul>
-		 * <li>the value of the LANGUAGE variable, if set.</li>
-		 * <li>the value of the LANGUAGE variable, if set.</li>
+		 * <li>the value assigned to the category, if any.</li>
+		 * <li>the value of the global LANGUAGE variable, if set.</li>
+		 * <li>the value of the LANG const, which defaults to the language 
+		 * Flash Player determines (see the LANG constant for more 
+		 * informations).</li>
 		 * </ul>
 		 * </p>
 		 * 
@@ -96,7 +164,7 @@ package gnu.as3.gettext
 		 * @param locale the locale to set. If not null, the specified locale 
 		 * will be set for the specified category. If null, the method will 
 		 * return the current locale for the specified category. 
-		 * Use the mklocale() method to create a standard locale.
+		 * Use the mklocale() function to create a standard locale.
 		 * 
 		 * @see mklocale()
 		 */

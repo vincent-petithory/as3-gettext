@@ -23,7 +23,6 @@ package gnu.as3.gettext
 {
 	
 	import astre.api.*;
-	import astre.core.Astre;
 	
 	public class GettextTest extends Test 
 	{
@@ -64,6 +63,7 @@ package gnu.as3.gettext
 		{
 			gettext.bindtextdomain("pidgin","./locale2/");
 			assertEquals("./locale2",gettext.bindtextdomain("pidgin",null));
+			assertEquals("./locale2",gettext.bindtextdomain("pidgin"));
 		}
 		
 		public function textdomainThrowsAnErrorIfTheStringParameterIsEmpty():void

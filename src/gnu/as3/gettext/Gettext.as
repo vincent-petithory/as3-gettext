@@ -22,6 +22,9 @@
 package gnu.as3.gettext 
 {
 	
+	/**
+	 * The global _Gettext object. 
+	 */
 	public const Gettext:_Gettext = new _Gettext(gnu.as3.gettext.Locale);
 	
 }
