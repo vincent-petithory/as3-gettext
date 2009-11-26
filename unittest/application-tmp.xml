@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <application xmlns="http://ns.adobe.com/air/application/1.5"> 
 	
-	<id>${project.name}.UnitTest</id> 
+	<id>project.noinstall.UnitTest</id> 
 	<version>1.0</version> 
 	<filename>${project.name}</filename> 
 	
