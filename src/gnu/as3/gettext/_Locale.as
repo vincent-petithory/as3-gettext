@@ -80,6 +80,26 @@ package gnu.as3.gettext
 		
 		public const LANG:String = __FP_ISO639_TO_LOCALE__[Capabilities.language];
 		
+		/**
+		 * The setlocale() method encapsulates all the logic to set and 
+		 * retrieve the current locale. 
+		 * 
+		 * <p>The default locale for every category is determined in the 
+		 * following order :
+		 * <ul>
+		 * <li>the value of the LANGUAGE variable, if set.</li>
+		 * <li>the value of the LANGUAGE variable, if set.</li>
+		 * </ul>
+		 * </p>
+		 * 
+		 * @param category the category to set/retrieve information.
+		 * @param locale the locale to set. If not null, the specified locale 
+		 * will be set for the specified category. If null, the method will 
+		 * return the current locale for the specified category. 
+		 * Use the mklocale() method to create a standard locale.
+		 * 
+		 * @see mklocale()
+		 */
 		public function setlocale(category:uint, locale:String = null):String
 		{
 			var pw:int = 0;
@@ -119,11 +139,6 @@ package gnu.as3.gettext
 				}
 			}
 			return locale;
-		}
-		
-		public function ISO(iso639:String, iso3166:String):String
-		{
-			return iso639+"_"+iso3166;
 		}
 		
 	}

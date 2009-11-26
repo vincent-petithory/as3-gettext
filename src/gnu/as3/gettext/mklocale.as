@@ -1,5 +1,5 @@
 /*
- * ISO_639_1_FlashPlayerSubset.as
+ * mklocale.as
  * This file is part of Actionscript GNU Gettext
  *
  * Copyright (C) 2009 - Vincent Petithory
@@ -20,30 +20,18 @@
  * Boston, MA  02110-1301  USA
  */
 package gnu.as3.gettext 
-{
+{	
 	
-    public const ISO_639_1_FlashPlayerSubset:Object = {
-		'cs'    : 'Czech',
-		'da'    : 'Danish',
-		'nl'    : 'Dutch',
-		'en'    : 'English',
-		'fi'    : 'Finnish',
-		'fr'    : 'French',
-		'de'    : 'German',
-		'hu'    : 'Hungarian',
-		'it'    : 'Italian',
-		'ja'    : 'Japanese',
-		'ko'    : 'Korean',
-		'no'    : 'Norwegian',
-		'xu'    : 'Other/unknown',
-		'pl'    : 'Polish',
-		'pt'    : 'Portuguese',
-		'ru'    : 'Russian',
-		'zh-CN' : 'Simplified Chinese',
-		'es'    : 'Spanish',
-		'sv'    : 'Swedish',
-		'zh-TW' : 'Traditional Chinese',
-		'tr'    : 'Turkish'
+    /**
+	 * Creates a locale using an ISO 639 code (language) 
+	 * and an ISO 3166 code (country).
+	 * 
+	 * @param iso639 the iso 639 language code.
+	 * @param iso3166 the iso 3166 country code.
+	 */
+	public function mklocale(iso639:String, iso3166:String):String
+	{
+		return iso639+"_"+iso3166;
 	}
-	
 }
+

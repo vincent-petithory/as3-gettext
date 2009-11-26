@@ -77,6 +77,10 @@ package gnu.as3.gettext
 			}
 		}
 		
+		/**
+		 * @private
+		 * Attempts to launch the service that will load the translations.
+		 */
 		private function tryService(service:IGettextService, dirName:String, domainName:String):void
 		{
 			if (service)
@@ -93,6 +97,9 @@ package gnu.as3.gettext
 			}
 		}
 		
+		/**
+		 * @private
+		 */
 		private function onComplete(event:Event):void
 		{
 			var service:IGettextService = event.target as IGettextService;
@@ -119,9 +126,13 @@ package gnu.as3.gettext
 			}
 		}
 		
-		public function gettext(string:String):String
+		/**
+		 * Returns the translation string for the specified string, using 
+		 * the current locale and the current domain.
+		 */
+		public function gettext(string:String, domain:String = null, locale:String = null):String
 		{
-			
+			throw new Error("not implemented");
 			return string;
 		}
 		
