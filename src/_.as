@@ -22,6 +22,12 @@
 package 
 {
 
+    import gnu.as3.gettext.Gettext;
+    
+    /**
+	 * An alias of <code>Gettext.gettext()</code>.
+     * @see gnu.as3.gettext._Gettext#gettext()
+     */
     public const _:Function = Gettext.gettext;
     
 }

@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, 
  * Boston, MA  02110-1301  USA
  */
-package gnu.as3.gettext 
+package 
 {	
 	
     /**
@@ -28,6 +28,10 @@ package gnu.as3.gettext
 	 * 
 	 * @param iso639 the iso 639 language code.
 	 * @param iso3166 the iso 3166 country code.
+	 * @return a standard locale.
+	 * 
+	 * @see gnu.as3.gettext.ISO_639_1
+	 * @see gnu.as3.gettext.ISO_3166
 	 */
 	public function mklocale(iso639:String, iso3166:String):String
 	{
