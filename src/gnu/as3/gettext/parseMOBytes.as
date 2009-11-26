@@ -39,37 +39,26 @@ package gnu.as3.gettext
     public function parseMOBytes(bytes:ByteArray):MOFile 
     {
 		if (bytes == null)
-		{
 			throw new TypeError("The <bytes> parameter must not be null");
-		}
+			
 		var originalPosition:uint = bytes.position;
 		var originalEndian:String = bytes.endian;
 		var magicNumber:uint = bytes.readUnsignedInt();
 		if (magicNumber == 0xde120495)
-		{
 			bytes.endian = Endian.LITTLE_ENDIAN;
-		}
 		else if (magicNumber == 0x950412de)
-		{
 			bytes.endian = Endian.BIG_ENDIAN;
-		}
 		else
-		{
 			throw new GettextError("The magic number is invalid.");
-		}
 		
 		var fileFormatRevision:uint = bytes.readUnsignedInt();
 		if (fileFormatRevision > 0)
-		{
 			throw new GettextError("Unknown or unsupported "+
 									"MO file format revision.");
-		}
 		
 		var n:uint = bytes.readUnsignedInt();
 		if (n <= 0)
-		{
 			throw new GettextError("The MO file has no translations.");
-		}
 		
 		var o:uint = bytes.readUnsignedInt();
 		var t:uint = bytes.readUnsignedInt();
@@ -132,13 +121,12 @@ package gnu.as3.gettext
 		mo.reportMsgidBugsTo = elements[1].substr(elements[1].indexOf(":")+2);
 		
 		// YYYY-MM-DD HH::MM(+|-HHMM)
-		var datePattern:RegExp = /(\d+)-(\d+)-(\d+) (\d+):(\d+)(\+|-\d+)/g;
-		var datePatternRepl:String = "$1/$2/$3 $4:$5 GMT$6";
+		
 		var rawPotCreationDate:String = elements[2].substr(elements[2].indexOf(":")+2);
 		
 		mo.potCreationDate = new Date(
 			Date.parse(
-				rawPotCreationDate.replace(datePattern,datePatternRepl)
+				rawPotCreationDate.replace(DATE_PATTERN,DATE_PATTERN_REPL)
 			)
 		);
 		
@@ -146,7 +134,7 @@ package gnu.as3.gettext
 		mo.poRevisionDate = new Date();
 		mo.poRevisionDate = new Date(
 			Date.parse(
-				rawPoRevisionDate.replace(datePattern,datePatternRepl)
+				rawPoRevisionDate.replace(DATE_PATTERN,DATE_PATTERN_REPL)
 			)
 		);
 		
@@ -164,4 +152,7 @@ package gnu.as3.gettext
 	}
     
 }
+
+internal const DATE_PATTERN:RegExp = /(\d+)-(\d+)-(\d+) (\d+):(\d+)(\+|-\d+)/g;
+internal const DATE_PATTERN_REPL:String = "$1/$2/$3 $4:$5 GMT$6";
 
