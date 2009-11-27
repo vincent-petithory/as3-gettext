@@ -36,7 +36,9 @@ package gnu.as3.gettext.services
 	import flash.utils.ByteArray;
 	import flash.utils.setTimeout;
 
-    public class LocalFilesystemService extends EventDispatcher implements IGettextService 
+    public class LocalFilesystemService 
+								extends EventDispatcher 
+								implements IGettextService 
     {
         public function LocalFilesystemService(baseURL:String = null)
         {

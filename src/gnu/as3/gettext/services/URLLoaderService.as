@@ -25,10 +25,10 @@ package gnu.as3.gettext.services
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.events.IEventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.SecurityErrorEvent;
 	
+	import flash.net.URLRequest;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	
@@ -37,7 +37,9 @@ package gnu.as3.gettext.services
 	import gnu.as3.gettext.MOFile;
 	import gnu.as3.gettext.parseMOBytes;
 	
-	public class URLLoaderService extends EventDispatcher implements IGettextService 
+	public class URLLoaderService 
+							extends EventDispatcher 
+							implements IGettextService 
 	{
 		
 		private var loader:URLLoader;
@@ -84,15 +86,21 @@ package gnu.as3.gettext.services
 			
 			// set listeners
 			loader.addEventListener(Event.COMPLETE, onComplete);
-			loader.addEventListener(IOErrorEvent.IO_ERROR, onErrorEventToRedispatch);
-			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onErrorEventToRedispatch);
+			loader.addEventListener(IOErrorEvent.IO_ERROR, 
+										onErrorEventToRedispatch);
+			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, 
+										onErrorEventToRedispatch);
 			
 			try 
 			{
 				loader.load(new URLRequest(this._baseURL+"/"+url));
 			} catch (e:Error)
 			{
-				this.dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR, false, false, e.message));
+				this.dispatchEvent(
+					new IOErrorEvent(
+						IOErrorEvent.IO_ERROR, false, false, e.message
+					)
+				);
 			}
 		}
 		
@@ -104,7 +112,11 @@ package gnu.as3.gettext.services
 		
 		private function onErrorEventToRedispatch(event:ErrorEvent):void
 		{
-			this.dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR, false, false, e.text));
+			this.dispatchEvent(
+				new IOErrorEvent(
+					IOErrorEvent.IO_ERROR, false, false, event.text
+					)
+				);
 		}
 		
 	}

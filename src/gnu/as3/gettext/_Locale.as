@@ -141,27 +141,27 @@ package gnu.as3.gettext
 		 * ISO 3166 code) :</p>
 		 * <table class="innertable">
 		 *     <tr><th>Flash Player language code</th><th>Locale</th></tr>
-		 *     <tr><td>cs</code></td><td>cs_CZ</td></tr>
-		 *     <tr><td>da</code></td><td>da_DK</td></tr>
-		 *     <tr><td>nl</code></td><td>nl_NL</td></tr>
-		 *     <tr><td>en</code></td><td>en_US</td></tr>
-		 *     <tr><td>fi</code></td><td>fi_FI</td></tr>
-		 *     <tr><td>fr</code></td><td>fr_FR</td></tr>
-		 *     <tr><td>de</code></td><td>de_DE</td></tr>
-		 *     <tr><td>hu</code></td><td>hu_HU</td></tr>
-		 *     <tr><td>it</code></td><td>it_IT</td></tr>
-		 *     <tr><td>ja</code></td><td>ja_JP</td></tr>
-		 *     <tr><td>ko</code></td><td>ko_KR</td></tr>
-		 *     <tr><td>no</code></td><td>no_NO</td></tr>
-		 *     <tr><td>xu</code></td><td>en_US</td></tr>
-		 *     <tr><td>pl</code></td><td>pl_PL</td></tr>
-		 *     <tr><td>pt</code></td><td>pt_PT</td></tr>
-		 *     <tr><td>ru</code></td><td>ru_RU</td></tr>
-		 *     <tr><td>zh-CN</code></td>zh_CN<td></td></tr>
-		 *     <tr><td>es</code></td><td>es_ES</td></tr>
-		 *     <tr><td>sv</code></td><td>sv_SE</td></tr>
-		 *     <tr><td>zh-TW</code></td>zh_TW<td></td></tr>
-		 *     <tr><td>tr</code></td><td>tr_TR</td></tr>
+		 *     <tr><td>cs</td><td>cs_CZ</td></tr>
+		 *     <tr><td>da</td><td>da_DK</td></tr>
+		 *     <tr><td>nl</td><td>nl_NL</td></tr>
+		 *     <tr><td>en</td><td>en_US</td></tr>
+		 *     <tr><td>fi</td><td>fi_FI</td></tr>
+		 *     <tr><td>fr</td><td>fr_FR</td></tr>
+		 *     <tr><td>de</td><td>de_DE</td></tr>
+		 *     <tr><td>hu</td><td>hu_HU</td></tr>
+		 *     <tr><td>it</td><td>it_IT</td></tr>
+		 *     <tr><td>ja</td><td>ja_JP</td></tr>
+		 *     <tr><td>ko</td><td>ko_KR</td></tr>
+		 *     <tr><td>no</td><td>no_NO</td></tr>
+		 *     <tr><td>xu</td><td>en_US</td></tr>
+		 *     <tr><td>pl</td><td>pl_PL</td></tr>
+		 *     <tr><td>pt</td><td>pt_PT</td></tr>
+		 *     <tr><td>ru</td><td>ru_RU</td></tr>
+		 *     <tr><td>zh-CN</td>zh_CN<td></td></tr>
+		 *     <tr><td>es</td><td>es_ES</td></tr>
+		 *     <tr><td>sv</td><td>sv_SE</td></tr>
+		 *     <tr><td>zh-TW</td>zh_TW<td></td></tr>
+		 *     <tr><td>tr</td><td>tr_TR</td></tr>
 		 * </table>
 		 * 
 		 */
