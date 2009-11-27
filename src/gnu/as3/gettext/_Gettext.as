@@ -38,7 +38,9 @@ package gnu.as3.gettext
 		private var _domainBindings:Dictionary;
 		private var _domainCatalogs:Dictionary;
 		
-		public const DEFAULT_DIR_NAME:String = "./locale";
+		private var currentStrings:Dictionary;
+		
+		public const DEFAULT_DIR_NAME:String = "locale";
 		
 		public function _Gettext(locale:_Locale)
 		{
@@ -56,6 +58,7 @@ package gnu.as3.gettext
 								service:IGettextService = null
 							):String
 		{
+		    this.currentLocale = __locale.setlocale(__locale.LC_MESSAGES,null);
 			if (_domainBindings[domainName] == undefined)
 			{
 				_domainBindings[domainName] = DEFAULT_DIR_NAME;
@@ -63,19 +66,19 @@ package gnu.as3.gettext
 			
 			if (dirName == null)
 			{
-				return _domainBindings[domainName];
+				if (service)
+					tryService(service, _domainBindings[domainName], domainName);
 			}
 			else
 			{
 				var l:int = dirName.length-1;
 				if (dirName.charAt(l) == "/")
-				{
 					dirName = dirName.substring(0,l);
+				if (service)
 					tryService(service, dirName, domainName);
-				}
 				_domainBindings[domainName] = dirName;
-				return dirName;
 			}
+			return _domainBindings[domainName];
 		}
 		
 		/**
@@ -84,17 +87,16 @@ package gnu.as3.gettext
 		 */
 		private function tryService(service:IGettextService, dirName:String, domainName:String):void
 		{
-			if (service)
+			if (_domainCatalogs[domainName] != undefined)
 			{
-				if (_domainCatalogs[domainName] != undefined)
-				{
-					service.dispatchEvent(new Event(Event.COMPLETE));
-				}
-				else
-				{
-					service.addEventListener(Event.COMPLETE, onComplete);
-					service.load(dirName+"/"+currentLocale+"/LC_MESSAGES/"+domainName+".mo", domainName);
-				}
+			    // catalog is already loaded; do not reload.
+				service.dispatchEvent(new Event(Event.COMPLETE));
+			}
+			else
+			{
+			    // load the catalog
+				service.addEventListener(Event.COMPLETE, onComplete, false, 0x7fffff);
+				service.load(dirName+"/"+this.currentLocale+"/LC_MESSAGES/"+domainName+".mo", domainName);
 			}
 		}
 		
@@ -106,6 +108,8 @@ package gnu.as3.gettext
 			var service:IGettextService = event.target as IGettextService;
 			service.removeEventListener(Event.COMPLETE, onComplete);
 			_domainCatalogs[service.domainName] = service.catalog;
+			if (this.currentDomainName != null)
+			    this.currentStrings = _domainCatalogs[this.currentDomainName].strings;
 		}
 		
 		/**
@@ -129,16 +133,16 @@ package gnu.as3.gettext
 		public function textdomain(domainName:String = null, service:IGettextService = null):String
 		{
 			this.currentLocale = __locale.setlocale(__locale.LC_MESSAGES,null);
-			if (domainName == null)
-			{
-				return this.currentDomainName;
-			}
-			else
+			if (domainName != null)
 			{
 				this.currentDomainName = domainName;
-				tryService(service, this.bindtextdomain(this.currentDomainName), this.currentDomainName);
+				if (_domainCatalogs[this.currentDomainName] != null)
+				    this.currentStrings = _domainCatalogs[this.currentDomainName].strings;
+				if (service)
+					tryService(service, this.bindtextdomain(this.currentDomainName), this.currentDomainName);
 				return currentDomainName;
 			}
+			return this.currentDomainName;
 		}
 		
 		/**
@@ -147,8 +151,10 @@ package gnu.as3.gettext
 		 */
 		public function gettext(string:String, domain:String = null, locale:String = null):String
 		{
-			throw new Error("not implemented");
-			return string;
+		    if (domain != null)
+		        return this._domainCatalogs[domain].strings[string];
+		    else
+		        return this.currentStrings[string];
 		}
 		
 	}

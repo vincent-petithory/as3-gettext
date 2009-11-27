@@ -40,25 +40,47 @@ package gnu.as3.gettext
 		 * The standard messages
 		 */
 		public const LC_MESSAGES:uint = 1 << pwd_inc++;
+		
+		/**
+		 * @private
+		 * Not used yet.
+		 */
 		public const LC_TIME:uint = 1 << pwd_inc++;
+		
+		/**
+		 * @private
+		 * Not used yet.
+		 */
 		public const LC_MONETARY:uint = 1 << pwd_inc++;
+		
+		/**
+		 * @private
+		 * Not used yet.
+		 */
 		public const LC_NUMERIC:uint = 1 << pwd_inc++;
+		
+		/**
+		 * @private
+		 * Not used yet.
+		 */
 		public const LC_COLLATE:uint = 1 << pwd_inc++;
 		
 		/**
+		 * @private
 		 * LC_CTYPE is essentially used to determine locales in some standard
 		 * C functions. There is no such things to localize in AS3, but it 
 		 * may be used in your own functions if you use gettext to 
 		 * localize your library.
+		 * Not used yet.
 		 */
 		public const LC_CTYPE:uint = 1 << pwd_inc++;
 		
 		/**
-		 * A shortcut to all the categories
+		 * A shortcut to all the categories.
 		 */
-		public const LC_ALL:uint = 			LC_MESSAGES | LC_TIME 	 | 
-											LC_MONETARY | LC_NUMERIC | 
-											LC_COLLATE 	| LC_CTYPE;
+	    public const LC_ALL:uint = 	LC_MESSAGES | LC_TIME 	 | 
+									LC_MONETARY | LC_NUMERIC | 
+									LC_COLLATE 	| LC_CTYPE;
 		
 		/**
 		 * @private

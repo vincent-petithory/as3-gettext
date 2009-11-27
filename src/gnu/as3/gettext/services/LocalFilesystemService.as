@@ -21,6 +21,10 @@
  */
 package gnu.as3.gettext.services 
 {
+    
+    import flash.events.Event;
+    import flash.events.EventDispatcher;
+    import flash.events.IOErrorEvent;
 
 	import gnu.as3.gettext.parseMOBytes;
 	import gnu.as3.gettext.MOFile;
@@ -30,12 +34,27 @@ package gnu.as3.gettext.services
 	import flash.filesystem.FileMode;
 	
 	import flash.utils.ByteArray;
+	import flash.utils.setTimeout;
 
     public class LocalFilesystemService extends EventDispatcher implements IGettextService 
     {
-        public function LocalFilesystemService()
+        public function LocalFilesystemService(baseURL:String = null)
         {
             super();
+            if (baseURL)
+                this.baseURL = baseURL;
+        }
+        
+        private var _baseURL:String;
+        
+        public function get baseURL():String
+        {
+            return _baseURL;
+        }
+        
+        public function set baseURL(value:String):void
+        {
+            this._baseURL = value;
         }
         
         private var _domainName:String;
@@ -52,28 +71,35 @@ package gnu.as3.gettext.services
 			return parseMOBytes(this.data);
 		}
         
-        public function load(url:String, domainName:String):void
+        public function load(path:String, domainName:String):void
         {
+            this._domainName = domainName;
             try 
             {
-		        var moFile:File = new File(File.applicationDirectory.nativePath+"/pidgin.mo");
+		        var moFile:File = new File(this._baseURL+File.separator+path);
 				if (!moFile.exists)
-				{
-					fail("no input mo file");
-				}
+					throw new TypeError("no input mo file");
+				
 				var stream:FileStream = new FileStream();
 				stream.open(moFile, FileMode.READ);
-				moBytes = new ByteArray();
+				var moBytes:ByteArray = new ByteArray();
 				stream.readBytes(moBytes);
 				stream.close();
 				moBytes.position = 0;
 				this.data = moBytes;
 			} catch (e:Error)
 			{
-				this.dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR,false,false,e.message));
+				// call this on a later frame to have a consistent 
+				// behavior with all the services
+				setTimeout(this.dispatchEvent, 10, 
+					new IOErrorEvent(
+						IOErrorEvent.IO_ERROR,false,false,e.message
+					)
+				);
 			}
-			this.dispatchEvent(new Event(Event.COMPLETE));
-			
+			// call this on a later frame to have a consistent 
+			// behavior with all the services
+			setTimeout(this.dispatchEvent, 10, new Event(Event.COMPLETE));
         }
         
     }

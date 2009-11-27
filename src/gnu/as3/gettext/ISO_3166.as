@@ -27,16 +27,19 @@ package gnu.as3.gettext
     public final class ISO_3166 
     {
         
+        private static var _codes:Object;
+        
         public static function get codes():Object
         {
+            if (_codes != null)
+                return _codes;
             var codeConstants:XMLList = describeType(ISO_3166).constant;
-            var codes:Object = {};
+            _codes = {};
             var codeConstant:XML;
             for each (codeConstant in codeConstants)
             {
                 var name:String = codeConstant.@name;
-                codes[name] = ISO_3166[name];
-                trace(name, ISO_3166[name]);
+                codes[ISO_3166[name]] = name;
             }
             return codes;
         }

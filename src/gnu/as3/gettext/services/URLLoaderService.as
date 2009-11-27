@@ -56,10 +56,25 @@ package gnu.as3.gettext.services
 			return parseMOBytes(this.data);
 		}
 	
-		public function URLLoaderService()
+		public function URLLoaderService(baseURL:String = null)
 		{
+		    super();
 			loader = new URLLoader();
+			if (baseURL)
+                this.baseURL = baseURL;
 		}
+        
+        private var _baseURL:String;
+        
+        public function get baseURL():String
+        {
+            return _baseURL;
+        }
+        
+        public function set baseURL(value:String):void
+        {
+            this._baseURL = value;
+        }
 		
 		public function load(url:String, domainName:String):void
 		{
@@ -74,7 +89,7 @@ package gnu.as3.gettext.services
 			
 			try 
 			{
-				loader.load(new URLRequest(url));
+				loader.load(new URLRequest(this._baseURL+"/"+url));
 			} catch (e:Error)
 			{
 				this.dispatchEvent(new IOErrorEvent(IOErrorEvent.IO_ERROR, false, false, e.message));

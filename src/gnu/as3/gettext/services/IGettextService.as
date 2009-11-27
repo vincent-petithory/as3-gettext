@@ -25,12 +25,19 @@ package gnu.as3.gettext.services
 	import flash.events.IEventDispatcher;
 	
 	import gnu.as3.gettext.MOFile;
-
+	
+	/**
+	 * A service to load a catalog. Dispatches a complete or an ioError events.
+	 */
 	public interface IGettextService extends IEventDispatcher 
 	{
-		function load(url:String, domainName:String):void;
+		function load(path:String, domainName:String):void;
 		function get domainName():String;
 		function get catalog():MOFile;
+		
+		function get baseURL():String;
+		function set baseURL(value:String):void;
+		
 	}
 
 }

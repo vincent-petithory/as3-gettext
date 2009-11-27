@@ -27,16 +27,19 @@ package gnu.as3.gettext
     public final class ISO_639_1 
     {
         
+        private static var _codes:Object;
+        
         public static function get codes():Object
         {
+            if (_codes != null)
+                return _codes;
             var codeConstants:XMLList = describeType(ISO_639_1).constant;
-            var codes:Object = {};
+            _codes = {};
             var codeConstant:XML;
             for each (codeConstant in codeConstants)
             {
                 var name:String = codeConstant.@name;
-                codes[name.toLowerCase()] = ISO_639_1[name];
-                trace(name.toLowerCase(), ISO_639_1[name]);
+                codes[ISO_639_1[name]] = name.toLowerCase();
             }
             return codes;
         }

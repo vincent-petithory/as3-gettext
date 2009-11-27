@@ -21,6 +21,9 @@
  */
 package 
 {	
+	   
+	import gnu.as3.gettext.ISO_639_1;
+	import gnu.as3.gettext.ISO_3166;
 	
     /**
 	 * Creates a locale using an ISO 639 code (language) 
@@ -35,7 +38,7 @@ package
 	 */
 	public function mklocale(iso639:String, iso3166:String):String
 	{
-		return iso639+"_"+iso3166;
+		return ISO_639_1.codes[iso639]+"_"+ISO_3166.codes[iso3166];
 	}
 }
 
