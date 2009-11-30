@@ -152,16 +152,37 @@ package gnu.as3.gettext
 			return this.currentDomainName;
 		}
 		
+		public function ignore(domain:String):void
+		{
+		    var empty:MOFile = new MOFile();
+		    empty.strings = new Dictionary();
+		    this._domainCatalogs[domain] = empty;
+		}
+		
 		/**
 		 * Returns the translation string for the specified string, using 
 		 * the current locale and the current domain.
 		 */
-		public function gettext(string:String, domain:String = null, locale:String = null):String
+		public function gettext(string:String):String
 		{
-		    if (domain != null)
-		        return this._domainCatalogs[domain].strings[string];
+		    var str:String = this.currentStrings[string];
+	        if (str)
+	            return str;
+	        else 
+	            return string;
+		}
+		
+		/**
+		 * Returns the translation string for the specified string, using 
+		 * the current locale and the current domain.
+		 */
+		public function dgettext(domain:String, string:String):String
+		{
+		    var str:String = this._domainCatalogs[domain].strings[string];
+		    if (str)
+		        return str;
 		    else
-		        return this.currentStrings[string];
+		        return string;
 		}
 		
 	}

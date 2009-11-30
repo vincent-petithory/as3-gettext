@@ -1,5 +1,5 @@
 /*
- * AllTests.as
+ * _.as
  * This file is part of Actionscript GNU Gettext
  *
  * Copyright (C) 2009 - Vincent Petithory
@@ -21,21 +21,14 @@
  */
 package gnu.as3.gettext 
 {
-	
-	import astre.api.*;
-	
-    public final class AllTests 
+    
+    /**
+     * @private
+     * internal alias of dgettext.
+     */
+    public function _(string:String):String
     {
-        
-        public static function suite():TestSuite
-        {
-            var list:TestSuite = new TestSuite();
-            list.add(parseMOBytesTest);
-            list.add(_LocaleTest);
-            list.add(_GettextTest);
-            return list;
-        }
-
+        return dgettext(PACKAGE, string);
     }
-	
+    
 }

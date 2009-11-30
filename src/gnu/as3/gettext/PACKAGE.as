@@ -1,5 +1,5 @@
 /*
- * AllTests.as
+ * PACKAGE.as
  * This file is part of Actionscript GNU Gettext
  *
  * Copyright (C) 2009 - Vincent Petithory
@@ -21,21 +21,5 @@
  */
 package gnu.as3.gettext 
 {
-	
-	import astre.api.*;
-	
-    public final class AllTests 
-    {
-        
-        public static function suite():TestSuite
-        {
-            var list:TestSuite = new TestSuite();
-            list.add(parseMOBytesTest);
-            list.add(_LocaleTest);
-            list.add(_GettextTest);
-            return list;
-        }
-
-    }
-	
+    public const PACKAGE:String = "libas3gnugettext";
 }

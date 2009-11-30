@@ -1,5 +1,5 @@
 /*
- * GettextTest.as
+ * _GettextTest.as
  * This file is part of Actionscript GNU Gettext
  *
  * Copyright (C) 2009 - Vincent Petithory
@@ -24,46 +24,46 @@ package gnu.as3.gettext
 	
 	import astre.api.*;
 	
-	public class GettextTest extends Test 
+	public class _GettextTest extends Test 
 	{
 		
-		public function GettextTest(name:String)
+		public function _GettextTest(name:String)
 		{
 			super(name);
 		}
 		
-		private var gettext:_Gettext;
+		private var asgettext:_Gettext;
 		
 		override public function setUp():void
 		{
-			gettext = new _Gettext(new _Locale());
+			asgettext = new _Gettext(new _Locale());
 		}
 		
 		public function bindtextdomainStoresDomains():void
 		{
 			var dir:String = "./another_dir/locale";
-			gettext.bindtextdomain("pidgin",dir);
-			assertEquals(dir,gettext.bindtextdomain("pidgin",null));
+			asgettext.bindtextdomain("pidgin",dir);
+			assertEquals(dir,asgettext.bindtextdomain("pidgin",null));
 		}
 		
 		public function bindtextdomainReturnsTheDirNameOfTheDomainWhenPassingNullOrNothing():void
 		{
 			var dir:String = "./another_dir/locale";
-			gettext.bindtextdomain("pidgin",dir);
-			assertEquals(dir,gettext.bindtextdomain("pidgin",null));
-			assertEquals(dir,gettext.bindtextdomain("pidgin"));
+			asgettext.bindtextdomain("pidgin",dir);
+			assertEquals(dir,asgettext.bindtextdomain("pidgin",null));
+			assertEquals(dir,asgettext.bindtextdomain("pidgin"));
 		}
 		
 		public function aDomainHasTheDefaultDomainWhenHavingNotSetAPreviousDirName():void
 		{
-			assertEquals(gettext.DEFAULT_DIR_NAME, gettext.bindtextdomain("pidgin",null));
+			assertEquals(asgettext.DEFAULT_DIR_NAME, asgettext.bindtextdomain("pidgin",null));
 		}
 		
 		public function bindtextdomainStripsTrailingSlashesInDirNames():void
 		{
-			gettext.bindtextdomain("pidgin","./locale2/");
-			assertEquals("./locale2",gettext.bindtextdomain("pidgin",null));
-			assertEquals("./locale2",gettext.bindtextdomain("pidgin"));
+			asgettext.bindtextdomain("pidgin","./locale2/");
+			assertEquals("./locale2",asgettext.bindtextdomain("pidgin",null));
+			assertEquals("./locale2",asgettext.bindtextdomain("pidgin"));
 		}
 		
 		public function textdomainThrowsAnErrorIfTheStringParameterIsEmpty():void
@@ -78,7 +78,7 @@ package gnu.as3.gettext
 		
 		override public function tearDown():void
 		{
-			gettext = null;
+			asgettext = null;
 		}
 		
 	}

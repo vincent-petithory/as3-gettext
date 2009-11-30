@@ -47,8 +47,8 @@ package
             var service:LocalFilesystemService = new LocalFilesystemService(File.applicationDirectory.nativePath);
             service.addEventListener(Event.COMPLETE, onComplete);
             service.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
-            Gettext.bindtextdomain("libas3gnugettext", null, service);
-            Gettext.textdomain("libas3gnugettext");
+            ASGettext.bindtextdomain(PACKAGE, null, service);
+            ASGettext.textdomain(PACKAGE);
         }
         
         private function onComplete(event:Event):void

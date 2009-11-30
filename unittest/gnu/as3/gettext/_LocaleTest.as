@@ -1,5 +1,5 @@
 /*
- * LocaleTest.as
+ * _LocaleTest.as
  * This file is part of Actionscript GNU Gettext
  *
  * Copyright (C) 2009 - Vincent Petithory
@@ -24,10 +24,10 @@ package gnu.as3.gettext
 	
 	import astre.api.*;
 	
-	public class LocaleTest extends Test 
+	public class _LocaleTest extends Test 
 	{
 		
-		public function LocaleTest(name:String)
+		public function _LocaleTest(name:String)
 		{
 			super(name);
 		}

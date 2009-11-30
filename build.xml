@@ -27,7 +27,7 @@
 	<!-- The project major version -->
 	<property name="project.version.major" value="0" />
 	<!-- The project minor version -->
-	<property name="project.version.minor" value="2" />
+	<property name="project.version.minor" value="3" />
 	
 	<!-- Compile time properties -->
 	<property name="debug" value="true" />

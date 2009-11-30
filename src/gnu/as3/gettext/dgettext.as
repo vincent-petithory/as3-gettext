@@ -1,5 +1,5 @@
 /*
- * _.as
+ * dgettext.as
  * This file is part of Actionscript GNU Gettext
  *
  * Copyright (C) 2009 - Vincent Petithory
@@ -19,15 +19,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, 
  * Boston, MA  02110-1301  USA
  */
-package 
+package gnu.as3.gettext 
 {
-
-    import gnu.as3.gettext.Gettext;
     
     /**
-	 * An alias of <code>Gettext.gettext()</code>.
-     * @see gnu.as3.gettext._Gettext#gettext()
+     * An alias of <code>ASGettext.dgettext()</code>.
+     * @see _Gettext#dgettext()
      */
-    public const _:Function = Gettext.gettext;
+    public const dgettext:Function = ASGettext.dgettext;
     
 }
