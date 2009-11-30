@@ -85,7 +85,11 @@ package gnu.as3.gettext
 		 * @private
 		 * Attempts to launch the service that will load the translations.
 		 */
-		private function tryService(service:IGettextService, dirName:String, domainName:String):void
+		private function tryService(
+								service:IGettextService, 
+								dirName:String, 
+								domainName:String
+							):void
 		{
 			if (_domainCatalogs[domainName] != undefined)
 			{
@@ -96,7 +100,10 @@ package gnu.as3.gettext
 			{
 			    // load the catalog
 				service.addEventListener(Event.COMPLETE, onComplete, false, 0x7fffff);
-				service.load(dirName+"/"+this.currentLocale+"/LC_MESSAGES/"+domainName+".mo", domainName);
+				service.load(dirName+"/"+
+							this.currentLocale+"/"+
+							this.__locale.LC_MESSAGES_FOLDER+"/"+
+							domainName+".mo", domainName);
 			}
 		}
 		

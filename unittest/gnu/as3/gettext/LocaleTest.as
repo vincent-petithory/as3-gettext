@@ -30,8 +30,6 @@ package gnu.as3.gettext
 		public function LocaleTest(name:String)
 		{
 			super(name);
-			ISO_639_1.codes;
-			ISO_3166.codes;
 		}
 		
 		private var locale:_Locale;
@@ -50,7 +48,7 @@ package gnu.as3.gettext
 		
 		public function languageConstOverridesLangConstAndLC_ALL():void
 		{
-			locale.LANGUAGE = mklocale("en","US");
+			locale.LANGUAGE = mklocale(ISO_639_1.EN,ISO_3166.US);
 			assertEquals("en_US", locale.setlocale(locale.LC_ALL));
 		}
 		

@@ -24,8 +24,12 @@ package
 	
     import astre.api.*;
 	import gnu.as3.gettext.*;
+	import gnu.as3.gettext.services.LocalFilesystemService;
 
     import flash.display.Sprite;
+    import flash.events.Event;
+    import flash.events.IOErrorEvent;
+    import flash.filesystem.File;
 
     public final class AllTests extends Sprite 
     {
@@ -39,7 +43,22 @@ package
 
         public function AllTests()
         {
+            //setlocale(Locale.LC_MESSAGES, mklocale(ISO_639_1.FR,ISO_3166.FR));
+            var service:LocalFilesystemService = new LocalFilesystemService(File.applicationDirectory.nativePath);
+            service.addEventListener(Event.COMPLETE, onComplete);
+            service.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
+            Gettext.bindtextdomain("libas3gnugettext", null, service);
+            Gettext.textdomain("libas3gnugettext");
+        }
+        
+        private function onComplete(event:Event):void
+        {
             CLITestRunner.run(suite());
+        }
+        
+        private function onIOError(event:IOErrorEvent):void
+        {
+            trace(event);
         }
         
     }

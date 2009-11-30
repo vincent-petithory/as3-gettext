@@ -82,13 +82,13 @@ package gnu.as3.gettext
 									LC_MONETARY | LC_NUMERIC | 
 									LC_COLLATE 	| LC_CTYPE;
 		
+		public const LC_MESSAGES_FOLDER:String = "LC_MESSAGES";
+		
 		/**
 		 * @private
 		 * The number of categories.
 		 */
 		private const NUM_LC_XXX:uint = pwd_inc;
-		
-		//private var _domainsMap:Dictionary = new Dictionary(false);
 		
 		/**
 		 * @private
