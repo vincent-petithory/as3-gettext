@@ -44,8 +44,9 @@
 	/>
 	
 	<!-- metadata -->
+	
 	<property name="project.metadata.title" value="'Actionscript GNU Gettext'" />
-	<property name="project.metadata.description" value="'The GNU Gettext utilities for use in Actionscript 3.0'" />
+	<property name="project.metadata.description" value="'An implementation of the GNU Gettext utilities in Actionscript 3.0'" />
 	<property name="project.metadata.publisher" value="'Vincent Petithory'" />
 	<property name="project.metadata.creator" value="'Vincent Petithory'" />
 	<property name="project.metadata.language" value="EN" />
