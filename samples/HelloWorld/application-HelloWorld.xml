@@ -3,15 +3,15 @@
 	
 	<id>project.noinstall.Samples</id> 
 	<version>1.0</version> 
-	<filename>${sample}</filename> 
+	<filename>HelloWorld</filename> 
 	
-	<name>${ant.project.name} Samples</name> 
-	<description>${ant.project.name} Samples</description> 
+	<name>Actionscript GNU Gettext Samples</name> 
+	<description>Actionscript GNU Gettext Samples</description> 
 	<copyright></copyright> 
 	
 	<initialWindow> 
-		<title>${ant.project.name} Sample "${sample}"</title> 
-		<content>${sample}.swf</content> 
+		<title>Actionscript GNU Gettext Sample "HelloWorld"</title> 
+		<content>HelloWorld.swf</content> 
 		<systemChrome>standard</systemChrome> 
 		<transparent>false</transparent> 
 		<visible>true</visible> 

@@ -26,7 +26,8 @@ package gnu.as3.gettext
 	import flash.system.Capabilities;
 	
 	/**
-	 * 
+	 * A _Locale manages the locale in an application. Usually, you use the 
+	 * unique Locale object, instead of creating your own.
 	 */
 	public final class _Locale 
     {
@@ -37,7 +38,7 @@ package gnu.as3.gettext
 		private var pwd_inc:uint = 0;
 		
 		/**
-		 * The standard messages
+		 * The standard messages.
 		 */
 		public const LC_MESSAGES:uint = 1 << pwd_inc++;
 		
@@ -82,13 +83,18 @@ package gnu.as3.gettext
 									LC_MONETARY | LC_NUMERIC | 
 									LC_COLLATE 	| LC_CTYPE;
 		
-		public const LC_MESSAGES_FOLDER:String = "LC_MESSAGES";
+		
+		/**
+		 * The directory where messages are stored. This directory exists in 
+		 * each {locale_dir}/xx_XX locale directory.
+		 */
+		public const LC_MESSAGES_DIR:String = "LC_MESSAGES";
 		
 		/**
 		 * @private
 		 * The number of categories.
 		 */
-		private const NUM_LC_XXX:uint = pwd_inc;
+		private const NUM_LC:uint = pwd_inc;
 		
 		/**
 		 * @private
@@ -97,7 +103,7 @@ package gnu.as3.gettext
 		private var _locales:Dictionary = new Dictionary(false);
 		
 		/**
-		 * The user default language.
+		 * The user default language. Use the mklocale() function to set it.
 		 */
 		public var LANGUAGE:String = "";
 		
@@ -134,7 +140,7 @@ package gnu.as3.gettext
 		 * 
 		 * <p>As Flash Player only determines a language code, not a full locale, 
 		 * a locale is made out of that language code. When Flash Player 
-		 * encounters an unknown locale, then en_US is used instead.
+		 * encounters an unknown locale, then en_US is used by default.
 		 * The following table 
 		 * shows the mapping between flash player language codes and locales 
 		 * (an ISO 639-1 code, followed by a _ character, followed by an 
@@ -202,7 +208,7 @@ package gnu.as3.gettext
 				}
 				var numCats:uint = 0;
 				var cat:uint = 0;
-				for (pw = 0; pw < NUM_LC_XXX; pw++)
+				for (pw = 0; pw < NUM_LC; pw++)
 				{
 					lc = 1 << pw;
 					if (category == lc)
@@ -220,7 +226,7 @@ package gnu.as3.gettext
 			{
 				locale = setlocale(category, null);
 			}
-			for (pw = 0; pw < NUM_LC_XXX; pw++)
+			for (pw = 0; pw < NUM_LC; pw++)
 			{
 				lc = 1 << pw;
 				if ((category & lc) == lc)

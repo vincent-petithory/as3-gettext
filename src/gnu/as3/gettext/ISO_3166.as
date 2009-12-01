@@ -23,12 +23,26 @@ package gnu.as3.gettext
 {
 
     import flash.utils.describeType;
-
+    
+    /**
+     * The ISO_3166 class enumerates the country codes as defined by 
+     * the ISO 3166 standard.
+     */
     public final class ISO_3166 
     {
         
+        /**
+         * @private
+         */
         private static var _codes:Object;
         
+        /**
+         * A hashtable that associates the constants to their country code.
+         * <p>For example, ISO_3166.FR returns the name of the country 
+         * (France).<br/>
+         * ISO_3166.codes[ISO_3166.FR] returns the country code (FR).</p>
+         * 
+         */
         public static function get codes():Object
         {
             if (_codes != null)

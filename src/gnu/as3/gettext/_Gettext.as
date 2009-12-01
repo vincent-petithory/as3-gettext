@@ -29,19 +29,50 @@ package gnu.as3.gettext
 	
     public final class _Gettext 
     {
-	
+		
+		/**
+		 * The current locale.
+		 */
 		private var currentLocale:String;
+		
+		/**
+		 * The current domain.
+		 */
 		private var currentDomainName:String;
 	
+		/*
+		 * @private
+		 */
 		private var __locale:_Locale;
 
+		/**
+		 * @private
+		 * The locations associated to the domains.
+		 */
 		private var _domainBindings:Dictionary;
+		
+		/**
+		 * @private
+		 * The catalogs associated to the domains.
+		 */
 		private var _domainCatalogs:Dictionary;
 		
+		/**
+		 * @private
+		 * A shortcut to the active domain translation strings.
+		 */
 		private var currentStrings:Dictionary;
 		
+		/**
+		 * The default directory where locales are stored.
+		 */
 		public const DEFAULT_DIR_NAME:String = "locale";
 		
+		/**
+		 * Constructor.
+		 * 
+		 * @param locale The _Locale to use with this _Gettext.
+		 */
 		public function _Gettext(locale:_Locale)
 		{
 			this.__locale = locale;
@@ -50,7 +81,8 @@ package gnu.as3.gettext
 		}
 		
 		/**
-		 * 
+		 * Binds a domain to a directory, optionally loading the translations 
+		 * using the current locale, if the service parameter is not null.
 		 */
 		public function bindtextdomain(
 								domainName:String, 
@@ -79,44 +111,6 @@ package gnu.as3.gettext
 				_domainBindings[domainName] = dirName;
 			}
 			return _domainBindings[domainName];
-		}
-		
-		/**
-		 * @private
-		 * Attempts to launch the service that will load the translations.
-		 */
-		private function tryService(
-								service:IGettextService, 
-								dirName:String, 
-								domainName:String
-							):void
-		{
-			if (_domainCatalogs[domainName] != undefined)
-			{
-			    // catalog is already loaded; do not reload.
-				service.dispatchEvent(new Event(Event.COMPLETE));
-			}
-			else
-			{
-			    // load the catalog
-				service.addEventListener(Event.COMPLETE, onComplete, false, 0x7fffff);
-				service.load(dirName+"/"+
-							this.currentLocale+"/"+
-							this.__locale.LC_MESSAGES_FOLDER+"/"+
-							domainName+".mo", domainName);
-			}
-		}
-		
-		/**
-		 * @private
-		 */
-		private function onComplete(event:Event):void
-		{
-			var service:IGettextService = event.target as IGettextService;
-			service.removeEventListener(Event.COMPLETE, onComplete);
-			_domainCatalogs[service.domainName] = service.catalog;
-			if (this.currentDomainName != null)
-			    this.currentStrings = _domainCatalogs[this.currentDomainName].strings;
 		}
 		
 		/**
@@ -152,6 +146,10 @@ package gnu.as3.gettext
 			return this.currentDomainName;
 		}
 		
+		/**
+		 * Tells the gettext engine to ignore 
+		 * the translations of the specified domain. 
+		 */
 		public function ignore(domain:String):void
 		{
 		    var empty:MOFile = new MOFile();
@@ -166,7 +164,7 @@ package gnu.as3.gettext
 		public function gettext(string:String):String
 		{
 		    var str:String = this.currentStrings[string];
-	        if (str)
+	        if (str && str != "")
 	            return str;
 	        else 
 	            return string;
@@ -179,11 +177,63 @@ package gnu.as3.gettext
 		public function dgettext(domain:String, string:String):String
 		{
 		    var str:String = this._domainCatalogs[domain].strings[string];
-		    if (str)
+		    if (str && str != "")
 		        return str;
 		    else
 		        return string;
 		}
+		
+		/**
+		 * Returns the string as it is. No operation is performed. This method 
+		 * is used in some special cases to detect strings to be translated; 
+		 * typically, this is used in initialization constants.
+		 * 
+		 * @param string The string to be translated.
+		 * @return The same, non-translated, string.
+		 */
+		public function gettext_noop(string:String):String
+		{
+			return string;
+		}
+		
+		/**
+		 * @private
+		 * Attempts to launch the service that will load the translations.
+		 */
+		private function tryService(
+								service:IGettextService, 
+								dirName:String, 
+								domainName:String
+							):void
+		{
+			if (_domainCatalogs[domainName] != undefined)
+			{
+			    // catalog is already loaded; do not reload.
+				service.dispatchEvent(new Event(Event.COMPLETE));
+			}
+			else
+			{
+			    // load the catalog
+				service.addEventListener(Event.COMPLETE, onComplete, false, 0x7fffff);
+				service.load(dirName+"/"+
+							this.currentLocale+"/"+
+							this.__locale.LC_MESSAGES_DIR+"/"+
+							domainName+".mo", domainName);
+			}
+		}
+		
+		/**
+		 * @private
+		 */
+		private function onComplete(event:Event):void
+		{
+			var service:IGettextService = event.target as IGettextService;
+			service.removeEventListener(Event.COMPLETE, onComplete);
+			_domainCatalogs[service.domainName] = service.catalog;
+			if (this.currentDomainName != null)
+			    this.currentStrings = _domainCatalogs[this.currentDomainName].strings;
+		}
+		
 		
 	}
 	

@@ -80,7 +80,7 @@ package gnu.as3.gettext.services
             {
 		        var moFile:File = new File(this._baseURL+File.separator+path);
 				if (!moFile.exists)
-					throw new TypeError("no input mo file");
+					throw new TypeError(_("No input mo file"));
 				
 				var stream:FileStream = new FileStream();
 				stream.open(moFile, FileMode.READ);
@@ -92,7 +92,7 @@ package gnu.as3.gettext.services
 			} catch (e:Error)
 			{
 				// call this on a later frame to have a consistent 
-				// behavior with all the services
+				// behavior with all other (asynchronous) services
 				setTimeout(this.dispatchEvent, 10, 
 					new IOErrorEvent(
 						IOErrorEvent.IO_ERROR,false,false,e.message
@@ -100,7 +100,7 @@ package gnu.as3.gettext.services
 				);
 			}
 			// call this on a later frame to have a consistent 
-			// behavior with all the services
+			// behavior with all other (asynchronous) services
 			setTimeout(this.dispatchEvent, 10, new Event(Event.COMPLETE));
         }
         

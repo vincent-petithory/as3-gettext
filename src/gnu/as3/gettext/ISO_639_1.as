@@ -24,11 +24,25 @@ package gnu.as3.gettext
     
     import flash.utils.describeType;
     
+    /**
+     * The ISO_639_1 class enumerates the country codes as defined by 
+     * the ISO 639-1 standard.
+     */
     public final class ISO_639_1 
     {
         
+        /**
+         * @private
+         */
         private static var _codes:Object;
         
+        /**
+         * A hashtable that associates the constants to their language code.
+         * <p>For example, ISO_639_1.FR returns the name of the language
+         * (French).<br/>
+         * ISO_639_1.codes[ISO_639_1.FR] returns the language code (fr).</p>
+         * 
+         */
         public static function get codes():Object
         {
             if (_codes != null)

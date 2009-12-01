@@ -26,7 +26,7 @@ package gnu.as3.gettext
      * @private
      * internal alias of dgettext.
      */
-    public function _(string:String):String
+    internal function _(string:String):String
     {
         return dgettext(PACKAGE, string);
     }

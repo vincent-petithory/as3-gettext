@@ -1,5 +1,5 @@
 /*
- * PACKAGE.as
+ * _.as
  * This file is part of Actionscript GNU Gettext
  *
  * Copyright (C) 2009 - Vincent Petithory
@@ -19,10 +19,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, 
  * Boston, MA  02110-1301  USA
  */
-package gnu.as3.gettext 
+package gnu.as3.gettext.services 
 {
+    
+    import gnu.as3.gettext.dgettext;
+    import gnu.as3.gettext.PACKAGE;
+    
     /**
-     * The name of this library package.
+     * @private
+     * internal alias of dgettext.
      */
-    public const PACKAGE:String = "libas3gnugettext";
+    internal function _(string:String):String
+    {
+        return dgettext(PACKAGE, string);
+    }
+    
 }

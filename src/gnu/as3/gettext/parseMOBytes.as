@@ -29,10 +29,10 @@ package gnu.as3.gettext
 	import flash.errors.EOFError;	
 	
 	/**
-     * Parses the bytes representing an MO file
+     * Parses the bytes representing a MO file.
      * 
-     * @param bytes the bytes of the MO file
-     * @return a MOFile instance containing the informations of the original
+     * @param bytes The bytes of the MO file
+     * @return A MOFile instance containing the informations of the original
      * .mo file.
      * 
      * @throws GettextError if the bytes does not represent a valid MO file.

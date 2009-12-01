@@ -1,5 +1,5 @@
 /*
- * PACKAGE.as
+ * gettext_noop.as
  * This file is part of Actionscript GNU Gettext
  *
  * Copyright (C) 2009 - Vincent Petithory
@@ -21,8 +21,11 @@
  */
 package gnu.as3.gettext 
 {
+    
     /**
-     * The name of this library package.
+     * An alias of <code>ASGettext.gettext_noop()</code>.
+     * @see _Gettext#gettext_noop()
      */
-    public const PACKAGE:String = "libas3gnugettext";
+    public const gettext_noop:Function = ASGettext.gettext_noop;
+    
 }
