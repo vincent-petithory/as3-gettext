@@ -1,10 +1,10 @@
 docs
 lib
 man
-**/*.cache
-**/*.swc
-**/*.swf
+*.cache
+*.swc
+*.swf
 samples/*.xml
 unittest/*.xml
-!**/*-tmp.xml
+!*-tmp.xml
 

@@ -29,7 +29,7 @@ package
     
     import flash.filesystem.File;
     
-    import gnu.as3.gettext.Gettext;
+    import gnu.as3.gettext.ASGettext;
     import gnu.as3.gettext.Locale;
     import gnu.as3.gettext.ISO_639_1;
     import gnu.as3.gettext.ISO_3166;
@@ -58,7 +58,7 @@ package
             
             // Binds the messages of the helloword domain to the 
             // default directory (locale)
-            Gettext.bindtextdomain("helloworld", null, service);
+            ASGettext.bindtextdomain("helloworld", null, service);
             // if we use libraries that use gettext to localize their messages,
             // we should call bindtextdomain again for each library.
             // example for the as3-mox lib : 
@@ -67,8 +67,10 @@ package
             // We select helloworld to be the default domain. 
             // Localized libraries should not call this. Instead, they use 
             // the gettext() method with the domain optional parameters.
-            Gettext.textdomain("helloworld");
+            ASGettext.textdomain("helloworld");
         }
+        
+        public static const _:Function = gnu.as3.gettext.gettext;
         
         private function onComplete(event:Event):void
         {

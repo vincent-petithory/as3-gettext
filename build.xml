@@ -73,7 +73,7 @@
 			<tarfileset 
 				dir="." 
 				prefix="${project.name}-${project.version}" 
-				excludes=".gitignore,.git/**,*.tar.gz"
+				excludes=".gitignore,.git/**,*.tar.gz,docs/**"
 			/>
 		</tar>
 		<gzip destfile="${basedir}/${project.name}-${project.version}.tar.gz" src="${basedir}/${project.name}-${project.version}.tar"/>

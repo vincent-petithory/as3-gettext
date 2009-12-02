@@ -71,7 +71,7 @@ package gnu.as3.gettext
 		
 		// Loop through string and translations location informations 
 		// and retrieve string and translations infos
-		const LOOP_INCREMENT:int = 4+4;
+		const LOOP_INCREMENT:int = 8;//4+4
 		const NUM_LOOPS:int = n;//(n-1+1)
 		var dictionary:Dictionary = new Dictionary(false);
 		var i:int = -1;
