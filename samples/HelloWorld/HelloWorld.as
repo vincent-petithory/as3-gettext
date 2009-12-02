@@ -1,5 +1,5 @@
 /*
- * HelloAsGettext.as
+ * HelloWorld.as
  * This file is part of Actionscript GNU Gettext
  *
  * Copyright (C) 2009 - Vincent Petithory
