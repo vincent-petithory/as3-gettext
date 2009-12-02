@@ -78,7 +78,7 @@ package gnu.as3.gettext.services
             this._baseURL = value;
         }
 		
-		public function load(url:String, domainName:String):void
+		public function load(path:String, domainName:String):void
 		{
 			this._domainName = domainName;
 			// set the format. We expect a ByteArray
@@ -93,7 +93,7 @@ package gnu.as3.gettext.services
 			
 			try 
 			{
-				loader.load(new URLRequest(this._baseURL+"/"+url));
+				loader.load(new URLRequest(this._baseURL+"/"+path));
 			} catch (e:Error)
 			{
 				this.dispatchEvent(
