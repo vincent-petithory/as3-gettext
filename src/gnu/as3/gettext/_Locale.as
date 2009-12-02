@@ -163,10 +163,10 @@ package gnu.as3.gettext
 		 *     <tr><td>pl</td><td>pl_PL</td></tr>
 		 *     <tr><td>pt</td><td>pt_PT</td></tr>
 		 *     <tr><td>ru</td><td>ru_RU</td></tr>
-		 *     <tr><td>zh-CN</td>zh_CN<td></td></tr>
+		 *     <tr><td>zh-CN</td><td>zh_CN</td></tr>
 		 *     <tr><td>es</td><td>es_ES</td></tr>
 		 *     <tr><td>sv</td><td>sv_SE</td></tr>
-		 *     <tr><td>zh-TW</td>zh_TW<td></td></tr>
+		 *     <tr><td>zh-TW</td><td>zh_TW</td></tr>
 		 *     <tr><td>tr</td><td>tr_TR</td></tr>
 		 * </table>
 		 * 
@@ -202,9 +202,9 @@ package gnu.as3.gettext
 			var lc:uint;
 			if (locale == null)
 			{
-				if (LANGUAGE != null && LANGUAGE != "")
+				if (this.LANGUAGE != null && this.LANGUAGE != "")
 				{
-					return LANGUAGE;
+					return this.LANGUAGE;
 				}
 				var numCats:uint = 0;
 				var cat:uint = 0;
