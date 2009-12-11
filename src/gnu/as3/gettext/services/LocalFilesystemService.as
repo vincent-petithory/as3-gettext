@@ -75,8 +75,6 @@ package gnu.as3.gettext.services
 			this.data = null;
 		}
 		
-		private var data:ByteArray;
-        
         public function load(path:String, domainName:String):void
         {
             this._domainName = domainName;
