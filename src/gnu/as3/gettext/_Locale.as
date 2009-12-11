@@ -21,222 +21,232 @@
  */
 package gnu.as3.gettext 
 {
-	
-	import flash.utils.Dictionary;
-	import flash.system.Capabilities;
-	
-	/**
-	 * A _Locale manages the locale in an application. Usually, you use the 
-	 * unique Locale object, instead of creating your own.
-	 */
-	public final class _Locale 
+
+    import flash.events.Event;
+    import flash.events.EventDispatcher;
+    
+    import flash.utils.Dictionary;
+    import flash.system.Capabilities;
+    
+    /**
+     * A _Locale manages the locale in an application. Usually, you use the 
+     * unique Locale object, instead of creating your own.
+     */
+    public final class _Locale extends EventDispatcher 
     {
-		
-		/**
-		 * @private
-		 */
-		private var pwd_inc:uint = 0;
-		
-		/**
-		 * The standard messages.
-		 */
-		public const LC_MESSAGES:uint = 1 << pwd_inc++;
-		
-		/**
-		 * @private
-		 * Not used yet.
-		 */
-		public const LC_TIME:uint = 1 << pwd_inc++;
-		
-		/**
-		 * @private
-		 * Not used yet.
-		 */
-		public const LC_MONETARY:uint = 1 << pwd_inc++;
-		
-		/**
-		 * @private
-		 * Not used yet.
-		 */
-		public const LC_NUMERIC:uint = 1 << pwd_inc++;
-		
-		/**
-		 * @private
-		 * Not used yet.
-		 */
-		public const LC_COLLATE:uint = 1 << pwd_inc++;
-		
-		/**
-		 * @private
-		 * LC_CTYPE is essentially used to determine locales in some standard
-		 * C functions. There is no such things to localize in AS3, but it 
-		 * may be used in your own functions if you use gettext to 
-		 * localize your library.
-		 * Not used yet.
-		 */
-		public const LC_CTYPE:uint = 1 << pwd_inc++;
-		
-		/**
-		 * A shortcut to all the categories.
-		 */
-	    public const LC_ALL:uint = 	LC_MESSAGES | LC_TIME 	 | 
-									LC_MONETARY | LC_NUMERIC | 
-									LC_COLLATE 	| LC_CTYPE;
-		
-		
-		/**
-		 * The directory where messages are stored. This directory exists in 
-		 * each {locale_dir}/xx_XX locale directory.
-		 */
-		public const LC_MESSAGES_DIR:String = "LC_MESSAGES";
-		
-		/**
-		 * @private
-		 * The number of categories.
-		 */
-		private const NUM_LC:uint = pwd_inc;
-		
-		/**
-		 * @private
-		 * The hash table of the locales associated to the categories.
-		 */
-		private var _locales:Dictionary = new Dictionary(false);
-		
-		/**
-		 * The user default language. Use the mklocale() function to set it.
-		 */
-		public var LANGUAGE:String = "";
-		
-		/**
-		 * @private
-		 */
-		private const __FP_ISO639_TO_LOCALE__:Object = { 
-			'cs'    : 'cs_CZ',
-			'da'    : 'da_DK',
-			'nl'    : 'nl_NL',
-			'en'    : 'en_US',
-			'fi'    : 'fi_FI',
-			'fr'    : 'fr_FR',
-			'de'    : 'de_DE',
-			'hu'    : 'hu_HU',
-			'it'    : 'it_IT',
-			'ja'    : 'ja_JP',
-			'ko'    : 'ko_KR',
-			'no'    : 'no_NO',
-			'xu'    : 'en_US',
-			'pl'    : 'pl_PL',
-			'pt'    : 'pt_PT',
-			'ru'    : 'ru_RU',
-			'zh-CN' : 'zh_CN',
-			'es'    : 'es_ES',
-			'sv'    : 'sv_SE',
-			'zh-TW' : 'zh_TW',
-			'tr'    : 'tr_TR' 
-		};
-		
-		/**
-		 * The native locale of the system, which defaults to the language 
-		 * Flash Player determines (see the table below).
-		 * 
-		 * <p>As Flash Player only determines a language code, not a full locale, 
-		 * a locale is made out of that language code. When Flash Player 
-		 * encounters an unknown locale, then en_US is used by default.
-		 * The following table 
-		 * shows the mapping between flash player language codes and locales 
-		 * (an ISO 639-1 code, followed by a _ character, followed by an 
-		 * ISO 3166 code) :</p>
-		 * <table class="innertable">
-		 *     <tr><th>Flash Player language code</th><th>Locale</th></tr>
-		 *     <tr><td>cs</td><td>cs_CZ</td></tr>
-		 *     <tr><td>da</td><td>da_DK</td></tr>
-		 *     <tr><td>nl</td><td>nl_NL</td></tr>
-		 *     <tr><td>en</td><td>en_US</td></tr>
-		 *     <tr><td>fi</td><td>fi_FI</td></tr>
-		 *     <tr><td>fr</td><td>fr_FR</td></tr>
-		 *     <tr><td>de</td><td>de_DE</td></tr>
-		 *     <tr><td>hu</td><td>hu_HU</td></tr>
-		 *     <tr><td>it</td><td>it_IT</td></tr>
-		 *     <tr><td>ja</td><td>ja_JP</td></tr>
-		 *     <tr><td>ko</td><td>ko_KR</td></tr>
-		 *     <tr><td>no</td><td>no_NO</td></tr>
-		 *     <tr><td>xu</td><td>en_US</td></tr>
-		 *     <tr><td>pl</td><td>pl_PL</td></tr>
-		 *     <tr><td>pt</td><td>pt_PT</td></tr>
-		 *     <tr><td>ru</td><td>ru_RU</td></tr>
-		 *     <tr><td>zh-CN</td><td>zh_CN</td></tr>
-		 *     <tr><td>es</td><td>es_ES</td></tr>
-		 *     <tr><td>sv</td><td>sv_SE</td></tr>
-		 *     <tr><td>zh-TW</td><td>zh_TW</td></tr>
-		 *     <tr><td>tr</td><td>tr_TR</td></tr>
-		 * </table>
-		 * 
-		 */
-		public const LANG:String = __FP_ISO639_TO_LOCALE__[Capabilities.language];
-		
-		/**
-		 * The setlocale() method encapsulates all the logic to set and 
-		 * retrieve the current locale. 
-		 * 
-		 * <p>The default locale for a given category is determined in the 
-		 * following order :
-		 * <ul>
-		 * <li>the value assigned to the category, if any.</li>
-		 * <li>the value of the global LANGUAGE variable, if set.</li>
-		 * <li>the value of the LANG const, which defaults to the language 
-		 * Flash Player determines (see the LANG constant for more 
-		 * informations).</li>
-		 * </ul>
-		 * </p>
-		 * 
-		 * @param category the category to set/retrieve information.
-		 * @param locale the locale to set. If not null, the specified locale 
-		 * will be set for the specified category. If null, the method will 
-		 * return the current locale for the specified category. 
-		 * Use the mklocale() function to create a standard locale.
-		 * 
-		 * @see mklocale()
-		 */
-		public function setlocale(category:uint, locale:String = null):String
-		{
-			var pw:int = 0;
-			var lc:uint;
-			if (locale == null)
-			{
-				if (this.LANGUAGE != null && this.LANGUAGE != "")
-				{
-					return this.LANGUAGE;
-				}
-				var numCats:uint = 0;
-				var cat:uint = 0;
-				for (pw = 0; pw < NUM_LC; pw++)
-				{
-					lc = 1 << pw;
-					if (category == lc)
-					{
-						cat = lc;
-						numCats++;
-					}
-				}
-				if (numCats == 1 && _locales[cat] != undefined)
-					return _locales[cat];
-				else
-					return LANG;
-			}
-			if (locale == "")
-			{
-				locale = setlocale(category, null);
-			}
-			for (pw = 0; pw < NUM_LC; pw++)
-			{
-				lc = 1 << pw;
-				if ((category & lc) == lc)
-				{
-					_locales[lc] = locale;
-				}
-			}
-			return locale;
-		}
-		
-	}
-	
+        
+        /**
+         * @private
+         */
+        private var pwd_inc:uint = 0;
+        
+        /**
+         * The standard messages.
+         */
+        public const LC_MESSAGES:uint = 1 << pwd_inc++;
+        
+        /**
+         * @private
+         * Not used yet.
+         */
+        public const LC_TIME:uint = 1 << pwd_inc++;
+        
+        /**
+         * @private
+         * Not used yet.
+         */
+        public const LC_MONETARY:uint = 1 << pwd_inc++;
+        
+        /**
+         * @private
+         * Not used yet.
+         */
+        public const LC_NUMERIC:uint = 1 << pwd_inc++;
+        
+        /**
+         * @private
+         * Not used yet.
+         */
+        public const LC_COLLATE:uint = 1 << pwd_inc++;
+        
+        /**
+         * @private
+         * LC_CTYPE is essentially used to determine locales in some standard
+         * C functions. There is no such things to localize in AS3, but it 
+         * may be used in your own functions if you use gettext to 
+         * localize your library.
+         * Not used yet.
+         */
+        public const LC_CTYPE:uint = 1 << pwd_inc++;
+        
+        /**
+         * A shortcut to all the categories.
+         */
+        public const LC_ALL:uint =     LC_MESSAGES | LC_TIME      | 
+                                    LC_MONETARY | LC_NUMERIC | 
+                                    LC_COLLATE     | LC_CTYPE;
+        
+        
+        /**
+         * The directory where messages are stored. This directory exists in 
+         * each {locale_dir}/xx_XX locale directory.
+         */
+        public const LC_MESSAGES_DIR:String = "LC_MESSAGES";
+        
+        /**
+         * @private
+         * The number of categories.
+         */
+        private const NUM_LC:uint = pwd_inc;
+        
+        /**
+         * @private
+         * The hash table of the locales associated to the categories.
+         */
+        private var _locales:Dictionary = new Dictionary(false);
+        
+        /**
+         * The user default language. Use the mklocale() function to set it.
+         */
+        public var LANGUAGE:String = "";
+        
+        /**
+         * @private
+         */
+        private const __FP_ISO639_TO_LOCALE__:Object = { 
+            'cs'    : 'cs_CZ',
+            'da'    : 'da_DK',
+            'nl'    : 'nl_NL',
+            'en'    : 'en_US',
+            'fi'    : 'fi_FI',
+            'fr'    : 'fr_FR',
+            'de'    : 'de_DE',
+            'hu'    : 'hu_HU',
+            'it'    : 'it_IT',
+            'ja'    : 'ja_JP',
+            'ko'    : 'ko_KR',
+            'no'    : 'no_NO',
+            'xu'    : 'en_US',
+            'pl'    : 'pl_PL',
+            'pt'    : 'pt_PT',
+            'ru'    : 'ru_RU',
+            'zh-CN' : 'zh_CN',
+            'es'    : 'es_ES',
+            'sv'    : 'sv_SE',
+            'zh-TW' : 'zh_TW',
+            'tr'    : 'tr_TR' 
+        };
+        
+        /**
+         * The native locale of the system, which defaults to the language 
+         * Flash Player determines (see the table below).
+         * 
+         * <p>As Flash Player only determines a language code, not a full locale, 
+         * a locale is made out of that language code. When Flash Player 
+         * encounters an unknown locale, then en_US is used by default.
+         * The following table 
+         * shows the mapping between flash player language codes and locales 
+         * (an ISO 639-1 code, followed by a _ character, followed by an 
+         * ISO 3166 code) :</p>
+         * <table class="innertable">
+         *     <tr><th>Flash Player language code</th><th>Locale</th></tr>
+         *     <tr><td>cs</td><td>cs_CZ</td></tr>
+         *     <tr><td>da</td><td>da_DK</td></tr>
+         *     <tr><td>nl</td><td>nl_NL</td></tr>
+         *     <tr><td>en</td><td>en_US</td></tr>
+         *     <tr><td>fi</td><td>fi_FI</td></tr>
+         *     <tr><td>fr</td><td>fr_FR</td></tr>
+         *     <tr><td>de</td><td>de_DE</td></tr>
+         *     <tr><td>hu</td><td>hu_HU</td></tr>
+         *     <tr><td>it</td><td>it_IT</td></tr>
+         *     <tr><td>ja</td><td>ja_JP</td></tr>
+         *     <tr><td>ko</td><td>ko_KR</td></tr>
+         *     <tr><td>no</td><td>no_NO</td></tr>
+         *     <tr><td>xu</td><td>en_US</td></tr>
+         *     <tr><td>pl</td><td>pl_PL</td></tr>
+         *     <tr><td>pt</td><td>pt_PT</td></tr>
+         *     <tr><td>ru</td><td>ru_RU</td></tr>
+         *     <tr><td>zh-CN</td><td>zh_CN</td></tr>
+         *     <tr><td>es</td><td>es_ES</td></tr>
+         *     <tr><td>sv</td><td>sv_SE</td></tr>
+         *     <tr><td>zh-TW</td><td>zh_TW</td></tr>
+         *     <tr><td>tr</td><td>tr_TR</td></tr>
+         * </table>
+         * 
+         */
+        public const LANG:String = __FP_ISO639_TO_LOCALE__[Capabilities.language];
+        
+        /**
+         * The setlocale() method encapsulates all the logic to set and 
+         * retrieve the current locale. 
+         * 
+         * <p>The default locale for a given category is determined in the 
+         * following order :
+         * <ul>
+         * <li>the value assigned to the category, if any.</li>
+         * <li>the value of the global LANGUAGE variable, if set.</li>
+         * <li>the value of the LANG const, which defaults to the language 
+         * Flash Player determines (see the LANG constant for more 
+         * informations).</li>
+         * </ul>
+         * </p>
+         * 
+         * @param category the category to set/retrieve information.
+         * @param locale the locale to set. If not null, the specified locale 
+         * will be set for the specified category. If null, the method will 
+         * return the current locale for the specified category. 
+         * Use the mklocale() function to create a standard locale.
+         * 
+         * @see mklocale()
+         */
+        public function setlocale(category:uint, locale:String = null):String
+        {
+            var pw:int = 0;
+            var lc:uint;
+            if (locale == null)
+            {
+                if (this.LANGUAGE != null && this.LANGUAGE != "")
+                {
+                    return this.LANGUAGE;
+                }
+                var numCats:uint = 0;
+                var cat:uint = 0;
+                for (pw = 0; pw < NUM_LC; pw++)
+                {
+                    lc = 1 << pw;
+                    if (category == lc)
+                    {
+                        cat = lc;
+                        numCats++;
+                    }
+                }
+                if (numCats == 1 && _locales[cat] != undefined)
+                    return _locales[cat];
+                else
+                    return LANG;
+            }
+            if (locale == "")
+            {
+                locale = setlocale(category, null);
+            }
+            for (pw = 0; pw < NUM_LC; pw++)
+            {
+                lc = 1 << pw;
+                var isLocaleChanged:Boolean = false;
+                if ((category & lc) == lc)
+                {
+                    var oldLocale:String = _locales[lc];
+                    _locales[lc] = locale;
+                    if (oldLocale != locale)
+                        isLocaleChanged = true;
+                }
+                // dispatch locale change event here
+                if (isLocaleChanged)
+                    this.dispatchEvent(new Event("localeChange"));
+            }
+            return locale;
+        }
+        
+    }
+    
 }

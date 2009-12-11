@@ -27,7 +27,7 @@ package gnu.as3.gettext
 	
 	import gnu.as3.gettext.services.IGettextService;
 	
-    public final class _Gettext 
+    public class _Gettext 
     {
 		
 		/**
@@ -63,10 +63,20 @@ package gnu.as3.gettext
 		 */
 		private var currentStrings:Dictionary;
 		
+		/** 
+		 * @private
+		 */
+		private var isLocaleListened:Boolean = false;
+		
 		/**
 		 * The default directory where locales are stored.
 		 */
 		public const DEFAULT_DIR_NAME:String = "locale";
+		
+		/**
+		 * The default service to be used when the locale is changed.
+		 */
+		public var defaultService:IGettextService = null;
 		
 		/**
 		 * Constructor.
@@ -83,6 +93,9 @@ package gnu.as3.gettext
 		/**
 		 * Binds a domain to a directory, optionally loading the translations 
 		 * using the current locale, if the service parameter is not null.
+		 * 
+		 * NOTE: the first time this method takes a non null service parameter, 
+		 * that service will be set to the defaultService variable.
 		 */
 		public function bindtextdomain(
 								domainName:String, 
@@ -90,6 +103,9 @@ package gnu.as3.gettext
 								service:IGettextService = null
 							):String
 		{
+			// listen only now, to avoid the first assignment to the locale
+			if (!isLocaleListened) 
+				this.__locale.addEventListener("localeChange", onLocaleChange);
 		    this.currentLocale = __locale.setlocale(__locale.LC_MESSAGES,null);
 			if (_domainBindings[domainName] == undefined)
 			{
@@ -98,6 +114,8 @@ package gnu.as3.gettext
 			
 			if (dirName == null)
 			{
+				if (service && !defaultService)
+					this.defaultService = service;
 				if (service)
 					tryService(service, _domainBindings[domainName], domainName);
 			}
@@ -197,6 +215,18 @@ package gnu.as3.gettext
 		}
 		
 		/**
+		 * Called when the Locale changes
+		 * @param event the event to process.
+		 */
+		protected function onLocaleChange(event:Event):void
+        {
+            this.currentLocale = this.__locale.setlocale(this.__locale.LC_MESSAGES);
+            if (this.defaultService)
+                this.defaultService.reset();
+            this.tryService(this.defaultService, this.bindtextdomain(this.currentDomainName), this.currentDomainName);
+        }
+		
+		/**
 		 * @private
 		 * Attempts to launch the service that will load the translations.
 		 */
@@ -225,7 +255,7 @@ package gnu.as3.gettext
 		/**
 		 * @private
 		 */
-		private function onComplete(event:Event):void
+		protected function onComplete(event:Event):void
 		{
 			var service:IGettextService = event.target as IGettextService;
 			service.removeEventListener(Event.COMPLETE, onComplete);
