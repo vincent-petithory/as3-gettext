@@ -23,11 +23,12 @@ package gnu.as3.gettext
 {
 	
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	
 	import gnu.as3.gettext.services.IGettextService;
 	
-    public class _Gettext 
+    public class _Gettext extends EventDispatcher 
     {
 		
 		/**
@@ -262,6 +263,7 @@ package gnu.as3.gettext
 			_domainCatalogs[service.domainName] = service.catalog;
 			if (this.currentDomainName != null)
 			    this.currentStrings = _domainCatalogs[this.currentDomainName].strings;
+			this.dispatchEvent(new Event("localeComplete"));
 		}
 		
 		
