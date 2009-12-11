@@ -38,49 +38,49 @@ package gnu.as3.gettext
         }
         
         /**
-		 * @private
-		 */
-		override protected function onComplete(event:Event):void
-		{
+         * @private
+         */
+        override protected function onComplete(event:Event):void
+        {
             super.onComplete(event);
             this.dispatchEvent(new Event("localeChange"));
-		}
+        }
         
         /**
-		 * @inheritDoc
-		 */
+         * @inheritDoc
+         */
         [Bindable("localeChange")]
-		override public function gettext(string:String):String
-		{
-		    return super.gettext(string);
-		}
+        override public function gettext(string:String):String
+        {
+            return super.gettext(string);
+        }
         
         /**
-		 * @copy #gettext()
-		 */
+         * @copy #gettext()
+         */
         [Bindable("localeChange")]
-		public function _(string:String):String
-		{
-		    return super.gettext(string);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-        [Bindable("localeChange")]
-		override public function dgettext(domain:String, string:String):String
-		{
-		    return super.dgettext(domain,string);
-		}
+        public function _(string:String):String
+        {
+            return super.gettext(string);
+        }
         
         /**
-		 * @copy #dgettext()
-		 */
+         * @inheritDoc
+         */
         [Bindable("localeChange")]
-		public function _N(domain:String, string:String):String
-		{
-		    return super.dgettext(domain,string);
-		}
+        override public function dgettext(domain:String, string:String):String
+        {
+            return super.dgettext(domain,string);
+        }
+        
+        /**
+         * @copy #dgettext()
+         */
+        [Bindable("localeChange")]
+        public function _d(domain:String, string:String):String
+        {
+            return super.dgettext(domain,string);
+        }
         
         //---------------------------------------------------------------------
         // IEventDispatcher implementation
