@@ -61,9 +61,8 @@ package gnu.as3.gettext.services
 		public function URLLoaderService(baseURL:String = null)
 		{
 		    super();
-			loader = new URLLoader();
 			if (baseURL)
-                this.baseURL = baseURL;
+                this._baseURL = baseURL;
 		}
         
         private var _baseURL:String;
@@ -73,15 +72,19 @@ package gnu.as3.gettext.services
             return _baseURL;
         }
         
-        public function set baseURL(value:String):void
-        {
-            this._baseURL = value;
-        }
+		public function reset():void
+		{
+			this._domainName = null;
+			this._baseURL = null;
+			this.data = null;
+			this.loader = null;
+		}
 		
 		public function load(path:String, domainName:String):void
 		{
 			this._domainName = domainName;
 			// set the format. We expect a ByteArray
+			loader = new URLLoader();
 			loader.dataFormat = URLLoaderDataFormat.BINARY;
 			
 			// set listeners
@@ -106,12 +109,22 @@ package gnu.as3.gettext.services
 		
 		private function onComplete(event:Event):void
 		{
+			loader.removeEventListener(Event.COMPLETE, onComplete);
+			loader.removeEventListener(IOErrorEvent.IO_ERROR, 
+										onErrorEventToRedispatch);
+			loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, 
+										onErrorEventToRedispatch);
 			this.data = loader.data;
 			this.dispatchEvent(event.clone());
 		}
 		
 		private function onErrorEventToRedispatch(event:ErrorEvent):void
 		{
+			loader.removeEventListener(Event.COMPLETE, onComplete);
+			loader.removeEventListener(IOErrorEvent.IO_ERROR, 
+										onErrorEventToRedispatch);
+			loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, 
+										onErrorEventToRedispatch);
 			this.dispatchEvent(
 				new IOErrorEvent(
 					IOErrorEvent.IO_ERROR, false, false, event.text

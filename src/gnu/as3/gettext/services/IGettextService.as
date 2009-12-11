@@ -31,12 +31,12 @@ package gnu.as3.gettext.services
 	 */
 	public interface IGettextService extends IEventDispatcher 
 	{
-		function load(path:String, domainName:String):void;
 		function get domainName():String;
 		function get catalog():MOFile;
-		
 		function get baseURL():String;
-		function set baseURL(value:String):void;
+		
+		function load(path:String, domainName:String):void;
+		function reset():void;
 		
 	}
 

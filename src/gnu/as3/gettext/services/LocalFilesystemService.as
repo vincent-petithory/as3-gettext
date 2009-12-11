@@ -44,7 +44,7 @@ package gnu.as3.gettext.services
         {
             super();
             if (baseURL)
-                this.baseURL = baseURL;
+                this._baseURL = baseURL;
         }
         
         private var _baseURL:String;
@@ -52,11 +52,6 @@ package gnu.as3.gettext.services
         public function get baseURL():String
         {
             return _baseURL;
-        }
-        
-        public function set baseURL(value:String):void
-        {
-            this._baseURL = value;
         }
         
         private var _domainName:String;
@@ -72,6 +67,15 @@ package gnu.as3.gettext.services
 		{
 			return parseMOBytes(this.data);
 		}
+        
+        public function reset():void
+		{
+			this._domainName = null;
+			this._baseURL = null;
+			this.data = null;
+		}
+		
+		private var data:ByteArray;
         
         public function load(path:String, domainName:String):void
         {
