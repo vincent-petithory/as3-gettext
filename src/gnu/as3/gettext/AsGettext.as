@@ -1,5 +1,5 @@
 /*
- * ASGettext.as
+ * AsGettext.as
  * This file is part of Actionscript GNU Gettext
  *
  * Copyright (C) 2009 - Vincent Petithory
@@ -25,6 +25,6 @@ package gnu.as3.gettext
 	/**
 	 * The global _Gettext object. 
 	 */
-	public const ASGettext:_Gettext = new _Gettext(gnu.as3.gettext.Locale);
+	public const AsGettext:_Gettext = new _Gettext(gnu.as3.gettext.Locale);
 	
 }

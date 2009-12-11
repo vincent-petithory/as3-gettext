@@ -23,9 +23,9 @@ package gnu.as3.gettext
 {
     
     /**
-     * An alias of <code>ASGettext.gettext_noop()</code>.
+     * An alias of <code>AsGettext.gettext_noop()</code>.
      * @see _Gettext#gettext_noop()
      */
-    public const gettext_noop:Function = ASGettext.gettext_noop;
+    public const gettext_noop:Function = AsGettext.gettext_noop;
     
 }

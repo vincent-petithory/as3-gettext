@@ -23,9 +23,9 @@ package gnu.as3.gettext
 {
     
     /**
-     * An alias of <code>ASGettext.gettext()</code>.
+     * An alias of <code>AsGettext.gettext()</code>.
      * @see _Gettext#gettext()
      */
-    public const gettext:Function = ASGettext.gettext;
+    public const gettext:Function = AsGettext.gettext;
     
 }
