@@ -1,0 +1,21 @@
+# English translations for as package.
+# Copyright (C) 2009 THE as'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the as package.
+# Automatically generated, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: HelloWorld 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-12-10 23:56+0100\n"
+"PO-Revision-Date: 2009-12-10 23:56+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../src/FlexHelloWorld.mxml:52
+msgid "Hello World!"
+msgstr "Hello World!"

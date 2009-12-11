@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+    xmlns:s="library://ns.adobe.com/flex/spark"
+    preinitialize="onPreinitialize()"> 
+	
+	
+	<fx:Script>
+		<![CDATA[
+            
+            import flash.events.Event;
+            import flash.events.IOErrorEvent;
+            
+            import gnu.as3.gettext._FxGettext;
+            import gnu.as3.gettext.FxGettext;
+            import gnu.as3.gettext.Locale;
+            import gnu.as3.gettext.ISO_639_1;
+            import gnu.as3.gettext.ISO_3166;
+            
+            import gnu.as3.gettext.services.IGettextService;
+            import gnu.as3.gettext.services.URLLoaderService;
+            
+            [Bindable]
+            private var fx:_FxGettext = FxGettext;
+            
+            private function onPreinitialize():void
+            {
+                // we set the locale for the messages category to fr_FR
+                setlocale(Locale.LC_MESSAGES, mklocale(ISO_639_1.FR,ISO_3166.FR));
+                
+                // prepare the service to load the translations.
+                // We assume the swf is at the root 
+                // of the ./FlexHelloWorld directory
+                var service:IGettextService = new URLLoaderService("..");
+                service.addEventListener(Event.COMPLETE, onComplete);
+                service.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
+                
+                // Binds the messages of the helloword domain to the 
+                // default directory (locale)
+                FxGettext.bindtextdomain("helloworld", null, service);
+                
+                // We select helloworld to be the default domain. 
+                FxGettext.textdomain("helloworld");
+            }
+            
+            private function onComplete(event:Event):void
+            {
+                // do some stuff here, if needed.
+            }
+            
+            private function onIOError(event:IOErrorEvent):void
+            {
+                // do some stuff here, if needed.
+            }
+            
+		]]>
+	</fx:Script>
+	
+	<s:Panel width="90%" height="90%">
+        <s:title>{fx.gettext("Hello World!")}</s:title>
+    </s:Panel>
+	
+</s:Application>
