@@ -42,7 +42,7 @@ package gnu.as3.gettext
     public function parseMOBytes(bytes:ByteArray):MOFile 
     {
 		if (bytes == null)
-			throw new TypeError(_("The <bytes> parameter must not be null"));
+			throw new TypeError("The <bytes> parameter must not be null");
 			
 		var originalPosition:uint = bytes.position;
 		var originalEndian:String = bytes.endian;
@@ -52,17 +52,17 @@ package gnu.as3.gettext
 		else if (magicNumber == 0x950412de)
 			bytes.endian = Endian.BIG_ENDIAN;
 		else
-			throw new GettextError(_("The magic number is invalid."));
+			throw new GettextError("The magic number is invalid.");
 		
 		var fileFormatRevision:uint = bytes.readUnsignedInt();
 		if (fileFormatRevision > 0)
 			throw new GettextError(
-				_("Unknown or unsupported MO file format revision.")
+				"Unknown or unsupported MO file format revision."
 			);
 		
 		var n:uint = bytes.readUnsignedInt();
 		if (n <= 0)
-			throw new GettextError(_("The MO file has no translations."));
+			throw new GettextError("The MO file has no translations.");
 		
 		var o:uint = bytes.readUnsignedInt();
 		var t:uint = bytes.readUnsignedInt();
@@ -100,7 +100,7 @@ package gnu.as3.gettext
 				dictionary[str] = bytes.readUTFBytes(trStrlen);
 			} catch (e:EOFError)
 			{
-				throw new GettextError(_("The MO file is invalid or corrupted."));
+				throw new GettextError("The MO file is invalid or corrupted.");
 			}
 		}
 		

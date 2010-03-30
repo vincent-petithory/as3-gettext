@@ -71,18 +71,18 @@ package gnu.as3.gettext.services
         public function reset():void
 		{
 			this._domainName = null;
-			this._baseURL = null;
 			this.data = null;
 		}
 		
         public function load(path:String, domainName:String):void
         {
             this._domainName = domainName;
+            var hasErrors:Boolean = false;
             try 
             {
 		        var moFile:File = new File(this._baseURL+File.separator+path);
 				if (!moFile.exists)
-					throw new TypeError(_("No input mo file"));
+					throw new TypeError("No input mo file");
 				
 				var stream:FileStream = new FileStream();
 				stream.open(moFile, FileMode.READ);
@@ -93,6 +93,7 @@ package gnu.as3.gettext.services
 				this.data = moBytes;
 			} catch (e:Error)
 			{
+				hasErrors = true;
 				// call this on a later frame to have a consistent 
 				// behavior with all other (asynchronous) services
 				setTimeout(this.dispatchEvent, 10, 
@@ -101,9 +102,12 @@ package gnu.as3.gettext.services
 					)
 				);
 			}
-			// call this on a later frame to have a consistent 
-			// behavior with all other (asynchronous) services
-			setTimeout(this.dispatchEvent, 10, new Event(Event.COMPLETE));
+			if (!hasErrors)
+			{
+				// call this on a later frame to have a consistent 
+				// behavior with all other (asynchronous) services
+				setTimeout(this.dispatchEvent, 10, new Event(Event.COMPLETE));
+			}
         }
         
     }
