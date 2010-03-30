@@ -147,6 +147,11 @@ package gnu.as3.gettext
 		}
 		
 		/**
+		 * The locale of this catalog.
+		 */
+		public var locale:String;
+		
+		/**
 		 * The plural value used in the MO file, to determine if a string 
 		 * is a plural form. The value is usually <code>2</code>.
 		 */

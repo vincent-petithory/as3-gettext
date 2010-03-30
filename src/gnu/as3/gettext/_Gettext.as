@@ -106,28 +106,31 @@ package gnu.as3.gettext
 		{
 			// listen only now, to avoid the first assignment to the locale
 			if (!isLocaleListened) 
+			{
 				this.__locale.addEventListener("localeChange", onLocaleChange);
+				isLocaleListened = true;
+			}
 		    this.currentLocale = __locale.setlocale(__locale.LC_MESSAGES,null);
 			if (_domainBindings[domainName] == undefined)
 			{
 				_domainBindings[domainName] = DEFAULT_DIR_NAME;
 			}
 			
-			if (dirName == null)
+			if (dirName != null)
 			{
-				if (service && !defaultService)
-					this.defaultService = service;
-				if (service)
-					tryService(service, _domainBindings[domainName], domainName);
-			}
-			else
-			{
+				// Remove the trailing slash
 				var l:int = dirName.length-1;
 				if (dirName.charAt(l) == "/")
 					dirName = dirName.substring(0,l);
-				if (service)
-					tryService(service, dirName, domainName);
 				_domainBindings[domainName] = dirName;
+			}
+			// Assign the default service
+			if (service)
+			{
+				if (this.defaultService == null)
+					this.defaultService = service;
+				
+				tryService(service, _domainBindings[domainName], domainName);
 			}
 			return _domainBindings[domainName];
 		}
@@ -237,10 +240,13 @@ package gnu.as3.gettext
 								domainName:String
 							):void
 		{
-			if (_domainCatalogs[domainName] != undefined)
+			var catalog:MOFile = _domainCatalogs[domainName];
+			if (catalog != null && catalog.locale == __locale.setlocale(__locale.LC_MESSAGES))
 			{
 			    // catalog is already loaded; do not reload.
+			    // We do not want to call the onComplete listener here.
 				service.dispatchEvent(new Event(Event.COMPLETE));
+				this.dispatchEvent(new Event("localeComplete"));
 			}
 			else
 			{
@@ -260,7 +266,9 @@ package gnu.as3.gettext
 		{
 			var service:IGettextService = event.target as IGettextService;
 			service.removeEventListener(Event.COMPLETE, onComplete);
-			_domainCatalogs[service.domainName] = service.catalog;
+			var catalog:MOFile = service.catalog;
+			catalog.locale = this.currentLocale;
+			_domainCatalogs[service.domainName] = catalog;
 			if (this.currentDomainName != null)
 			    this.currentStrings = _domainCatalogs[this.currentDomainName].strings;
 			this.dispatchEvent(new Event("localeComplete"));
