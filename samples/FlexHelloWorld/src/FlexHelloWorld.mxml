@@ -21,7 +21,7 @@
             import gnu.as3.gettext.services.URLLoaderService;
             
             [Bindable]
-            private var fx:_FxGettext = FxGettext;
+            private var fxgt:_FxGettext = FxGettext;
             
             private function onPreinitialize():void
             {
@@ -32,32 +32,40 @@
                 // We assume the swf is at the root 
                 // of the ./FlexHelloWorld directory
                 var service:IGettextService = new URLLoaderService("..");
-                service.addEventListener(Event.COMPLETE, onComplete);
+                //service.addEventListener(Event.COMPLETE, onServiceComplete);
                 service.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
+                
+                // You can listen to this event, but it is not required in 
+                // MXML files: the labels are automatically updated at startup 
+                // and when the locale changes
+                //fxgt.addEventListener(Event.COMPLETE, onComplete);
                 
                 // Binds the messages of the helloword domain to the 
                 // default directory (locale)
-                FxGettext.bindtextdomain("helloworld", null, service);
+                fxgt.bindtextdomain("helloworld", null, service);
                 
                 // We select helloworld to be the default domain. 
-                FxGettext.textdomain("helloworld");
+                fxgt.textdomain("helloworld");
             }
             
-            private function onComplete(event:Event):void
+            private function onServiceComplete(event:Event):void
             {
                 // do some stuff here, if needed.
             }
             
             private function onIOError(event:IOErrorEvent):void
             {
-                // do some stuff here, if needed.
+                // an error occured while loading the catalog
+                // it probably means there is no translations for this locale
+                // or the base path to the translations is incorrect.
+                trace(event);
             }
             
 		]]>
 	</fx:Script>
 	
-	<s:Panel width="90%" height="90%">
-        <s:title>{fx.gettext("Hello World!")}</s:title>
+	<s:Panel width="100%" height="100%">
+        <s:title>{fxgt.gettext("Hello World!")}</s:title>
     </s:Panel>
 	
 </s:Application>

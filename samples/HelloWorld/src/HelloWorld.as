@@ -53,12 +53,18 @@ package
             // prepare the service. As an AIR sample, we use a local 
             // file system service based on the File class.
             var service:IGettextService = new LocalFilesystemService(File.applicationDirectory.nativePath);
-            service.addEventListener(Event.COMPLETE, onComplete);
+            // This event is triggered before the gettext's 'complete' event. 
+            // You can use it if you have stuff to do with the service.
+            //service.addEventListener(Event.COMPLETE, onServiceComplete);
             service.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
+            
+            // We listen for the translations to be ready
+            AsGettext.addEventListener(Event.COMPLETE, onComplete);
             
             // Binds the messages of the helloword domain to the 
             // default directory (locale)
-            AsGettext.bindtextdomain("helloworld", null, service);
+            var relativeLocalePath:String = "../locale"; // Set this path accordingly
+            AsGettext.bindtextdomain("helloworld", relativeLocalePath, service);
             // if we use libraries that use gettext to localize their messages,
             // we should call bindtextdomain again for each library.
             // example for the as3-mox lib : 

@@ -28,6 +28,8 @@
 	<property name="project.version.major" value="0" />
 	<!-- The project minor version -->
 	<property name="project.version.minor" value="4" />
+	<!-- The project revision version -->
+	<property name="project.version.revision" value="1" />
 	
 	<!-- Compile time properties -->
 	<property name="debug" value="true" />

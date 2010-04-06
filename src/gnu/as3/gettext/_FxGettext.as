@@ -35,7 +35,7 @@ package gnu.as3.gettext
         /**
          * @inheritDoc
          */
-        [Bindable("localeComplete")]
+        [Bindable("complete")]
         override public function gettext(string:String):String
         {
             return super.gettext(string);
@@ -44,7 +44,7 @@ package gnu.as3.gettext
         /**
          * @copy #gettext()
          */
-        [Bindable("localeComplete")]
+        [Bindable("complete")]
         public function _(string:String):String
         {
             return super.gettext(string);
@@ -53,7 +53,7 @@ package gnu.as3.gettext
         /**
          * @inheritDoc
          */
-        [Bindable("localeComplete")]
+        [Bindable("complete")]
         override public function dgettext(domain:String, string:String):String
         {
             return super.dgettext(domain,string);
@@ -62,7 +62,7 @@ package gnu.as3.gettext
         /**
          * @copy #dgettext()
          */
-        [Bindable("localeComplete")]
+        [Bindable("complete")]
         public function _d(domain:String, string:String):String
         {
             return super.dgettext(domain,string);

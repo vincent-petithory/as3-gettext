@@ -62,8 +62,13 @@ package
             // prepare the service. As an AIR sample, we use a local 
             // file system service based on the File class.
             var service:IGettextService = new LocalFilesystemService(File.applicationDirectory.nativePath);
-            service.addEventListener(Event.COMPLETE, onComplete);
+            // This event is triggered before the gettext's 'complete' event. 
+            // You can use it if you have stuff to do with the service.
+            //service.addEventListener(Event.COMPLETE, onServiceComplete);
             service.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
+            
+            // We listen for the translations to be ready
+            AsGettext.addEventListener(Event.COMPLETE, onComplete);
             
             // Binds the messages of the helloworldlocalechange domain to the 
             // default directory (locale)

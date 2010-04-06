@@ -75,7 +75,6 @@ package gnu.as3.gettext.services
 		public function reset():void
 		{
 			this._domainName = null;
-			this._baseURL = null;
 			this.data = null;
 			this.loader = null;
 		}

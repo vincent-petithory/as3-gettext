@@ -29,6 +29,12 @@ package gnu.as3.gettext
     import flash.system.Capabilities;
     
     /**
+     * Dispatched when the setlocale() method is called and 
+     * results in changing the current locale.
+     */
+    [Event(name="change", type="flash.events.Event")]
+    
+    /**
      * A _Locale manages the locale in an application. Usually, you use the 
      * unique Locale object, instead of creating your own.
      */
@@ -242,7 +248,7 @@ package gnu.as3.gettext
                 }
                 // dispatch locale change event here
                 if (isLocaleChanged)
-                    this.dispatchEvent(new Event("localeChange"));
+                    this.dispatchEvent(new Event(Event.CHANGE));
             }
             return locale;
         }

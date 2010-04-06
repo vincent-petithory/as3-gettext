@@ -28,6 +28,12 @@ package gnu.as3.gettext
 	
 	import gnu.as3.gettext.services.IGettextService;
 	
+	/**
+     * Dispatched when a new locale is set and the translations 
+     * for it are loaded and available in the code.
+     */
+	[Event(name="complete", type="flash.events.Event")]
+	
     public class _Gettext extends EventDispatcher 
     {
 		
@@ -107,7 +113,7 @@ package gnu.as3.gettext
 			// listen only now, to avoid the first assignment to the locale
 			if (!isLocaleListened) 
 			{
-				this.__locale.addEventListener("localeChange", onLocaleChange);
+				this.__locale.addEventListener(Event.CHANGE, onLocaleChange);
 				isLocaleListened = true;
 			}
 		    this.currentLocale = __locale.setlocale(__locale.LC_MESSAGES,null);
@@ -219,6 +225,8 @@ package gnu.as3.gettext
 		}
 		
 		/**
+		 * @private
+		 * 
 		 * Called when the Locale changes
 		 * @param event the event to process.
 		 */
@@ -246,7 +254,7 @@ package gnu.as3.gettext
 			    // catalog is already loaded; do not reload.
 			    // We do not want to call the onComplete listener here.
 				service.dispatchEvent(new Event(Event.COMPLETE));
-				this.dispatchEvent(new Event("localeComplete"));
+				this.dispatchEvent(new Event(Event.COMPLETE));
 			}
 			else
 			{
@@ -271,7 +279,7 @@ package gnu.as3.gettext
 			_domainCatalogs[service.domainName] = catalog;
 			if (this.currentDomainName != null)
 			    this.currentStrings = _domainCatalogs[this.currentDomainName].strings;
-			this.dispatchEvent(new Event("localeComplete"));
+			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		
