@@ -83,7 +83,6 @@
 	</target>
     
     <target name="all">
-    	<buildnumber file="${project.build.file}" />
     	<mkdir dir="${project.deps}" />
     	<mkdir dir="${project.lib}" />
 		<compc air="${air}" failonerror="true">
