@@ -1,15 +1,57 @@
-commit dea7ae18f766d17e224d901d65c475896949529f
+commit bb7099d63b5718ecc9415a915e1de18bde89cc1d
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Aug 27 10:51:02 2010 +0200
+
+    Change License from GPLv3 to LGPLv3.
+    
+     * Add COPYING.LESSER
+     * Change the license header in all files
+
+ COPYING.LESSER                                     |  165 ++++++++++++++++++++
+ build.xml                                          |   27 ++--
+ src/gnu/as3/gettext/AsGettext.as                   |   27 ++--
+ src/gnu/as3/gettext/FxGettext.as                   |   27 ++--
+ src/gnu/as3/gettext/GettextError.as                |   27 ++--
+ src/gnu/as3/gettext/ISO_3166.as                    |   27 ++--
+ src/gnu/as3/gettext/ISO_639_1.as                   |   27 ++--
+ src/gnu/as3/gettext/Locale.as                      |   27 ++--
+ src/gnu/as3/gettext/MOFile.as                      |   27 ++--
+ src/gnu/as3/gettext/PACKAGE.as                     |   27 ++--
+ src/gnu/as3/gettext/_.as                           |   27 ++--
+ src/gnu/as3/gettext/_FxGettext.as                  |   27 ++--
+ src/gnu/as3/gettext/_Gettext.as                    |   27 ++--
+ src/gnu/as3/gettext/_Locale.as                     |   73 +++++-----
+ src/gnu/as3/gettext/dgettext.as                    |   27 ++--
+ src/gnu/as3/gettext/gettext.as                     |   27 ++--
+ src/gnu/as3/gettext/gettext_noop.as                |   27 ++--
+ src/gnu/as3/gettext/parseMOBytes.as                |   27 ++--
+ src/gnu/as3/gettext/services/IGettextService.as    |   27 ++--
+ .../as3/gettext/services/LocalFilesystemService.as |   27 ++--
+ src/gnu/as3/gettext/services/URLLoaderService.as   |   27 ++--
+ src/gnu/as3/gettext/services/_.as                  |   27 ++--
+ src/gnu/as3/gettext/sprintf.as                     |   39 +++---
+ src/mklocale.as                                    |   39 +++---
+ src/setlocale.as                                   |   27 ++--
+ unittest/AllTests.as                               |   27 ++--
+ unittest/application-tmp.xml                       |   72 +++++-----
+ unittest/gnu/as3/gettext/AllTests.as               |   27 ++--
+ unittest/gnu/as3/gettext/_GettextTest.as           |   27 ++--
+ unittest/gnu/as3/gettext/_LocaleTest.as            |   27 ++--
+ unittest/gnu/as3/gettext/parseMOBytesTest.as       |   27 ++--
+ 31 files changed, 613 insertions(+), 477 deletions(-)
+
+commit 55fb52dfcfc65a834e0a93b98cb3a4e133cd68b0
 Author: Vincent Petithory <vincent.petithory@gmail.com>
 Date:   Fri Aug 27 10:38:15 2010 +0200
 
     Add GNU files (README, Authors, ChangeLog, INSTALL, NEWS)
 
  AUTHORS   |    1 +
- ChangeLog |  632 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ ChangeLog |  645 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  INSTALL   |   10 +
  NEWS      |    6 +
  README    |    5 +
- 5 files changed, 654 insertions(+), 0 deletions(-)
+ 5 files changed, 667 insertions(+), 0 deletions(-)
 
 commit 56c1e7036223bf33cc69cf667bd1a0a9e927ae23
 Author: Vincent Petithory <vincent.petithory@gmail.com>
