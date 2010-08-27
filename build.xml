@@ -21,154 +21,154 @@
  -->
 <project name="Actionscript GNU Gettext" default="all" basedir=".">
 
-	<!-- The project name (canonical form) -->
-	<property name="project.name" value="as3-gettext" />
-	<!-- The project major version -->
-	<property name="project.version.major" value="0" />
-	<!-- The project minor version -->
-	<property name="project.version.minor" value="4" />
-	<!-- The project revision version -->
-	<property name="project.version.revision" value="1" />
-	
-	<!-- Compile time properties -->
-	<property name="debug" value="true" />
-	<property name="player" value="10" />
-	<property name="air" value="true" />
-	
-	<!-- Properties -->
+    <!-- The project name (canonical form) -->
+    <property name="project.name" value="as3-gettext" />
+    <!-- The project major version -->
+    <property name="project.version.major" value="0" />
+    <!-- The project minor version -->
+    <property name="project.version.minor" value="4" />
+    <!-- The project revision version -->
+    <property name="project.version.revision" value="2" />
+    
+    <!-- Compile time properties -->
+    <property name="debug" value="true" />
+    <property name="player" value="10" />
+    <property name="air" value="true" />
+    
+    <!-- Properties -->
 
-	<property file="${basedir}/build.properties" />
+    <property file="${basedir}/build.properties" />
 
-	<taskdef 
-		file="${project.build.system.tasks}" 
-		classpath="${project.build.system.jar}" 
-	/>
-	
-	<!-- metadata -->
-	
-	<property name="project.metadata.title" value="'Actionscript GNU Gettext'" />
-	<property name="project.metadata.description" value="'An implementation of the GNU Gettext utilities in Actionscript 3.0'" />
-	<property name="project.metadata.publisher" value="'Vincent Petithory'" />
-	<property name="project.metadata.creator" value="'Vincent Petithory'" />
-	<property name="project.metadata.language" value="EN" />
-	
-	<!-- Standard targets -->
-	
-	<target name="distclean" description="cleans the distribution files">
-		<antcall target="checkclean" />
-	</target>
-	
-	<target name="dist" description="makes the distribution file">
-		<fail message="Non-sources files are not built. run 'ant all' first. Check you did not delete provided documentation files too (run ant html to rebuild them).">
-			<condition>
-				<not>
-					<and>
-						<available file="${project.lib}" />
-						<available file="${project.man}" />
-					</and>
-				</not>
-			</condition>
-		</fail>
-		<antcall target="distclean" />
-		<tar destfile="${basedir}/${project.name}-${project.version}.tar" >
-			<tarfileset 
-				dir="." 
-				prefix="${project.name}-${project.version}" 
-				excludes=".gitignore,.git/**,*.tar.gz,docs/**"
-			/>
-		</tar>
-		<gzip destfile="${basedir}/${project.name}-${project.version}.tar.gz" src="${basedir}/${project.name}-${project.version}.tar"/>
-		<delete file="${basedir}/${project.name}-${project.version}.tar" />
-	</target>
+    <taskdef 
+        file="${project.build.system.tasks}" 
+        classpath="${project.build.system.jar}" 
+    />
+    
+    <!-- metadata -->
+    
+    <property name="project.metadata.title" value="'Actionscript GNU Gettext'" />
+    <property name="project.metadata.description" value="'An implementation of the GNU Gettext utilities in Actionscript 3.0'" />
+    <property name="project.metadata.publisher" value="'Vincent Petithory'" />
+    <property name="project.metadata.creator" value="'Vincent Petithory'" />
+    <property name="project.metadata.language" value="EN" />
+    
+    <!-- Standard targets -->
+    
+    <target name="distclean" description="cleans the distribution files">
+        <antcall target="checkclean" />
+    </target>
+    
+    <target name="dist" description="makes the distribution file">
+        <fail message="Non-sources files are not built. run 'ant all' first. Check you did not delete provided documentation files too (run ant html to rebuild them).">
+            <condition>
+                <not>
+                    <and>
+                        <available file="${project.lib}" />
+                        <available file="${project.man}" />
+                    </and>
+                </not>
+            </condition>
+        </fail>
+        <antcall target="distclean" />
+        <tar destfile="${basedir}/${project.name}-${project.version}.tar" >
+            <tarfileset 
+                dir="." 
+                prefix="${project.name}-${project.version}" 
+                excludes=".gitignore,.git/**,*.tar.gz,docs/**"
+            />
+        </tar>
+        <gzip destfile="${basedir}/${project.name}-${project.version}.tar.gz" src="${basedir}/${project.name}-${project.version}.tar"/>
+        <delete file="${basedir}/${project.name}-${project.version}.tar" />
+    </target>
     
     <target name="all">
-    	<mkdir dir="${project.deps}" />
-    	<mkdir dir="${project.lib}" />
-		<compc air="${air}" failonerror="true">
-		    <arg value="-define=CFG::debug,${debug}" />
-		    <arg value="-define=CFG::air,${air}" />
-		    <arg value="-define=CFG::player,${player}" />
-		    <arg value="-define=CFG::vector,&quot;CFG::air || CFG::player > 9&quot;" />
-		    <arg value="-define=CFG::array,&quot;!CFG::vector&quot;" />
-		    <arg value="-title ${project.metadata.title}" />
-			<arg value="-description ${project.metadata.description}" />
-			<arg value="-publisher ${project.metadata.publisher}" />
-			<arg value="-creator ${project.metadata.creator}" />
-			<arg value="-language ${project.metadata.language}" />
-			<arg value="-debug=${debug}" />
-			<arg value="-target-player=${player}" />
-			<arg value="-sp ${project.src}" />
-			<arg value="-library-path+=${project.deps}" />
-			<arg value="-is ${project.input}" />
-			<arg value="-o ${project.output}" />
-		</compc>
+        <mkdir dir="${project.deps}" />
+        <mkdir dir="${project.lib}" />
+        <compc air="${air}" failonerror="true">
+            <arg value="-define=CFG::debug,${debug}" />
+            <arg value="-define=CFG::air,${air}" />
+            <arg value="-define=CFG::player,${player}" />
+            <arg value="-define=CFG::vector,&quot;CFG::air || CFG::player > 9&quot;" />
+            <arg value="-define=CFG::array,&quot;!CFG::vector&quot;" />
+            <arg value="-title ${project.metadata.title}" />
+            <arg value="-description ${project.metadata.description}" />
+            <arg value="-publisher ${project.metadata.publisher}" />
+            <arg value="-creator ${project.metadata.creator}" />
+            <arg value="-language ${project.metadata.language}" />
+            <arg value="-debug=${debug}" />
+            <arg value="-target-player=${player}" />
+            <arg value="-sp ${project.src}" />
+            <arg value="-library-path+=${project.deps}" />
+            <arg value="-is ${project.input}" />
+            <arg value="-o ${project.output}" />
+        </compc>
     </target>
     
     <target name="html">
         <mkdir dir="${project.man}" />
-    	<asdoc air="${air}" failonerror="true">
-		    <arg value="-define=CFG::debug,${debug}" />
-		    <arg value="-define=CFG::air,${air}" />
-		    <arg value="-define=CFG::player,${player}" />
-		    <arg value="-define=CFG::vector,&quot;CFG::air || CFG::player > 9&quot;" />
-		    <arg value="-define=CFG::array,&quot;!CFG::vector&quot;" />
-		    
-		    <arg value="-title ${project.metadata.title} " />
-			<arg value="-description ${project.metadata.description}" />
-			<arg value="-publisher ${project.metadata.publisher}" />
-			<arg value="-creator ${project.metadata.creator}" />
-			<arg value="-language ${project.metadata.language}" />
-			
-		    <arg value="-target-player=${player}" />
-			<arg value="-sp ${project.src}" />
-			<arg value="-library-path+=${project.deps}" />
-			<arg value="-doc-sources ${project.input}" />
-			<arg value="-o ${project.man.api}" />
-		</asdoc>
+        <asdoc air="${air}" failonerror="true">
+            <arg value="-define=CFG::debug,${debug}" />
+            <arg value="-define=CFG::air,${air}" />
+            <arg value="-define=CFG::player,${player}" />
+            <arg value="-define=CFG::vector,&quot;CFG::air || CFG::player > 9&quot;" />
+            <arg value="-define=CFG::array,&quot;!CFG::vector&quot;" />
+            
+            <arg value="-title ${project.metadata.title} " />
+            <arg value="-description ${project.metadata.description}" />
+            <arg value="-publisher ${project.metadata.publisher}" />
+            <arg value="-creator ${project.metadata.creator}" />
+            <arg value="-language ${project.metadata.language}" />
+            
+            <arg value="-target-player=${player}" />
+            <arg value="-sp ${project.src}" />
+            <arg value="-library-path+=${project.deps}" />
+            <arg value="-doc-sources ${project.input}" />
+            <arg value="-o ${project.man.api}" />
+        </asdoc>
     </target>
     
     <target name="clean">
-    	<delete includeemptydirs="true">
-			<fileset dir="${project.lib}" includes="**/*"/>
-			<fileset dir="${project.man}" includes="**/*"/>
-			<fileset dir="${project.check.bin}" includes="*.cache"/>
-			<fileset dir="${project.check.bin}" includes="*.swf"/>
-			<fileset dir="${project.check.bin}" includes="*.xml" excludes="*-tmp.xml"/>
-		</delete>
+        <delete includeemptydirs="true">
+            <fileset dir="${project.lib}" includes="**/*"/>
+            <fileset dir="${project.man}" includes="**/*"/>
+            <fileset dir="${project.check.bin}" includes="*.cache"/>
+            <fileset dir="${project.check.bin}" includes="*.swf"/>
+            <fileset dir="${project.check.bin}" includes="*.xml" excludes="*-tmp.xml"/>
+        </delete>
     </target>
 
-	<target name="check" description="runs unit tests">
+    <target name="check" description="runs unit tests">
         <mxmlc air="true" failonerror="true">
             <arg value="-define=CFG::debug,${debug}" />
-		    <arg value="-define=CFG::air,true" />
-		    <arg value="-define=CFG::player,${player}" />
-		    <arg value="-define=CFG::vector,&quot;CFG::air || CFG::player > 9&quot;" />
-		    <arg value="-define=CFG::array,&quot;!CFG::vector&quot;" />
+            <arg value="-define=CFG::air,true" />
+            <arg value="-define=CFG::player,${player}" />
+            <arg value="-define=CFG::vector,&quot;CFG::air || CFG::player > 9&quot;" />
+            <arg value="-define=CFG::array,&quot;!CFG::vector&quot;" />
             <arg value="-debug=${debug}" />
             <arg value="-incremental" />
             <arg value="-target-player=${player}" />
             <arg value="-sp ${project.check.src}" />
             <arg value="-sp ${project.src}" />
-			<arg value="-library-path+=${project.deps}" />
-			<arg value="-file-specs ${project.check.input}" />
-			<arg value="-o ${project.check.output}" />
+            <arg value="-library-path+=${project.deps}" />
+            <arg value="-file-specs ${project.check.input}" />
+            <arg value="-o ${project.check.output}" />
         </mxmlc>
         <copy file="${project.check.appdesc.tmp}" tofile="${project.check.appdesc}">
-        	<filterchain>
-        		<expandproperties />
-        	</filterchain>
+            <filterchain>
+                <expandproperties />
+            </filterchain>
         </copy>
         <adl xml="${project.check.appdesc}" dir="${project.check.bin}" />
     </target>
-	
-	<!-- private utility targets -->
-	
-	<target name="checkclean" description="Cleans all test generated files">
-    	<delete includeemptydirs="true">
-			<fileset dir="${project.check.bin}" includes="*.cache"/>
-			<fileset dir="${project.check.bin}" includes="*.swf"/>
-			<fileset dir="${project.check.bin}" includes="*.xml" excludes="*-tmp.xml"/>
-		</delete>
-	</target>
-	
+    
+    <!-- private utility targets -->
+    
+    <target name="checkclean" description="Cleans all test generated files">
+        <delete includeemptydirs="true">
+            <fileset dir="${project.check.bin}" includes="*.cache"/>
+            <fileset dir="${project.check.bin}" includes="*.swf"/>
+            <fileset dir="${project.check.bin}" includes="*.xml" excludes="*-tmp.xml"/>
+        </delete>
+    </target>
+    
 </project>

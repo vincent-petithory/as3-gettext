@@ -303,5 +303,5 @@ package gnu.as3.gettext
         public static const ZW:String = "Zimbabwe";
         
     }
-	
+    
 }

@@ -20,10 +20,10 @@
  */
 package gnu.as3.gettext 
 {
-	
-	/**
-	 * The global _FxGettext object. 
-	 */
-	public const FxGettext:_FxGettext = new _FxGettext(gnu.as3.gettext.Locale);
-	
+    
+    /**
+     * The global _FxGettext object. 
+     */
+    public const FxGettext:_FxGettext = new _FxGettext(gnu.as3.gettext.Locale);
+    
 }

@@ -1,4 +1,32 @@
-commit bb7099d63b5718ecc9415a915e1de18bde89cc1d
+commit a8fc36b106ce8cbcd454e897eb48935119314958
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Aug 27 10:54:02 2010 +0200
+
+    Fix inconsistent indentation in all source files (tabs -> 4 spaces)
+
+ build.xml                                          |  250 +++++-----
+ src/gnu/as3/gettext/AsGettext.as                   |   12 +-
+ src/gnu/as3/gettext/FxGettext.as                   |   12 +-
+ src/gnu/as3/gettext/GettextError.as                |   24 +-
+ src/gnu/as3/gettext/ISO_3166.as                    |    2 +-
+ src/gnu/as3/gettext/Locale.as                      |   12 +-
+ src/gnu/as3/gettext/MOFile.as                      |  234 +++++-----
+ src/gnu/as3/gettext/_Gettext.as                    |  504 ++++++++++----------
+ src/gnu/as3/gettext/parseMOBytes.as                |  238 +++++-----
+ src/gnu/as3/gettext/services/IGettextService.as    |   34 +-
+ .../as3/gettext/services/LocalFilesystemService.as |   98 ++--
+ src/gnu/as3/gettext/services/URLLoaderService.as   |  204 ++++----
+ src/gnu/as3/gettext/sprintf.as                     |   36 +-
+ src/setlocale.as                                   |    8 +-
+ unittest/AllTests.as                               |    6 +-
+ unittest/application-tmp.xml                       |   40 +-
+ unittest/gnu/as3/gettext/AllTests.as               |    8 +-
+ unittest/gnu/as3/gettext/_GettextTest.as           |  124 +++---
+ unittest/gnu/as3/gettext/_LocaleTest.as            |  120 +++---
+ unittest/gnu/as3/gettext/parseMOBytesTest.as       |  316 ++++++------
+ 20 files changed, 1141 insertions(+), 1141 deletions(-)
+
+commit dcee9e116e349c0d0164acab60ba376bf6723aaa
 Author: Vincent Petithory <vincent.petithory@gmail.com>
 Date:   Fri Aug 27 10:51:02 2010 +0200
 
@@ -8,6 +36,7 @@ Date:   Fri Aug 27 10:51:02 2010 +0200
      * Change the license header in all files
 
  COPYING.LESSER                                     |  165 ++++++++++++++++++++
+ ChangeLog                                          |   48 ++++++-
  build.xml                                          |   27 ++--
  src/gnu/as3/gettext/AsGettext.as                   |   27 ++--
  src/gnu/as3/gettext/FxGettext.as                   |   27 ++--
@@ -38,7 +67,7 @@ Date:   Fri Aug 27 10:51:02 2010 +0200
  unittest/gnu/as3/gettext/_GettextTest.as           |   27 ++--
  unittest/gnu/as3/gettext/_LocaleTest.as            |   27 ++--
  unittest/gnu/as3/gettext/parseMOBytesTest.as       |   27 ++--
- 31 files changed, 613 insertions(+), 477 deletions(-)
+ 32 files changed, 658 insertions(+), 480 deletions(-)
 
 commit 55fb52dfcfc65a834e0a93b98cb3a4e133cd68b0
 Author: Vincent Petithory <vincent.petithory@gmail.com>

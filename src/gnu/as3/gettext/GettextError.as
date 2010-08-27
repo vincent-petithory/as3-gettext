@@ -20,18 +20,18 @@
  */
 package gnu.as3.gettext 
 {
-	
-	/**
-	 * <code>GettextError</code> errors are typical errors used in the 
-	 * Actionscript GNU Gettext library.
-	 */
+    
+    /**
+     * <code>GettextError</code> errors are typical errors used in the 
+     * Actionscript GNU Gettext library.
+     */
     public class GettextError extends Error 
     {
-		public function GettextError(message:String,id:int = 0)
-		{
-			super(message,id);
-		}
-		
-	}
-	
+        public function GettextError(message:String,id:int = 0)
+        {
+            super(message,id);
+        }
+        
+    }
+    
 }

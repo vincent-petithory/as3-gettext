@@ -20,10 +20,10 @@
  */
 package gnu.as3.gettext 
 {
-	
-	/**
-	 * The global _Gettext object. 
-	 */
-	public const AsGettext:_Gettext = new _Gettext(gnu.as3.gettext.Locale);
-	
+    
+    /**
+     * The global _Gettext object. 
+     */
+    public const AsGettext:_Gettext = new _Gettext(gnu.as3.gettext.Locale);
+    
 }

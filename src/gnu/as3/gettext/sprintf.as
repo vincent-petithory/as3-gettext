@@ -20,23 +20,23 @@
  */
 package gnu.as3.gettext 
 {
-	
-	/**
-	 * Formats the specified string, using the specified values.
-	 * 
-	 * @param str The string to format.
-	 * @param values A collection of values to insert. 
-	 * It can be an Array, Vector, Dictionary, Object, or any object that 
-	 * matches the keys of the string.
-	 * @return The formatted string.
-	 */
+    
+    /**
+     * Formats the specified string, using the specified values.
+     * 
+     * @param str The string to format.
+     * @param values A collection of values to insert. 
+     * It can be an Array, Vector, Dictionary, Object, or any object that 
+     * matches the keys of the string.
+     * @return The formatted string.
+     */
     public function sprintf(string:String, values:* = undefined):String
-	{
-		regexpValues = values;
-		var stringOut:String = string.replace(tokenPattern, repFunc);
-		regexpValues = null;
-		return stringOut;
-	}
+    {
+        regexpValues = values;
+        var stringOut:String = string.replace(tokenPattern, repFunc);
+        regexpValues = null;
+        return stringOut;
+    }
     
 }
 
@@ -56,6 +56,6 @@ internal var regexpValues:*;
  */
 internal const repFunc:Function = function():String 
 {
-	var token:String = arguments[0];
-	return String(regexpValues[token.substring(1,token.length-1)]);
+    var token:String = arguments[0];
+    return String(regexpValues[token.substring(1,token.length-1)]);
 }

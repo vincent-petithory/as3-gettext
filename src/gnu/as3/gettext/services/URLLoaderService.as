@@ -20,49 +20,49 @@
  */
 package gnu.as3.gettext.services 
 {
-	
-	import flash.events.ErrorEvent;
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
-	import flash.events.IOErrorEvent;
-	import flash.events.SecurityErrorEvent;
-	
-	import flash.net.URLRequest;
-	import flash.net.URLLoader;
-	import flash.net.URLLoaderDataFormat;
-	
-	import flash.utils.ByteArray;
-	
-	import gnu.as3.gettext.MOFile;
-	import gnu.as3.gettext.parseMOBytes;
-	
-	public class URLLoaderService 
-							extends EventDispatcher 
-							implements IGettextService 
-	{
-		
-		private var loader:URLLoader;
-		private var data:ByteArray;
-		
-		private var _domainName:String;
-		
-		public function get domainName():String
-		{
-			return this._domainName;
-		}
-		
-		public function get catalog():MOFile
-		{
-			this.data.position = 0;
-			return parseMOBytes(this.data);
-		}
-	
-		public function URLLoaderService(baseURL:String = null)
-		{
-		    super();
-			if (baseURL)
+    
+    import flash.events.ErrorEvent;
+    import flash.events.Event;
+    import flash.events.EventDispatcher;
+    import flash.events.IOErrorEvent;
+    import flash.events.SecurityErrorEvent;
+    
+    import flash.net.URLRequest;
+    import flash.net.URLLoader;
+    import flash.net.URLLoaderDataFormat;
+    
+    import flash.utils.ByteArray;
+    
+    import gnu.as3.gettext.MOFile;
+    import gnu.as3.gettext.parseMOBytes;
+    
+    public class URLLoaderService 
+                            extends EventDispatcher 
+                            implements IGettextService 
+    {
+        
+        private var loader:URLLoader;
+        private var data:ByteArray;
+        
+        private var _domainName:String;
+        
+        public function get domainName():String
+        {
+            return this._domainName;
+        }
+        
+        public function get catalog():MOFile
+        {
+            this.data.position = 0;
+            return parseMOBytes(this.data);
+        }
+    
+        public function URLLoaderService(baseURL:String = null)
+        {
+            super();
+            if (baseURL)
                 this._baseURL = baseURL;
-		}
+        }
         
         private var _baseURL:String;
         
@@ -71,65 +71,65 @@ package gnu.as3.gettext.services
             return _baseURL;
         }
         
-		public function reset():void
-		{
-			this._domainName = null;
-			this.data = null;
-			this.loader = null;
-		}
-		
-		public function load(path:String, domainName:String):void
-		{
-			this._domainName = domainName;
-			// set the format. We expect a ByteArray
-			loader = new URLLoader();
-			loader.dataFormat = URLLoaderDataFormat.BINARY;
-			
-			// set listeners
-			loader.addEventListener(Event.COMPLETE, onComplete);
-			loader.addEventListener(IOErrorEvent.IO_ERROR, 
-										onErrorEventToRedispatch);
-			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, 
-										onErrorEventToRedispatch);
-			
-			try 
-			{
-				loader.load(new URLRequest(this._baseURL+"/"+path));
-			} catch (e:Error)
-			{
-				this.dispatchEvent(
-					new IOErrorEvent(
-						IOErrorEvent.IO_ERROR, false, false, e.message
-					)
-				);
-			}
-		}
-		
-		private function onComplete(event:Event):void
-		{
-			loader.removeEventListener(Event.COMPLETE, onComplete);
-			loader.removeEventListener(IOErrorEvent.IO_ERROR, 
-										onErrorEventToRedispatch);
-			loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, 
-										onErrorEventToRedispatch);
-			this.data = loader.data;
-			this.dispatchEvent(event.clone());
-		}
-		
-		private function onErrorEventToRedispatch(event:ErrorEvent):void
-		{
-			loader.removeEventListener(Event.COMPLETE, onComplete);
-			loader.removeEventListener(IOErrorEvent.IO_ERROR, 
-										onErrorEventToRedispatch);
-			loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, 
-										onErrorEventToRedispatch);
-			this.dispatchEvent(
-				new IOErrorEvent(
-					IOErrorEvent.IO_ERROR, false, false, event.text
-					)
-				);
-		}
-		
-	}
+        public function reset():void
+        {
+            this._domainName = null;
+            this.data = null;
+            this.loader = null;
+        }
+        
+        public function load(path:String, domainName:String):void
+        {
+            this._domainName = domainName;
+            // set the format. We expect a ByteArray
+            loader = new URLLoader();
+            loader.dataFormat = URLLoaderDataFormat.BINARY;
+            
+            // set listeners
+            loader.addEventListener(Event.COMPLETE, onComplete);
+            loader.addEventListener(IOErrorEvent.IO_ERROR, 
+                                        onErrorEventToRedispatch);
+            loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, 
+                                        onErrorEventToRedispatch);
+            
+            try 
+            {
+                loader.load(new URLRequest(this._baseURL+"/"+path));
+            } catch (e:Error)
+            {
+                this.dispatchEvent(
+                    new IOErrorEvent(
+                        IOErrorEvent.IO_ERROR, false, false, e.message
+                    )
+                );
+            }
+        }
+        
+        private function onComplete(event:Event):void
+        {
+            loader.removeEventListener(Event.COMPLETE, onComplete);
+            loader.removeEventListener(IOErrorEvent.IO_ERROR, 
+                                        onErrorEventToRedispatch);
+            loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, 
+                                        onErrorEventToRedispatch);
+            this.data = loader.data;
+            this.dispatchEvent(event.clone());
+        }
+        
+        private function onErrorEventToRedispatch(event:ErrorEvent):void
+        {
+            loader.removeEventListener(Event.COMPLETE, onComplete);
+            loader.removeEventListener(IOErrorEvent.IO_ERROR, 
+                                        onErrorEventToRedispatch);
+            loader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, 
+                                        onErrorEventToRedispatch);
+            this.dispatchEvent(
+                new IOErrorEvent(
+                    IOErrorEvent.IO_ERROR, false, false, event.text
+                    )
+                );
+        }
+        
+    }
 
 }

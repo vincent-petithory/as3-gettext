@@ -20,10 +20,10 @@
  */
 package 
 {
-	
+    
     import astre.api.*;
-	import gnu.as3.gettext.*;
-	import gnu.as3.gettext.services.LocalFilesystemService;
+    import gnu.as3.gettext.*;
+    import gnu.as3.gettext.services.LocalFilesystemService;
 
     import flash.display.Sprite;
     import flash.events.Event;

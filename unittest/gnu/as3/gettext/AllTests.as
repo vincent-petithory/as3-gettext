@@ -20,9 +20,9 @@
  */
 package gnu.as3.gettext 
 {
-	
-	import astre.api.*;
-	
+    
+    import astre.api.*;
+    
     public final class AllTests 
     {
         
@@ -36,5 +36,5 @@ package gnu.as3.gettext
         }
 
     }
-	
+    
 }

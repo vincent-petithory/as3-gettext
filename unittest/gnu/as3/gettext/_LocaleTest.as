@@ -20,64 +20,64 @@
  */
 package gnu.as3.gettext 
 {
-	
-	import astre.api.*;
-	
-	public class _LocaleTest extends Test 
-	{
-		
-		public function _LocaleTest(name:String)
-		{
-			super(name);
-		}
-		
-		private var locale:_Locale;
-		
-		override public function setUp():void
-		{
-			locale = new _Locale();
-		}
-		
-		public function constLCVariablesMixCorrectly():void
-		{
-			assertEquals(locale.LC_MESSAGES, locale.LC_ALL & locale.LC_MESSAGES);
-			assertEquals(locale.LC_NUMERIC, locale.LC_ALL & locale.LC_NUMERIC);
-			assertNotEquals(1<<8, locale.LC_ALL & (1 << 8));
-		}
-		
-		public function languageConstOverridesLangConstAndLC_ALL():void
-		{
-			locale.LANGUAGE = mklocale(ISO_639_1.EN,ISO_3166.US);
-			assertEquals("en_US", locale.setlocale(locale.LC_ALL));
-		}
-		
-		public function langConstIsAFallBackWhenLanguageIsNotSetAndWhenUsingLC_ALL():void
-		{
-			assertEquals(locale.LANG, locale.setlocale(locale.LC_ALL));
-		}
-		
-		public function settingLCMessagesThenRetrievingTheValueIsConsistent():void
-		{
-			locale.setlocale(locale.LC_MESSAGES, "es_ES");
-			assertEquals("es_ES", locale.setlocale(locale.LC_MESSAGES));
-		}
-		
-		public function settingLCALLThenRetrievingTheValueOfLCXXXIsConsistent():void
-		{
-			locale.setlocale(locale.LC_ALL, "it_IT");
-			assertEquals("it_IT", locale.setlocale(locale.LC_MESSAGES));
-			assertEquals("it_IT", locale.setlocale(locale.LC_TIME));
-			assertEquals("it_IT", locale.setlocale(locale.LC_MONETARY));
-			assertEquals("it_IT", locale.setlocale(locale.LC_NUMERIC));
-			assertEquals("it_IT", locale.setlocale(locale.LC_COLLATE));
-			assertEquals("it_IT", locale.setlocale(locale.LC_CTYPE));
-		}
-		
-		override public function tearDown():void
-		{
-			locale = null;
-		}
-		
-	}
-	
+    
+    import astre.api.*;
+    
+    public class _LocaleTest extends Test 
+    {
+        
+        public function _LocaleTest(name:String)
+        {
+            super(name);
+        }
+        
+        private var locale:_Locale;
+        
+        override public function setUp():void
+        {
+            locale = new _Locale();
+        }
+        
+        public function constLCVariablesMixCorrectly():void
+        {
+            assertEquals(locale.LC_MESSAGES, locale.LC_ALL & locale.LC_MESSAGES);
+            assertEquals(locale.LC_NUMERIC, locale.LC_ALL & locale.LC_NUMERIC);
+            assertNotEquals(1<<8, locale.LC_ALL & (1 << 8));
+        }
+        
+        public function languageConstOverridesLangConstAndLC_ALL():void
+        {
+            locale.LANGUAGE = mklocale(ISO_639_1.EN,ISO_3166.US);
+            assertEquals("en_US", locale.setlocale(locale.LC_ALL));
+        }
+        
+        public function langConstIsAFallBackWhenLanguageIsNotSetAndWhenUsingLC_ALL():void
+        {
+            assertEquals(locale.LANG, locale.setlocale(locale.LC_ALL));
+        }
+        
+        public function settingLCMessagesThenRetrievingTheValueIsConsistent():void
+        {
+            locale.setlocale(locale.LC_MESSAGES, "es_ES");
+            assertEquals("es_ES", locale.setlocale(locale.LC_MESSAGES));
+        }
+        
+        public function settingLCALLThenRetrievingTheValueOfLCXXXIsConsistent():void
+        {
+            locale.setlocale(locale.LC_ALL, "it_IT");
+            assertEquals("it_IT", locale.setlocale(locale.LC_MESSAGES));
+            assertEquals("it_IT", locale.setlocale(locale.LC_TIME));
+            assertEquals("it_IT", locale.setlocale(locale.LC_MONETARY));
+            assertEquals("it_IT", locale.setlocale(locale.LC_NUMERIC));
+            assertEquals("it_IT", locale.setlocale(locale.LC_COLLATE));
+            assertEquals("it_IT", locale.setlocale(locale.LC_CTYPE));
+        }
+        
+        override public function tearDown():void
+        {
+            locale = null;
+        }
+        
+    }
+    
 }

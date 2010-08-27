@@ -19,12 +19,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 package 
-{	
+{    
 
     import gnu.as3.gettext.Locale;
-	
-	/**
-	 * An alias of <code>Locale.setlocale()</code>.
+    
+    /**
+     * An alias of <code>Locale.setlocale()</code>.
      * @see gnu.as3.gettext._Locale#setlocale()
      */
     public const setlocale:Function = Locale.setlocale;
