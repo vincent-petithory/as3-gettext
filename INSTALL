@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+                           Actionscript GNU Gettext
+                   Actionscript 3.0 library GNU Gettext port
+-------------------------------------------------------------------------------
+
+
+To build the swc file, type `ant`.
+To build the documentation, type `ant html`
+
+If you get errors while building, check for a Flex SDK available in your PATH.

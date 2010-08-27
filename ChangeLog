@@ -1,0 +1,645 @@
+commit dea7ae18f766d17e224d901d65c475896949529f
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Aug 27 10:38:15 2010 +0200
+
+    Add GNU files (README, Authors, ChangeLog, INSTALL, NEWS)
+
+ AUTHORS   |    1 +
+ ChangeLog |  632 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ INSTALL   |   10 +
+ NEWS      |    6 +
+ README    |    5 +
+ 5 files changed, 654 insertions(+), 0 deletions(-)
+
+commit 56c1e7036223bf33cc69cf667bd1a0a9e927ae23
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Aug 27 10:37:27 2010 +0200
+
+    Remove unused BUILD file.
+
+ BUILD            |    3 -
+ build.properties |   77 ++++++++--------
+ build.xml        |  263 +++++++++++++++++++++++++++---------------------------
+ 3 files changed, 169 insertions(+), 174 deletions(-)
+
+commit 7ab6a935a99591e7481c84eadc7c966ff1ac91d6
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Tue Apr 6 17:51:56 2010 +0200
+
+    Revision 0.4.1. Minor fixes.
+    
+     * Fix a bug where the URLLoaderService was incorrectly reset (issue 1)
+     * Change the event dispatched by the _Locale class (localeChange -> Event.CHANGE)
+     * Change the event dispatched by the _Gettext class (localeComplete -> Event.COMPLETE)
+     * Update the samples (they show it is better to listen to the Event.COMPLETE event
+       of the  _Gettext instance, rather than the Event.COMPLETE event of the service that loads the translations.
+
+ BUILD                                              |    4 +-
+ build.properties                                   |    2 +-
+ build.xml                                          |    2 +
+ samples/FlexHelloWorld/src/FlexHelloWorld.mxml     |   30 ++++++++++++-------
+ samples/HelloWorld/src/HelloWorld.as               |   10 +++++-
+ .../src/HelloWorldLocaleChange.as                  |    7 ++++-
+ src/gnu/as3/gettext/_FxGettext.as                  |    8 ++--
+ src/gnu/as3/gettext/_Gettext.as                    |   14 +++++++--
+ src/gnu/as3/gettext/_Locale.as                     |    8 ++++-
+ src/gnu/as3/gettext/services/URLLoaderService.as   |    1 -
+ 10 files changed, 60 insertions(+), 26 deletions(-)
+
+commit 287c5888394559848eb4f7cbdfef6844d8029c19
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Tue Mar 30 14:18:41 2010 +0200
+
+    Mark version 0.4
+
+ build.xml |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 6d51cab492d07700e2dc6668789078b1111d138d
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Tue Mar 30 11:20:28 2010 +0200
+
+    Fix several issues.
+    
+     * Fix an issue where the LocalFilesystemService dispatched a complete event when an error occured.
+     * Fix an issue in _Gettext class where the default service was not assigned correctly.
+     * Fix an issue in _Gettext class where the strings catalog was not loaded properly after a change of the locale.
+     * Fix an issue in _Gettext class where the localeComplete event was not dispatched after a change of the locale, when the correct catalog already exists.
+
+ BUILD                                              |    4 +-
+ .../en_US/LC_MESSAGES/helloworldlocalechange.mo    |  Bin 0 -> 455 bytes
+ .../es_ES/LC_MESSAGES/helloworldlocalechange.mo    |  Bin 0 -> 458 bytes
+ .../fr_FR/LC_MESSAGES/helloworldlocalechange.mo    |  Bin 0 -> 457 bytes
+ .../po/HelloWorldLocaleChange.pot                  |   21 ++++
+ samples/HelloWorldLocaleChange/po/en_US.po         |   21 ++++
+ samples/HelloWorldLocaleChange/po/es_ES.po         |   21 ++++
+ samples/HelloWorldLocaleChange/po/fr_FR.po         |   21 ++++
+ samples/HelloWorldLocaleChange/po/make_mo.sh       |   16 +++
+ samples/HelloWorldLocaleChange/po/make_po.sh       |    6 +
+ samples/HelloWorldLocaleChange/po/make_pot.sh      |    5 +
+ .../src/HelloWorldLocaleChange.as                  |  104 ++++++++++++++++++++
+ .../src/application-HelloWorldLocaleChange.xml     |   23 +++++
+ src/gnu/as3/gettext/MOFile.as                      |    5 +
+ src/gnu/as3/gettext/_Gettext.as                    |   32 ++++---
+ 15 files changed, 265 insertions(+), 14 deletions(-)
+
+commit ac9a81aa71b1649e0365ab39581d6c45610124f0
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Tue Mar 30 11:16:43 2010 +0200
+
+    Remove translatable strings from the library. Fix an issue in a service
+    
+     * Translatable strings are removed from the files to prevent initialization issues.
+       (Relevant error messages could not be properly displayed when an error occured)
+     * Change the po directory to po-examples (they are not used, but are good script examples)
+
+ po-examples/fr_FR.po                               |   37 ++++++++++++++++++++
+ po-examples/libas3gnugettext.pot                   |   37 ++++++++++++++++++++
+ po-examples/make_mo.sh                             |   15 ++++++++
+ po-examples/make_po.sh                             |    6 +++
+ po-examples/make_pot.sh                            |    5 +++
+ po/fr_FR.po                                        |   37 --------------------
+ po/libas3gnugettext.pot                            |   37 --------------------
+ po/make_mo.sh                                      |   15 --------
+ po/make_po.sh                                      |    6 ---
+ po/make_pot.sh                                     |    5 ---
+ src/gnu/as3/gettext/parseMOBytes.as                |   10 +++---
+ .../as3/gettext/services/LocalFilesystemService.as |   14 +++++---
+ 12 files changed, 114 insertions(+), 110 deletions(-)
+
+commit 8d122ec119f1f7738837e17cc0499f66b4f42e86
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Dec 11 12:53:51 2009 +0100
+
+    Changed internal structure of _FxGettext an _Gettext classes
+
+ BUILD                                          |    4 +-
+ samples/FlexHelloWorld/src/FlexHelloWorld.mxml |    6 +-
+ src/gnu/as3/gettext/_FxGettext.as              |   84 ++----------------------
+ src/gnu/as3/gettext/_Gettext.as                |    4 +-
+ 4 files changed, 13 insertions(+), 85 deletions(-)
+
+commit b5b40af2d39183f0ac1a1245c65d6c57c0210b3f
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Dec 11 12:53:09 2009 +0100
+
+    Fixed data property problem in LocalFilesystemService class
+
+ .../as3/gettext/services/LocalFilesystemService.as |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+commit e54aa98b425d804afe1f2c89a6e7d75d86f483cb
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Dec 11 12:17:58 2009 +0100
+
+    Renamed gnu.as3.gettext._FxGettext._N() to _d()
+
+ src/gnu/as3/gettext/_FxGettext.as |   62 ++++++++++++++++++------------------
+ 1 files changed, 31 insertions(+), 31 deletions(-)
+
+commit eddb6507273735e5574db0a3474964cb5adc14d3
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Dec 11 01:18:53 2009 +0100
+
+    Add a HelloWorld sample for Flex, FlexHelloWorld
+
+ .../locale/en_US/LC_MESSAGES/helloworld.mo         |  Bin 0 -> 441 bytes
+ .../locale/fr_FR/LC_MESSAGES/helloworld.mo         |  Bin 0 -> 444 bytes
+ samples/FlexHelloWorld/po/en_US.po                 |   21 +++++++
+ samples/FlexHelloWorld/po/fr_FR.po                 |   22 +++++++
+ samples/FlexHelloWorld/po/make_mo.sh               |   16 +++++
+ samples/FlexHelloWorld/po/make_po.sh               |    6 ++
+ samples/FlexHelloWorld/po/make_pot.sh              |    5 ++
+ samples/FlexHelloWorld/src/FlexHelloWorld.mxml     |   63 ++++++++++++++++++++
+ 8 files changed, 133 insertions(+), 0 deletions(-)
+
+commit 608cf8bc76b3b12f2e47da3e3f20188a2b051205
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Dec 11 01:16:38 2009 +0100
+
+    Add the support of Flex by introducing the _FxGettext class
+    
+     * Add gnu.as3.gettext._FxGettext class. It handles Flex features and introduces data binding to automatically update strings when the locale changes and when launching the application.
+     * Add gnu.as3.gettext.FxGettext constant : a singleton of _FxGettext that is to be used in the Flex application.
+
+ src/gnu/as3/gettext/FxGettext.as  |   30 ++++++++
+ src/gnu/as3/gettext/_FxGettext.as |  147 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 177 insertions(+), 0 deletions(-)
+
+commit 2ce75a836c002469e320ecac28981c7f1e399029
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Dec 11 01:15:59 2009 +0100
+
+    Updated services API. Minor corrections too.
+
+ src/gnu/as3/gettext/services/IGettextService.as    |    6 ++--
+ .../as3/gettext/services/LocalFilesystemService.as |   16 ++++++++----
+ src/gnu/as3/gettext/services/URLLoaderService.as   |   25 +++++++++++++++----
+ 3 files changed, 32 insertions(+), 15 deletions(-)
+
+commit 70ba2d5aedc9efb0f05be5003358b614c96e14e1
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Dec 11 01:13:40 2009 +0100
+
+    Enhance _Gettext and _Locale class to handle runtime changes of locales
+    
+     * Change _Locale.setlocale() function.
+     * Change _Gettext class to dispatch events when needed.
+     * Change _Gettext class to handle locale changes.
+     * Change _Gettext class to switch to a default service when no one is specified.
+
+ src/gnu/as3/gettext/_Gettext.as |   34 +++-
+ src/gnu/as3/gettext/_Locale.as  |  444 ++++++++++++++++++++-------------------
+ 2 files changed, 259 insertions(+), 219 deletions(-)
+
+commit 2219b7d82a3452915367b4af371fa999b5ad3c09
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Dec 11 01:11:11 2009 +0100
+
+    Refactored and updated HelloWorld sample
+    
+     * Renamed ASGettext constant to AsGettext
+     * New structure for the HelloWorld sample (add src/, po/, locale/ dirs)
+     * Updated HelloWorld sample to reflect the changes in the API
+
+ samples/HelloWorld/HelloWorld.as                   |   91 --------------------
+ samples/HelloWorld/application-HelloWorld.xml      |   23 -----
+ .../locale/en_US/LC_MESSAGES/helloworld.mo         |  Bin 0 -> 443 bytes
+ .../locale/fr_FR/LC_MESSAGES/helloworld.mo         |  Bin 440 -> 445 bytes
+ samples/HelloWorld/po/HelloWorld.pot               |   21 +++++
+ samples/HelloWorld/po/en_US.po                     |   21 +++++
+ samples/HelloWorld/po/fr_FR.po                     |   22 +++++
+ samples/HelloWorld/po/make_mo.sh                   |   16 ++++
+ samples/HelloWorld/po/make_po.sh                   |    6 ++
+ samples/HelloWorld/po/make_pot.sh                  |    5 +
+ samples/HelloWorld/src/HelloWorld.as               |   91 ++++++++++++++++++++
+ samples/HelloWorld/src/application-HelloWorld.xml  |   23 +++++
+ src/gnu/as3/gettext/ASGettext.as                   |   30 -------
+ src/gnu/as3/gettext/AsGettext.as                   |   30 +++++++
+ src/gnu/as3/gettext/dgettext.as                    |    4 +-
+ src/gnu/as3/gettext/gettext.as                     |    4 +-
+ src/gnu/as3/gettext/gettext_noop.as                |    4 +-
+ 17 files changed, 241 insertions(+), 150 deletions(-)
+
+commit 50a8038fd6d5630ff5d3a125ee50712a96603c7a
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Dec 11 01:06:11 2009 +0100
+
+    Add 2 scripts in the po directory
+    
+     * Add make_po.sh script to generate a po file from a pot (template) file
+     * Add make_pot.sh script to generate a pot file from the sources
+
+ po/make_po.sh  |    6 ++++++
+ po/make_pot.sh |    5 +++++
+ 2 files changed, 11 insertions(+), 0 deletions(-)
+
+commit 004c89d2953459b9de32b83cc95c2ccc5cc5966e
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Dec 11 01:02:15 2009 +0100
+
+    Add po directory where to store translation scripts and po files
+    of the gettext library
+    
+     * Delete <files> file (handled in a script instead)
+     * Remove locale dir, added po files in ./po
+     * Add a script to generate mo files from the po files in the ./po directory
+
+ files                                        |   21 --------------
+ libas3gnugettext.pot                         |   37 --------------------------
+ locale/fr_FR/LC_MESSAGES/libas3gnugettext.po |   37 --------------------------
+ po/fr_FR.po                                  |   37 ++++++++++++++++++++++++++
+ po/libas3gnugettext.pot                      |   37 ++++++++++++++++++++++++++
+ po/make_mo.sh                                |   15 ++++++++++
+ 6 files changed, 89 insertions(+), 95 deletions(-)
+
+commit b9d9c7196db29ab75cbad80bd55419658f3c494a
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Wed Dec 2 18:32:11 2009 +0100
+
+    Regenerated the files to be translated.
+
+ files                            |    3 +++
+ samples/HelloWorld/HelloWorld.as |    2 +-
+ src/mklocale.as                  |   38 +++++++++++++++++++-------------------
+ 3 files changed, 23 insertions(+), 20 deletions(-)
+
+commit aafb72d508c1bbc1f9069eacc03e022853fb15f5
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Wed Dec 2 12:19:18 2009 +0100
+
+    Rename incorrect parameter of the URLLoaderService.load() method.
+
+ src/gnu/as3/gettext/services/URLLoaderService.as |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit ef430209e22e5d17efd1129dcfb1c16161f8d5e9
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Wed Dec 2 11:58:21 2009 +0100
+
+    Minor changes in _Locale class.
+
+ src/gnu/as3/gettext/_Locale.as |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+commit a720c66af68f5e3e457896629ebc208df4a3c07a
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Wed Dec 2 10:30:13 2009 +0100
+
+    Updated HelloWorld sample. Minor fixes. Updated .gitignore
+
+ .gitignore                          |    8 ++++----
+ BUILD                               |    4 ++--
+ build.xml                           |    2 +-
+ samples/HelloWorld/HelloWorld.as    |    8 +++++---
+ samples/HelloWorld/HelloWorld.swf   |  Bin 22516 -> 0 bytes
+ src/gnu/as3/gettext/parseMOBytes.as |    2 +-
+ 6 files changed, 13 insertions(+), 11 deletions(-)
+
+commit 5ddb0eac4976612a9379c7935394b46431a39767
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Tue Dec 1 12:04:20 2009 +0100
+
+    Minor improvments, docs, refactoring.
+
+ build.xml                                          |   38 +------
+ samples/HelloWorld.as                              |   89 -------------
+ samples/HelloWorld/HelloWorld.as                   |   89 +++++++++++++
+ samples/HelloWorld/HelloWorld.swf                  |  Bin 0 -> 22516 bytes
+ samples/HelloWorld/application-HelloWorld.xml      |   23 ++++
+ .../locale/fr_FR/LC_MESSAGES/helloworld.mo         |  Bin 0 -> 440 bytes
+ samples/application-sample-tmp.xml                 |   23 ----
+ samples/locale/fr_FR/LC_MESSAGES/helloworld.mo     |  Bin 440 -> 0 bytes
+ src/gnu/as3/gettext/ISO_3166.as                    |   16 +++-
+ src/gnu/as3/gettext/ISO_639_1.as                   |   14 ++
+ src/gnu/as3/gettext/PACKAGE.as                     |    3 +
+ src/gnu/as3/gettext/_.as                           |    2 +-
+ src/gnu/as3/gettext/_Gettext.as                    |  134 ++++++++++++++------
+ src/gnu/as3/gettext/_Locale.as                     |   22 ++--
+ src/gnu/as3/gettext/gettext_noop.as                |   31 +++++
+ src/gnu/as3/gettext/parseMOBytes.as                |    6 +-
+ .../as3/gettext/services/LocalFilesystemService.as |    6 +-
+ src/gnu/as3/gettext/services/_.as                  |   37 ++++++
+ src/gnu/as3/gettext/sprintf.as                     |   62 +++++++++
+ 19 files changed, 388 insertions(+), 207 deletions(-)
+
+commit 1ec67b2e09cf3643a1c6edc15ccd6a4bec93bd27
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Mon Nov 30 16:45:54 2009 +0100
+
+    Added missing files of previous commit.
+
+ src/gnu/as3/gettext/gettext.as               |   31 +++++
+ unittest/gnu/as3/gettext/parseMOBytesTest.as |  182 ++++++++++++++++++++++++++
+ 2 files changed, 213 insertions(+), 0 deletions(-)
+
+commit 06e596ae6ed6ebae4328f60349b8b154130edf35
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Mon Nov 30 16:43:37 2009 +0100
+
+    Major improvments and refactoring
+    
+     * Remove _() top level alias
+     * Add gettext() and dgettext() aliases
+     * Add internal _() alias, only for use in that library.
+
+ BUILD                                        |    4 +-
+ build.xml                                    |    2 +-
+ files                                        |    7 +-
+ libas3gnugettext.pot                         |    4 +-
+ src/_.as                                     |   33 -----
+ src/gnu/as3/gettext/ASGettext.as             |   30 +++++
+ src/gnu/as3/gettext/Gettext.as               |   30 -----
+ src/gnu/as3/gettext/PACKAGE.as               |   25 ++++
+ src/gnu/as3/gettext/_.as                     |   34 +++++
+ src/gnu/as3/gettext/_Gettext.as              |   29 ++++-
+ src/gnu/as3/gettext/dgettext.as              |   31 +++++
+ unittest/AllTests.as                         |    4 +-
+ unittest/gnu/as3/gettext/AllTests.as         |    6 +-
+ unittest/gnu/as3/gettext/GettextTest.as      |   86 ------------
+ unittest/gnu/as3/gettext/LocaleTest.as       |   84 ------------
+ unittest/gnu/as3/gettext/ParseMOBytesTest.as |  182 --------------------------
+ unittest/gnu/as3/gettext/_GettextTest.as     |   86 ++++++++++++
+ unittest/gnu/as3/gettext/_LocaleTest.as      |   84 ++++++++++++
+ 18 files changed, 330 insertions(+), 431 deletions(-)
+
+commit f8763f7cd4fd50e32bfd99f50f1dc879cd914610
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Mon Nov 30 14:19:53 2009 +0100
+
+    Change description of the project in the metadatas.
+
+ build.xml |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit 424bea941a64e09bdd485a120c3b1ec4f10b5b7e
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Mon Nov 30 12:35:05 2009 +0100
+
+    Started localization of the lib.
+
+ BUILD                                              |    4 +-
+ build.xml                                          |    8 ++--
+ files                                              |   15 ++++++++
+ libas3gnugettext.pot                               |   37 ++++++++++++++++++++
+ locale/fr_FR/LC_MESSAGES/libas3gnugettext.po       |   37 ++++++++++++++++++++
+ src/gnu/as3/gettext/_Gettext.as                    |   11 +++++-
+ src/gnu/as3/gettext/_Locale.as                     |    4 +-
+ src/gnu/as3/gettext/parseMOBytes.as                |   16 +++++---
+ unittest/AllTests.as                               |   19 ++++++++++
+ unittest/gnu/as3/gettext/LocaleTest.as             |    4 +--
+ .../locale/fr_FR/LC_MESSAGES/libas3gnugettext.mo   |  Bin 0 -> 915 bytes
+ 11 files changed, 136 insertions(+), 19 deletions(-)
+
+commit f3e51a40bfd8b01d0e3a22dbb09b75462ff8a513
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Nov 27 17:09:20 2009 +0100
+
+    Minor fixes (docs)
+    
+     * Fixed documentation problem in _Locale class
+     * Indents
+     * Error in URLLoaderService
+
+ BUILD                                              |    6 +-
+ src/gnu/as3/gettext/_Locale.as                     |   42 ++++++++++----------
+ .../as3/gettext/services/LocalFilesystemService.as |    4 +-
+ src/gnu/as3/gettext/services/URLLoaderService.as   |   24 ++++++++---
+ 4 files changed, 45 insertions(+), 31 deletions(-)
+
+commit d29501186e0c8cd6c65d1655499e46b06be14c75
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Fri Nov 27 16:40:02 2009 +0100
+
+    Major improvments. RC1
+    
+     * Add a HelloWorld sample
+     * Improvments in ISO codes (still need to be improved in performances)
+     * Finish basic implementation of gettext()
+     * Changed _Locale
+     * Implement some services (need some tests though)
+
+ samples/HelloAsGettext.as                          |   39 ---------
+ samples/HelloWorld.as                              |   89 ++++++++++++++++++++
+ samples/locale/fr_FR/LC_MESSAGES/helloworld.mo     |  Bin 0 -> 440 bytes
+ src/gnu/as3/gettext/ISO_3166.as                    |    9 ++-
+ src/gnu/as3/gettext/ISO_639_1.as                   |    9 ++-
+ src/gnu/as3/gettext/_Gettext.as                    |   52 +++++++-----
+ src/gnu/as3/gettext/_Locale.as                     |   30 ++++++-
+ src/gnu/as3/gettext/services/IGettextService.as    |   11 ++-
+ .../services/LocalAsyncFilesystemService.as        |   81 ------------------
+ .../as3/gettext/services/LocalFilesystemService.as |   46 ++++++++--
+ src/gnu/as3/gettext/services/URLLoaderService.as   |   19 ++++-
+ src/mklocale.as                                    |    5 +-
+ 12 files changed, 222 insertions(+), 168 deletions(-)
+
+commit aeae993d05bd06bee306413ec5400ec5114230b2
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Thu Nov 26 15:28:59 2009 +0100
+
+    Add notices, documentation and corrections to Gettext class
+    
+     * Documentation in various classes
+     * License headers in many files
+     * Corrections in Gettext class : the service that loads the messages can be triggered in the bindtextdomain method
+
+ build.xml                                          |   21 +++++
+ src/gnu/as3/gettext/Gettext.as                     |    3 +
+ src/gnu/as3/gettext/Locale.as                      |    3 +
+ src/gnu/as3/gettext/_Gettext.as                    |   23 +++++-
+ src/gnu/as3/gettext/_Locale.as                     |   78 ++++++++++++++++++-
+ src/gnu/as3/gettext/services/IGettextService.as    |   23 +++++-
+ .../services/LocalAsyncFilesystemService.as        |   81 ++++++++++++++++++++
+ .../as3/gettext/services/LocalFilesystemService.as |   81 ++++++++++++++++++++
+ src/gnu/as3/gettext/services/URLLoaderService.as   |   25 ++++++-
+ unittest/AllTests.as                               |   21 +++++
+ unittest/application-tmp.xml                       |   23 +++++-
+ unittest/gnu/as3/gettext/AllTests.as               |   21 +++++
+ unittest/gnu/as3/gettext/GettextTest.as            |    2 +-
+ unittest/gnu/as3/gettext/LocaleTest.as             |    5 +-
+ unittest/gnu/as3/gettext/ParseMOBytesTest.as       |   21 +++++
+ unittest/locale/LC_MESSAGES/pidgin.mo              |  Bin 0 -> 331349 bytes
+ 16 files changed, 415 insertions(+), 16 deletions(-)
+
+commit 7334989b09ac24969f07949dd285d2646e269ea4
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Thu Nov 26 15:18:44 2009 +0100
+
+    Created constants for iso codes instead of dictionary.
+    
+     * Delete ISO_639_1_FlashPlayerSubset constant
+     * Create constants in ISO_3166 class
+     * Create constants in ISO_639_1 class
+
+ src/gnu/as3/gettext/ISO_3166.as                    |  522 ++++++++++----------
+ src/gnu/as3/gettext/ISO_639_1.as                   |  393 ++++++++-------
+ src/gnu/as3/gettext/ISO_639_1_FlashPlayerSubset.as |   49 --
+ 3 files changed, 477 insertions(+), 487 deletions(-)
+
+commit 44624cb28b1e7d37cbd7111229ba09123e9cc18d
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Thu Nov 26 15:16:45 2009 +0100
+
+    Add and/or move some functions/aliases
+    
+     * Add top level _() alias of gettext() function
+     * Move mklocale() function to top level
+     * Move setlocale() alias to top level
+
+ src/_.as                         |    6 +++++
+ src/gnu/as3/gettext/mklocale.as  |   37 ----------------------------------
+ src/gnu/as3/gettext/setlocale.as |   32 -----------------------------
+ src/mklocale.as                  |   41 ++++++++++++++++++++++++++++++++++++++
+ src/setlocale.as                 |   34 +++++++++++++++++++++++++++++++
+ 5 files changed, 81 insertions(+), 69 deletions(-)
+
+commit cb76e3df4ea164405c0321097cb7554d1870d4f0
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Thu Nov 26 11:11:17 2009 +0100
+
+    Little performance improvements in MO file parsing
+    
+     * Changed parseMOBytes function.
+
+ src/gnu/as3/gettext/parseMOBytes.as |   23 +++++++----------------
+ 1 files changed, 7 insertions(+), 16 deletions(-)
+
+commit e299004e00dd335ef407897d96c1fffebd2ef977
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Thu Nov 26 11:07:55 2009 +0100
+
+    Cleaning and updated build system
+
+ .gitignore                             |    1 +
+ BUILD                                  |    6 +-
+ TODO                                   |    2 -
+ as3gnuTasks.jar                        |  Bin 0 -> 15434 bytes
+ as3gnuTasks.tasks                      |   10 ++
+ build.properties                       |   13 +-
+ build.xml                              |  215 ++++++++++++++++++++------------
+ flexc.jar                              |  Bin 17667 -> 0 bytes
+ flexc.tasks                            |   10 --
+ samples/HelloAsGettext.as              |   78 ++++++------
+ samples/application-HelloAsGettext.xml |   23 ----
+ samples/application-sample-tmp.xml     |   44 ++++----
+ unittest/application-tmp.xml           |    2 +-
+ 13 files changed, 215 insertions(+), 189 deletions(-)
+
+commit ca5450f2d05377d2f7bd09600e3990e3d781e13c
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Thu Nov 26 09:52:27 2009 +0100
+
+    Add some documentation, new mklocale() function, ISO_639_1 for FP.
+    
+     * Add documentation in _Gettext and _Locale classes
+     * Add mklocale() method to create a complete locale string
+     * Modified ISO-639-1 subset for Flash Player
+
+ src/gnu/as3/gettext/ISO_639_1_FlashPlayerSubset.as |   96 ++++++++++----------
+ src/gnu/as3/gettext/_Gettext.as                    |   15 +++-
+ src/gnu/as3/gettext/_Locale.as                     |   25 ++++-
+ src/gnu/as3/gettext/mklocale.as                    |   37 ++++++++
+ 4 files changed, 118 insertions(+), 55 deletions(-)
+
+commit e0ca04a5c4e414d117d1363a80c0770ef5fbeb3c
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Thu Nov 26 09:49:39 2009 +0100
+
+    Add _() in Top Level, an alias of Gettext.gettext() method.
+
+ src/_.as |   27 +++++++++++++++++++++++++++
+ 1 files changed, 27 insertions(+), 0 deletions(-)
+
+commit a9f67534fa76090355701955dde121ffb74590a1
+Author: U-LT-DE-LUNAR\lunar <lunar@LT-de-lunar.(none)>
+Date:   Thu Oct 22 00:33:30 2009 +0200
+
+    Add ISO standards, a sample, unitests for Locale and Gettext, textdomain and bindtextdomain impl.
+    
+     * Implement bindtextdomain() method
+     * Implement textdomain() method
+     * Separated Locale and Gettext so they are not singleton anymore. However, a default singleton couple is provided for conveniance
+     * Implement a service system in the Gettext class to load the catalogs. The service system is completely external, so anyone can use what he wants to load the catalogs. Default common services are provided, like URLLoaderService, FileLoaderService and others.
+     * Fixed LC_xxx system. Currently, any LC_xxx can be set but Gettext only loads LC_MESSAGES catalogs actually.
+
+ BUILD                                              |    3 +
+ TODO                                               |    2 +
+ build.properties                                   |    6 +-
+ build.xml                                          |  104 +++++---
+ build/flexc.jar                                    |  Bin 17667 -> 0 bytes
+ build/flexc.tasks                                  |   10 -
+ flexc.jar                                          |  Bin 0 -> 17667 bytes
+ flexc.tasks                                        |   10 +
+ samples/HelloAsGettext.as                          |   39 +++
+ samples/application-HelloAsGettext.xml             |   23 ++
+ samples/application-sample-tmp.xml                 |   23 ++
+ src/gnu/as3/gettext/Gettext.as                     |   27 ++
+ src/gnu/as3/gettext/ISO_3166.as                    |  271 ++++++++++++++++++++
+ src/gnu/as3/gettext/ISO_639_1.as                   |  210 +++++++++++++++
+ src/gnu/as3/gettext/ISO_639_1_FlashPlayerSubset.as |   49 ++++
+ src/gnu/as3/gettext/Locale.as                      |   27 ++
+ src/gnu/as3/gettext/_Gettext.as                    |  130 ++++++++++
+ src/gnu/as3/gettext/_Locale.as                     |  131 ++++++++++
+ src/gnu/as3/gettext/parseMOBytes.as                |    2 +-
+ src/gnu/as3/gettext/services/IGettextService.as    |   15 +
+ src/gnu/as3/gettext/services/URLLoaderService.as   |   76 ++++++
+ src/gnu/as3/gettext/setlocale.as                   |   32 +++
+ unittest/gnu/as3/gettext/AllTests.as               |    2 +
+ unittest/gnu/as3/gettext/GettextTest.as            |   86 ++++++
+ unittest/gnu/as3/gettext/LocaleTest.as             |   85 ++++++
+ 25 files changed, 1315 insertions(+), 48 deletions(-)
+
+commit cb8803755a659275557594d06b90faae1c721854
+Author: Vincent Petithory <vincent@vincent-desktop.(none)>
+Date:   Tue Oct 20 18:25:18 2009 +0200
+
+    Provide the GPL v3 in the COPYING file.
+
+ COPYING |  674 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 674 insertions(+), 0 deletions(-)
+
+commit bae49e28205e6ae8c4472bbb9dbe145b653e6dda
+Author: Vincent Petithory <vincent@vincent-desktop.(none)>
+Date:   Tue Oct 20 18:22:13 2009 +0200
+
+    Extended the support of the MO file parsing, done some refactoring
+    
+     * MOParser.parse() is now a global function, parseMOBytes()
+     * Metadata in MO files are retrevied.
+     * The MOFile class holds all the informations of the MO file.
+     * License is GPL.
+
+ src/gnu/as3/gettext/GettextError.as          |   25 ++++
+ src/gnu/as3/gettext/MOFile.as                |  175 ++++++++++++++++++++++++++
+ src/gnu/as3/gettext/MOParser.as              |  166 ------------------------
+ src/gnu/as3/gettext/parseMOBytes.as          |  167 ++++++++++++++++++++++++
+ unittest/gnu/as3/gettext/AllTests.as         |    3 +-
+ unittest/gnu/as3/gettext/MOParserTest.as     |  129 -------------------
+ unittest/gnu/as3/gettext/ParseMOBytesTest.as |  161 +++++++++++++++++++++++
+ unittest/hellogt.mo                          |  Bin 440 -> 0 bytes
+ 8 files changed, 529 insertions(+), 297 deletions(-)
+
+commit 590eea6d55d50e3516e0cf389353a5fe8745c32b
+Author: Vincent Petithory <vincent@vincent-desktop.(none)>
+Date:   Tue Oct 20 12:56:53 2009 +0200
+
+    Initial commit
+    
+     * Basic parsing of an MO file.
+     * Retrieves original and translations strings
+     * Retrieves header data
+
+ .gitignore                               |    9 ++
+ build.properties                         |   43 ++++++++
+ build.xml                                |  101 ++++++++++++++++++
+ build/flexc.jar                          |  Bin 0 -> 17667 bytes
+ build/flexc.tasks                        |   10 ++
+ src/gnu/as3/gettext/GettextError.as      |   13 +++
+ src/gnu/as3/gettext/MOParser.as          |  166 ++++++++++++++++++++++++++++++
+ unittest/AllTests.as                     |   26 +++++
+ unittest/application-tmp.xml             |   23 ++++
+ unittest/gnu/as3/gettext/AllTests.as     |   19 ++++
+ unittest/gnu/as3/gettext/MOParserTest.as |  129 +++++++++++++++++++++++
+ unittest/hellogt.mo                      |  Bin 0 -> 440 bytes
+ unittest/pidgin.mo                       |  Bin 0 -> 331349 bytes
+ 13 files changed, 539 insertions(+), 0 deletions(-)
