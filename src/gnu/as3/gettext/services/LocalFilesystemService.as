@@ -60,21 +60,39 @@ package gnu.as3.gettext.services
             return this._domainName;
         }
         
+        private var _locale:String;
+        
+        public function get locale():String
+        {
+            return this._locale;
+        }
+        
         private var data:ByteArray;
         
         public function get catalog():MOFile
         {
-            return parseMOBytes(this.data);
+            this.data.position = 0;
+            var moFile:MOFile = parseMOBytes(this.data);
+            moFile.locale = this._locale;
+            return moFile;
         }
         
         public function reset():void
         {
             this._domainName = null;
             this.data = null;
+            this._locale = null;
         }
         
-        public function load(path:String, domainName:String):void
+        public function clone():IGettextService
         {
+            var service:IGettextService = new LocalFilesystemService(this._baseURL);
+            return service;
+        }
+        
+        public function load(path:String, domainName:String, locale:String):void
+        {
+            this._locale = locale;
             this._domainName = domainName;
             var hasErrors:Boolean = false;
             try 

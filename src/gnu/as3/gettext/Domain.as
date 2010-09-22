@@ -1,5 +1,5 @@
 /*
- * IGettextService.as
+ * Domain.as
  * This file is part of Actionscript GNU Gettext 
  *
  * Copyright (C) 2010 - Vincent Petithory
@@ -18,27 +18,33 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package gnu.as3.gettext.services 
+package gnu.as3.gettext
 {
-
-    import flash.events.IEventDispatcher;
     
-    import gnu.as3.gettext.MOFile;
+    import flash.utils.Dictionary;
     
     /**
-     * A service to load a catalog. Dispatches a complete or an ioError events.
+     * Holds data about a domain
      */
-    public interface IGettextService extends IEventDispatcher 
+    public class Domain
     {
-        function get domainName():String;
-        function get catalog():MOFile;
-        function get baseURL():String;
-        function get locale():String;
-        function clone():IGettextService;
+        // locale/MOFile
+        public var catalogs:Dictionary;
         
-        function load(path:String, domainName:String, locale:String):void;
-        function reset():void;
+        /**
+         * The locations associated to the domains.
+         */
+        public var binding:String;
+        
+        public var name:String;
+        
+        public function Domain(name:String, binding:String, catalogs:Dictionary = null)
+        {
+            this.name = name;
+            this.binding = binding;
+            this.catalogs = catalogs || new Dictionary();
+        }
         
     }
-
+    
 }

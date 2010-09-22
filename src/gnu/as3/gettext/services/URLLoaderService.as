@@ -51,10 +51,19 @@ package gnu.as3.gettext.services
             return this._domainName;
         }
         
+        private var _locale:String;
+        
+        public function get locale():String
+        {
+            return this._locale;
+        }
+        
         public function get catalog():MOFile
         {
             this.data.position = 0;
-            return parseMOBytes(this.data);
+            var moFile:MOFile = parseMOBytes(this.data);
+            moFile.locale = this._locale;
+            return moFile;
         }
     
         public function URLLoaderService(baseURL:String = null)
@@ -76,10 +85,18 @@ package gnu.as3.gettext.services
             this._domainName = null;
             this.data = null;
             this.loader = null;
+            this._locale = null;
         }
         
-        public function load(path:String, domainName:String):void
+        public function clone():IGettextService
         {
+            var service:IGettextService = new URLLoaderService(this._baseURL);
+            return service;
+        }
+        
+        public function load(path:String, domainName:String, locale:String):void
+        {
+            this._locale = locale;
             this._domainName = domainName;
             // set the format. We expect a ByteArray
             loader = new URLLoader();

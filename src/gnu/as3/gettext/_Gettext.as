@@ -53,21 +53,9 @@ package gnu.as3.gettext
 
         /**
          * @private
-         * The locations associated to the domains.
+         * The registered domains.
          */
-        private var _domainBindings:Dictionary;
-        
-        /**
-         * @private
-         * The catalogs associated to the domains.
-         */
-        private var _domainCatalogs:Dictionary;
-        
-        /**
-         * @private
-         * A shortcut to the active domain translation strings.
-         */
-        private var currentStrings:Dictionary;
+        private var _domains:Dictionary;
         
         /** 
          * @private
@@ -78,6 +66,8 @@ package gnu.as3.gettext
          * The default directory where locales are stored.
          */
         public const DEFAULT_DIR_NAME:String = "locale";
+        
+        private var ignoredDomains:Array;
         
         /**
          * The default service to be used when the locale is changed.
@@ -92,8 +82,8 @@ package gnu.as3.gettext
         public function _Gettext(locale:_Locale)
         {
             this.__locale = locale;
-            _domainBindings = new Dictionary(false);
-            _domainCatalogs = new Dictionary(false);
+            _domains = new Dictionary(false);
+            ignoredDomains = new Array();
         }
         
         /**
@@ -116,9 +106,9 @@ package gnu.as3.gettext
                 isLocaleListened = true;
             }
             this.currentLocale = __locale.setlocale(__locale.LC_MESSAGES,null);
-            if (_domainBindings[domainName] == undefined)
+            if (_domains[domainName] == undefined)
             {
-                _domainBindings[domainName] = DEFAULT_DIR_NAME;
+                _domains[domainName] = new Domain(domainName, DEFAULT_DIR_NAME)
             }
             
             if (dirName != null)
@@ -127,7 +117,7 @@ package gnu.as3.gettext
                 var l:int = dirName.length-1;
                 if (dirName.charAt(l) == "/")
                     dirName = dirName.substring(0,l);
-                _domainBindings[domainName] = dirName;
+                _domains[domainName].binding = dirName;
             }
             // Assign the default service
             if (service)
@@ -135,9 +125,9 @@ package gnu.as3.gettext
                 if (this.defaultService == null)
                     this.defaultService = service;
                 
-                tryService(service, _domainBindings[domainName], domainName);
+                tryService(service, _domains[domainName].binding, domainName);
             }
-            return _domainBindings[domainName];
+            return _domains[domainName].binding;
         }
         
         /**
@@ -164,10 +154,12 @@ package gnu.as3.gettext
             if (domainName != null)
             {
                 this.currentDomainName = domainName;
-                if (_domainCatalogs[this.currentDomainName] != null)
-                    this.currentStrings = _domainCatalogs[this.currentDomainName].strings;
                 if (service)
+                {
+                    if (this.defaultService == null)
+                        this.defaultService = service;
                     tryService(service, this.bindtextdomain(this.currentDomainName), this.currentDomainName);
+                }
                 return currentDomainName;
             }
             return this.currentDomainName;
@@ -179,9 +171,12 @@ package gnu.as3.gettext
          */
         public function ignore(domain:String):void
         {
-            var empty:MOFile = new MOFile();
-            empty.strings = new Dictionary();
-            this._domainCatalogs[domain] = empty;
+            var index:int = this.ignoredDomains.indexOf(domain);
+            if (index != -1)
+            {
+                this.ignoredDomains.splice(index, 1);
+            }
+            ignoredDomains.push(domain);
         }
         
         /**
@@ -190,11 +185,8 @@ package gnu.as3.gettext
          */
         public function gettext(string:String):String
         {
-            var str:String = this.currentStrings[string];
-            if (str && str != "")
-                return str;
-            else 
-                return string;
+            return this.dgettext(this.currentDomainName, string);
+            
         }
         
         /**
@@ -203,11 +195,20 @@ package gnu.as3.gettext
          */
         public function dgettext(domain:String, string:String):String
         {
-            var str:String = this._domainCatalogs[domain].strings[string];
-            if (str && str != "")
-                return str;
-            else
+            if (this.ignoredDomains.indexOf(domain) != -1)
                 return string;
+            
+            var locales:Array = this.getLocales();
+            var catalogs:Dictionary = this._domains[domain].catalogs;
+            for each (var locale:String in locales)
+            {
+                var str:String = catalogs[locale].strings[string];
+                if (str && str != "")
+                {
+                    return str;
+                }
+            }
+            return string;
         }
         
         /**
@@ -237,6 +238,28 @@ package gnu.as3.gettext
             this.tryService(this.defaultService, this.bindtextdomain(this.currentDomainName), this.currentDomainName);
         }
         
+        private static function removeDuplicates(a:Array):Array
+        {
+            var n:int = a.length;
+            var a2:Array = new Array();
+            for (var i:int = 0; i < n; i++)
+            {
+                if (a2.indexOf(a[i]) == -1)
+                {
+                    a2.push(a[i]);
+                }
+            }
+            return a2;
+        }
+        
+        private function getLocales():Array
+        {
+            var locales:Array = this.__locale.getPriorityList();
+            locales = [this.currentLocale].concat(locales);
+            locales = removeDuplicates(locales);
+            return locales;
+        }
+        
         /**
          * @private
          * Attempts to launch the service that will load the translations.
@@ -247,23 +270,32 @@ package gnu.as3.gettext
                                 domainName:String
                             ):void
         {
-            var catalog:MOFile = _domainCatalogs[domainName];
-            if (catalog != null && catalog.locale == __locale.setlocale(__locale.LC_MESSAGES))
+            // Get the list of locales and put the preferred locale at the end
+            // to ensure it is the last to be loaded
+            var locales:Array = this.getLocales();
+            locales = locales.reverse();
+            for each (var locale:String in locales)
             {
-                // catalog is already loaded; do not reload.
-                // We do not want to call the onComplete listener here.
-                service.dispatchEvent(new Event(Event.COMPLETE));
-                this.dispatchEvent(new Event(Event.COMPLETE));
+                var catalog:MOFile = _domains[domainName].catalogs[locale];
+                if (catalog != null && catalog.locale == locale)
+                {
+                    // catalog is already loaded; do not reload.
+                    // We do not want to call the onComplete listener here.
+                    //service.dispatchEvent(new Event(Event.COMPLETE));
+                    this.dispatchEvent(new Event(Event.COMPLETE));
+                }
+                else
+                {
+                    // load the catalog
+                    var service2:IGettextService = service.clone();
+                    service2.addEventListener(Event.COMPLETE, onComplete, false, 0x7fffff);
+                    service2.load(dirName+"/"+
+                                locale+"/"+
+                                this.__locale.LC_MESSAGES_DIR+"/"+
+                                domainName+".mo", domainName, locale);
+                }
             }
-            else
-            {
-                // load the catalog
-                service.addEventListener(Event.COMPLETE, onComplete, false, 0x7fffff);
-                service.load(dirName+"/"+
-                            this.currentLocale+"/"+
-                            this.__locale.LC_MESSAGES_DIR+"/"+
-                            domainName+".mo", domainName);
-            }
+            
         }
         
         /**
@@ -274,11 +306,9 @@ package gnu.as3.gettext
             var service:IGettextService = event.target as IGettextService;
             service.removeEventListener(Event.COMPLETE, onComplete);
             var catalog:MOFile = service.catalog;
-            catalog.locale = this.currentLocale;
-            _domainCatalogs[service.domainName] = catalog;
-            if (this.currentDomainName != null)
-                this.currentStrings = _domainCatalogs[this.currentDomainName].strings;
-            this.dispatchEvent(new Event(Event.COMPLETE));
+            _domains[service.domainName].catalogs[service.locale] = catalog;
+            if (service.locale == this.currentLocale)
+                this.dispatchEvent(new Event(Event.COMPLETE));
         }
         
         

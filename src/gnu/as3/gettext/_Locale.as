@@ -212,6 +212,15 @@ package gnu.as3.gettext
             var lc:uint;
             if (locale == null)
             {
+                if (this.LANGUAGE != null && this.LANGUAGE != "")
+                {
+                    // return the first locale of the list
+                    var i:int = this.LANGUAGE.indexOf(":");
+                    if (i == -1)
+                        return this.LANGUAGE;
+                    else
+                        return this.LANGUAGE.substring(0,i);
+                }
                 if (this.LC_ALL != null && this.LC_ALL != "")
                 {
                     return this.LC_ALL;
@@ -252,6 +261,16 @@ package gnu.as3.gettext
                     this.dispatchEvent(new Event(Event.CHANGE));
             }
             return locale;
+        }
+        
+        private static const FILTER_LOCALE_LIST:Function = function (item:String,i:int,a:Array):Boolean
+        {
+            return item.length > 0;
+        }
+        
+        public function getPriorityList():Array
+        {
+            return this.LANGUAGE.split(":").filter(FILTER_LOCALE_LIST);
         }
         
     }
