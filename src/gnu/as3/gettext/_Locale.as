@@ -84,12 +84,6 @@ package gnu.as3.gettext
          */
         public const LC_CTYPE:uint = 1 << pwd_inc++;
         
-        /**
-         * A shortcut to all the categories.
-         */
-        public const LC_ALL:uint =     LC_MESSAGES | LC_TIME      | 
-                                    LC_MONETARY | LC_NUMERIC | 
-                                    LC_COLLATE     | LC_CTYPE;
         
         
         /**
@@ -106,14 +100,22 @@ package gnu.as3.gettext
         
         /**
          * @private
-         * The hash table of the locales associated to the categories.
+         * The dictionary of the locales associated to the categories.
          */
         private var _locales:Dictionary = new Dictionary(false);
         
         /**
+         * The priority list of locales, colon-separeted.
+         * Unlike the system LANGUAGE variable used by the legacy Gettext
+         * library, you have to set the complete locale (ll_CC), not just the 
+         * locale itself (ll).
+         */
+        public var LANGUAGE:String;
+        
+        /**
          * The user default language. Use the mklocale() function to set it.
          */
-        public var LANGUAGE:String = "";
+        public var LC_ALL:String;
         
         /**
          * @private
@@ -210,9 +212,9 @@ package gnu.as3.gettext
             var lc:uint;
             if (locale == null)
             {
-                if (this.LANGUAGE != null && this.LANGUAGE != "")
+                if (this.LC_ALL != null && this.LC_ALL != "")
                 {
-                    return this.LANGUAGE;
+                    return this.LC_ALL;
                 }
                 var numCats:uint = 0;
                 var cat:uint = 0;

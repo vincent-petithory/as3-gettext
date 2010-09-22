@@ -32,7 +32,7 @@ package gnu.as3.gettext
      * <p>The most important property is the <code>strings</code> property. 
      * It is a <code>Dictionary</code> instance holding the original strings 
      * and the translations of the MO file. Original strings are the keys 
-     * of this Dictionary, and translated strings are the values. Though<br/>
+     * of this Dictionary, and translated strings are the values. 
      * Almost all the other properties are metadata found in the MO file.</p>
      * 
      */
