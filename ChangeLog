@@ -1,9 +1,61 @@
-commit a8fc36b106ce8cbcd454e897eb48935119314958
+commit c2d721ef682a7fb34ba0ca77affb105ef62f10e1
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Wed Sep 22 22:57:07 2010 +0200
+
+    Add a sample (PriorityList) showing the usage of LANGUAGE for defining a priority list of languages
+
+ .../locale/fr_FR/LC_MESSAGES/prioritylist.mo       |  Bin 0 -> 569 bytes
+ .../locale/pt_PT/LC_MESSAGES/prioritylist.mo       |  Bin 0 -> 468 bytes
+ samples/PriorityList/po/fr_FR.po                   |   25 +++++
+ samples/PriorityList/po/make_mo.sh                 |   16 +++
+ samples/PriorityList/po/make_po.sh                 |    6 +
+ samples/PriorityList/po/make_pot.sh                |    5 +
+ samples/PriorityList/po/prioritylist.pot           |   25 +++++
+ samples/PriorityList/po/pt_PT.po                   |   25 +++++
+ samples/PriorityList/src/PriorityList.as           |  114 ++++++++++++++++++++
+ 9 files changed, 216 insertions(+), 0 deletions(-)
+
+commit 9e755be31f5223dfe2d7a59ac9dba178f086633b
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Wed Sep 22 22:56:23 2010 +0200
+
+    Add the priority list of languages using the LANGUAGE variable.
+    
+     * Add the correct behavior to the LANGUAGE variable.
+     * Add automated fallback on a locale using the preferred locales
+       defined in LANGUAGE.
+       The translations are all loaded at the first call to bindtextdomain
+       or textdomain.
+
+ build.xml                                          |    4 +-
+ src/gnu/as3/gettext/Domain.as                      |   50 +++++++
+ src/gnu/as3/gettext/_Gettext.as                    |  140 ++++++++++++--------
+ src/gnu/as3/gettext/_Locale.as                     |   19 +++
+ src/gnu/as3/gettext/services/IGettextService.as    |    4 +-
+ .../as3/gettext/services/LocalFilesystemService.as |   22 +++-
+ src/gnu/as3/gettext/services/URLLoaderService.as   |   21 +++-
+ 7 files changed, 198 insertions(+), 62 deletions(-)
+
+commit e33228f38f99d6a9b22681b10163a3f7376d121b
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Wed Sep 22 20:16:39 2010 +0200
+
+    Change LC_ALL to his real purpose (overriding all over LC_xxx)
+    
+     * LC_ALL overrides all other LC_xxx categories.
+     * LANGUAGE variable is disabled for now.
+
+ src/gnu/as3/gettext/MOFile.as  |    2 +-
+ src/gnu/as3/gettext/_Locale.as |   22 ++++++++++++----------
+ 2 files changed, 13 insertions(+), 11 deletions(-)
+
+commit d3c46ed5784866df14b05e98d8488895b0c3729e
 Author: Vincent Petithory <vincent.petithory@gmail.com>
 Date:   Fri Aug 27 10:54:02 2010 +0200
 
     Fix inconsistent indentation in all source files (tabs -> 4 spaces)
 
+ ChangeLog                                          |   33 ++-
  build.xml                                          |  250 +++++-----
  src/gnu/as3/gettext/AsGettext.as                   |   12 +-
  src/gnu/as3/gettext/FxGettext.as                   |   12 +-
@@ -24,7 +76,7 @@ Date:   Fri Aug 27 10:54:02 2010 +0200
  unittest/gnu/as3/gettext/_GettextTest.as           |  124 +++---
  unittest/gnu/as3/gettext/_LocaleTest.as            |  120 +++---
  unittest/gnu/as3/gettext/parseMOBytesTest.as       |  316 ++++++------
- 20 files changed, 1141 insertions(+), 1141 deletions(-)
+ 21 files changed, 1172 insertions(+), 1143 deletions(-)
 
 commit dcee9e116e349c0d0164acab60ba376bf6723aaa
 Author: Vincent Petithory <vincent.petithory@gmail.com>
