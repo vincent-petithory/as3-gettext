@@ -1,9 +1,25 @@
-commit c2d721ef682a7fb34ba0ca77affb105ef62f10e1
+commit fff90efc26cbda6851c13700a6e398022ea160fc
+Author: Vincent Petithory <vincent.petithory@gmail.com>
+Date:   Wed Jan 26 12:07:33 2011 +0100
+
+    Changed from ant to a simple makefile
+
+ .gitignore        |    8 ++-
+ INSTALL           |    5 +-
+ as3gnuTasks.jar   |  Bin 15434 -> 0 bytes
+ as3gnuTasks.tasks |   10 ---
+ build.properties  |   41 -------------
+ build.xml         |  174 -----------------------------------------------------
+ makefile          |   36 +++++++++++
+ 7 files changed, 42 insertions(+), 232 deletions(-)
+
+commit 07cd7ded89c1595132a2011d586f64048013253b
 Author: Vincent Petithory <vincent.petithory@gmail.com>
 Date:   Wed Sep 22 22:57:07 2010 +0200
 
     Add a sample (PriorityList) showing the usage of LANGUAGE for defining a priority list of languages
 
+ ChangeLog                                          |   56 +++++++++-
  .../locale/fr_FR/LC_MESSAGES/prioritylist.mo       |  Bin 0 -> 569 bytes
  .../locale/pt_PT/LC_MESSAGES/prioritylist.mo       |  Bin 0 -> 468 bytes
  samples/PriorityList/po/fr_FR.po                   |   25 +++++
@@ -13,7 +29,7 @@ Date:   Wed Sep 22 22:57:07 2010 +0200
  samples/PriorityList/po/prioritylist.pot           |   25 +++++
  samples/PriorityList/po/pt_PT.po                   |   25 +++++
  samples/PriorityList/src/PriorityList.as           |  114 ++++++++++++++++++++
- 9 files changed, 216 insertions(+), 0 deletions(-)
+ 10 files changed, 270 insertions(+), 2 deletions(-)
 
 commit 9e755be31f5223dfe2d7a59ac9dba178f086633b
 Author: Vincent Petithory <vincent.petithory@gmail.com>

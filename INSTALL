@@ -4,7 +4,4 @@
 -------------------------------------------------------------------------------
 
 
-To build the swc file, type `ant`.
-To build the documentation, type `ant html`
-
-If you get errors while building, check for a Flex SDK available in your PATH.
+make

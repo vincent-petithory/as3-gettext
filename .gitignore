@@ -1,6 +1,8 @@
-docs
-lib
-man
+/bin
+/doc
+/docs
+/*.tar.gz
+/*.zip
 *.cache
 *.swc
 *.swf
